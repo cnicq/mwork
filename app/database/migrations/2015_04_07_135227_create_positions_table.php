@@ -1,8 +1,9 @@
 <?php
 
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsersTable extends Migration {
+class CreatePositionsTable extends Migration {
 
     /**
      * Run the migrations.
@@ -11,16 +12,16 @@ class CreateUsersTable extends Migration {
      */
     public function up()
     {
-        // Create the `users` table
-        Schema::create('users', function($table)
+        // Creates the position table
+        Schema::create('positions', function($table)
         {
             $table->engine = 'InnoDB';
-            $table->increments('id')->unsigned();
-            $table->integer('user_type');
+            $table->increments('id');
             $table->string('name');
-            $table->string('teams_id');
-            $table->string('create_time');
+            $table->string('text');
+            $table->timestamps('updated_at');
         });
+
     }
 
     /**
@@ -30,7 +31,6 @@ class CreateUsersTable extends Migration {
      */
     public function down()
     {
-        Schema::drop('users');
+		Schema::drop('companys');
     }
-
 }

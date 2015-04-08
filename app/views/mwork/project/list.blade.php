@@ -36,7 +36,7 @@
 											<th>项目名</th>
 											<th>Owner</th>
 											<th>创建时间</th>
-											<th>客户公司</th>
+											<th>客户</th>
 
 										</tr>
 
@@ -47,9 +47,9 @@
 										@foreach ($projects as $project)
 										<tr>
 
+											<td>{{$project['name']}}</td>
 											<td>{{$project['owner_id']}}</td>
-											<td>{{$project['englishname']}}</td>
-											<td>{{$project['gender']}}</td>
+											<td>{{$project['created_date']}}</td>
 											<td>{{$project['location']}}</td>
 											
 										</tr>

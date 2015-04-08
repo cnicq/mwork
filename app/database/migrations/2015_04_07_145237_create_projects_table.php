@@ -1,42 +1,43 @@
 <?php
 
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 class CreateProjectsTable extends Migration {
 
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        // Create the `Posts` table
+	/**
+	 * Run the migrations.
+	 *
+	 * @return void
+	 */
+	public function up()
+	{
+		// Creates the position table
         Schema::create('projects', function($table)
         {
             $table->engine = 'InnoDB';
             $table->increments('id')->unsigned();
-            $table->integer('user_id')->unsigned()->index();
+            $table->integer('client_id')->unsigned()->index();
+            $table->integer('owner_id')->unsigned()->index();
+            $table->string('title');
+            $table->string('content');
             $table->string('purchase_order');
             $table->string('urgency');
-            $table->integer('client_id');
-            $table->integer('owner_id');
             $table->integer('job_id');
             $table->string('brief');
             $table->string('search_strategy');
-            $table->string('update_time');
+            $table->string('created_at');
         });
-    }
+	}
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        // Delete the `Posts` table
+	/**
+	 * Reverse the migrations.
+	 *
+	 * @return void
+	 */
+	public function down()
+	{
         Schema::drop('projects');
-    }
+	}
 
 }
