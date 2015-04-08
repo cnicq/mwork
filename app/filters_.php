@@ -37,7 +37,7 @@ Route::filter('auth', function()
 {
 	if ( Auth::guest() ) // If the user is not logged in
 	{
-        	return Response::View('mwork/user/login');
+        	return Redirect::guest('user/login');
 	}
 });
 
@@ -59,7 +59,7 @@ Route::filter('auth.basic', function()
 
 Route::filter('guest', function()
 {
-	if (Auth::check()) return Redirect::to('mwork/user/login/');
+	if (Auth::check()) return Redirect::to('user/login/');
 });
 
 /*
@@ -90,11 +90,11 @@ Entrust::routeNeedsPermission( 'admin/roles*', 'manage_roles', Redirect::to('/ad
 | session does not match the one given in this request, we'll bail.
 |
 */
+
 Route::filter('csrf', function()
 {
 	if (Session::getToken() !== Input::get('csrf_token') &&  Session::getToken() !== Input::get('_token'))
 	{
-		echo Session::getToken();
 		throw new Illuminate\Session\TokenMismatchException;
 	}
 });

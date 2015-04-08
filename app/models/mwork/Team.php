@@ -2,25 +2,41 @@
 
 use Illuminate\Support\Facades\URL;
 
-class Project extends Eloquent {
+class Candidate extends Eloquent {
 
+	/**
+	 * Deletes a candidate and all
+	 * the associated comments.
+	 *
+	 * @return bool
+	 */
 	public function delete()
 	{
 		// Delete the comments
-		$this->projects()->delete();
+		$this->comments()->delete();
 
 		return parent::delete();
 	}
 
+	/**
+	 * Returns a formatted candidate entry,
+	 * this ensures that line breaks are returned.
+	 *
+	 * @return string
+	 */
+	public function content()
+	{
+		return nl2br($this->content);
+	}
 
 	/**
-	 * Get the project owner.
+	 * Get the candidate owner.
 	 *
 	 * @return User
 	 */
 	public function owner()
 	{
-		return $this->belongsTo('User', 'userid');
+		return $this->belongsTo('Candidate', 'userid');
 	}
 
 	/**

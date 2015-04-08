@@ -30,82 +30,49 @@ Route::pattern('user', '[0-9]+');
 Route::pattern('role', '[0-9]+');
 Route::pattern('token', '[0-9a-z]+');
 
-/** ------------------------------------------
- *  Admin Routes
- *  ------------------------------------------
- */
-Route::group(array('prefix' => 'admin', 'before' => 'auth'), function()
-{
-
-    # Comment Management
-    Route::get('comments/{comment}/edit', 'AdminCommentsController@getEdit');
-    Route::post('comments/{comment}/edit', 'AdminCommentsController@postEdit');
-    Route::get('comments/{comment}/delete', 'AdminCommentsController@getDelete');
-    Route::post('comments/{comment}/delete', 'AdminCommentsController@postDelete');
-    Route::controller('comments', 'AdminCommentsController');
-
-    # Blog Management
-    Route::get('blogs/{post}/show', 'AdminBlogsController@getShow');
-    Route::get('blogs/{post}/edit', 'AdminBlogsController@getEdit');
-    Route::post('blogs/{post}/edit', 'AdminBlogsController@postEdit');
-    Route::get('blogs/{post}/delete', 'AdminBlogsController@getDelete');
-    Route::post('blogs/{post}/delete', 'AdminBlogsController@postDelete');
-    Route::controller('blogs', 'AdminBlogsController');
-
-    # User Management
-    Route::get('users/{user}/show', 'AdminUsersController@getShow');
-    Route::get('users/{user}/edit', 'AdminUsersController@getEdit');
-    Route::post('users/{user}/edit', 'AdminUsersController@postEdit');
-    Route::get('users/{user}/delete', 'AdminUsersController@getDelete');
-    Route::post('users/{user}/delete', 'AdminUsersController@postDelete');
-    Route::controller('users', 'AdminUsersController');
-
-    # User Role Management
-    Route::get('roles/{role}/show', 'AdminRolesController@getShow');
-    Route::get('roles/{role}/edit', 'AdminRolesController@getEdit');
-    Route::post('roles/{role}/edit', 'AdminRolesController@postEdit');
-    Route::get('roles/{role}/delete', 'AdminRolesController@getDelete');
-    Route::post('roles/{role}/delete', 'AdminRolesController@postDelete');
-    Route::controller('roles', 'AdminRolesController');
-
-    # Admin Dashboard
-    Route::controller('/', 'AdminDashboardController');
-});
-
-
-/** ------------------------------------------
- *  Frontend Routes
- *  ------------------------------------------
- */
-
-// User reset routes
-Route::get('user/reset/{token}', 'UserController@getReset');
-// User password reset
-Route::post('user/reset/{token}', 'UserController@postReset');
-//:: User Account Routes ::
-Route::post('user/{user}/edit', 'UserController@postEdit');
-
-//:: User Account Routes ::
 Route::post('user/login', 'UserController@postLogin');
+Route::post('user/create', 'UserController@postIndex');
+Route::get('user/login', 'UserController@getLogin');
+Route::get('user/logout', 'UserController@getLogout');
 
-# User RESTful Routes (Login, Logout, Register, etc)
-Route::controller('user', 'UserController');
 
-//:: Application Routes ::
-
-# Filter for detect language
-Route::when('contact-us','detectLang');
-
-# Contact Us Static Page
-Route::get('contact-us', function()
+function Titles()
 {
-    // Return about us page
-    return View::make('site/contact-us');
+    $PageTitle = 'MAPPING';
+    $NickName = 'TODO';
+    $BigTitle = '桌面';
+    $SmallTitle = '';
+    $Menu1 = '';
+    $Menu2 = '';
+    return compact('PageTitle', 'NickName', 'BigTitle', 'SmallTitle', 'Menu1', 'Menu2');
+}
+
+Route::group(array('before' => 'auth'), function(){
+    Route::get('/', function()
+    {
+        return View::make('mwork/index', Titles());
+    });
+
+    // candidate
+    Route::get('/candidate', 'CandidateController@getIndex');
+    Route::get('/candidate/add', function()
+    {
+        return View::make('mwork/candidate/add', Titles());
+    });
+    Route::get('/candidate/admin', function()
+    {
+        return View::make('mwork/candidate/admin', Titles());
+    });
+
+    // manage
+    Route::get('/manage/company', 'CompanyController@getIndex');
+    Route::get('/manage/position', 'PositionController@getIndex');
+    Route::post('/manage/company', 'CompanyController@postCreate');
+
+    Route::get('/project', 'ProjectController@getIndex');
+    Route::get('/team', 'TeamController@getIndex');
+
+
 });
 
-# Posts - Second to last set, match slug
-Route::get('{postSlug}', 'BlogController@getView');
-Route::post('{postSlug}', 'BlogController@postView');
-
-# Index Page - Last route, no matches
-Route::get('/', array('before' => 'detectLang','uses' => 'BlogController@getIndex'));
+Route::controller('user', 'UserController');
