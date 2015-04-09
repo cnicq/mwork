@@ -1,6 +1,6 @@
 <?php
 
-class PositionController extends BaseController {
+class PositionController extends ParentController {
 
     /**
      * Position Model

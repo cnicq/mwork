@@ -650,81 +650,17 @@
 
 						<li >
 
-							<a href="/bootstrap2/ui_general.html">
+							<a href="/project">
 
-							General</a>
-
-						</li>
-
-						<li >
-
-							<a href="/bootstrap2/ui_buttons.html">
-
-							Buttons</a>
+							我的项目</a>
 
 						</li>
 
 						<li >
 
-							<a href="/bootstrap2/ui_modals.html">
+							<a href="/project/admin">
 
-							Enhanced Modals</a>
-
-						</li>
-
-						<li >
-
-							<a href="/bootstrap2/ui_tabs_accordions.html">
-
-							Tabs & Accordions</a>
-
-						</li>
-
-						<li >
-
-							<a href="/bootstrap2/ui_jqueryui.html">
-
-							jQuery UI Components</a>
-
-						</li>
-
-						<li >
-
-							<a href="/bootstrap2/ui_sliders.html">
-
-							Sliders</a>
-
-						</li>
-
-						<li >
-
-							<a href="/bootstrap2/ui_tiles.html">
-
-							Tiles</a>
-
-						</li>
-
-						<li >
-
-							<a href="/bootstrap2/ui_typography.html">
-
-							Typography</a>
-
-						</li>
-
-						<li >
-
-							<a href="/bootstrap2/ui_tree.html">
-
-							Tree View</a>
-
-						</li>
-
-						<li >
-
-							<a href="/bootstrap2/ui_nestable.html">
-
-							Nestable List</a>
+							项目管理</a>
 
 						</li>
 
@@ -748,57 +684,17 @@
 
 						<li >
 
-							<a href="/bootstrap2/form_layout.html">
+							<a href="/client/admin">
 
-							Form Layouts</a>
-
-						</li>
-
-						<li >
-
-							<a href="/bootstrap2/form_samples.html">
-
-							Advance Form Samples</a>
+							我的客户</a>
 
 						</li>
 
 						<li >
 
-							<a href="/bootstrap2/form_component.html">
+							<a href="/client/admin">
 
-							Form Components</a>
-
-						</li>
-
-						<li >
-
-							<a href="/bootstrap2/form_wizard.html">
-
-							Form Wizard</a>
-
-						</li>
-
-						<li >
-
-							<a href="/bootstrap2/form_validation.html">
-
-							Form Validation</a>
-
-						</li>
-
-						<li >
-
-							<a href="/bootstrap2/form_fileupload.html">
-
-							Multiple File Upload</a>
-
-						</li>
-
-						<li >
-
-							<a href="/bootstrap2/form_dropzone.html">
-
-							Dropzone File Upload</a>
+							客户管理</a>
 
 						</li>
 
@@ -820,95 +716,7 @@
 
 					<ul class="sub-menu">
 
-						<li >
-
-							<a href="/bootstrap2/page_timeline.html">
-
-							<i class="icon-time"></i>
-
-							Timeline</a>
-
-						</li>
-
-						<li >
-
-							<a href="/bootstrap2/page_coming_soon.html">
-
-							<i class="icon-cogs"></i>
-
-							Coming Soon</a>
-
-						</li>
-
-						<li >
-
-							<a href="/bootstrap2/page_blog.html">
-
-							<i class="icon-comments"></i>
-
-							Blog</a>
-
-						</li>
-
-						<li >
-
-							<a href="/bootstrap2/page_blog_item.html">
-
-							<i class="icon-font"></i>
-
-							Blog Post</a>
-
-						</li>
-
-						<li >
-
-							<a href="/bootstrap2/page_news.html">
-
-							<i class="icon-coffee"></i>
-
-							News</a>
-
-						</li>
-
-						<li >
-
-							<a href="/bootstrap2/page_news_item.html">
-
-							<i class="icon-bell"></i>
-
-							News View</a>
-
-						</li>
-
-						<li >
-
-							<a href="/bootstrap2/page_about.html">
-
-							<i class="icon-group"></i>
-
-							About Us</a>
-
-						</li>
-
-						<li >
-
-							<a href="/bootstrap2/page_contact.html">
-
-							<i class="icon-envelope-alt"></i>
-
-							Contact Us</a>
-
-						</li>
-
-						<li >
-
-							<a href="/bootstrap2/page_calendar.html">
-
-							<i class="icon-calendar"></i>
-
-							Calendar</a>
-
-						</li>
+						
 
 					</ul>
 
@@ -930,108 +738,19 @@
 
 						<li >
 
-							<a href="/bootstrap2/extra_profile.html">
+							<a href="/team">
 
-							User Profile</a>
-
-						</li>
-
-						<li >
-
-							<a href="/bootstrap2/extra_lock.html">
-
-							Lock Screen</a>
+							我的团队</a>
 
 						</li>
 
 						<li >
 
-							<a href="/bootstrap2/extra_faq.html">
+							<a href="/team">
 
-							FAQ</a>
-
-						</li>
-
-						<li >
-
-							<a href="/bootstrap2/inbox.html">
-
-							Inbox</a>
+							团队管理</a>
 
 						</li>
-
-						<li >
-
-							<a href="/bootstrap2/extra_search.html">
-
-							Search Results</a>
-
-						</li>
-
-						<li >
-
-							<a href="/bootstrap2/extra_invoice.html">
-
-							Invoice</a>
-
-						</li>
-
-						<li >
-
-							<a href="/bootstrap2/extra_pricing_table.html">
-
-							Pricing Tables</a>
-
-						</li>
-
-						<li >
-
-							<a href="/bootstrap2/extra_image_manager.html">
-
-							Image Manager</a>
-
-						</li>
-
-						<li >
-
-							<a href="/bootstrap2/extra_404_option1.html">
-
-							404 Page Option 1</a>
-
-						</li>
-
-						<li >
-
-							<a href="/bootstrap2/extra_404_option2.html">
-
-							404 Page Option 2</a>
-
-						</li>
-
-						<li >
-
-							<a href="/bootstrap2/extra_404_option3.html">
-
-							404 Page Option 3</a>
-
-						</li>
-
-						<li >
-
-							<a href="/bootstrap2/extra_500_option1.html">
-
-							500 Page Option 1</a>
-
-						</li>
-
-						<li >
-
-							<a href="/bootstrap2/extra_500_option2.html">
-
-							500 Page Option 2</a>
-
-						</li>
-
 					</ul>
 
 				</li>
@@ -1065,7 +784,12 @@
 							职位</a>
 
 						</li>
+						<li >
+							<a href="/admin/position">
 
+							用户</a>
+
+						</li>
 						
 
 					</ul>

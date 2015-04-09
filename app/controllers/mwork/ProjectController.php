@@ -1,6 +1,6 @@
 <?php
 
-class CompanyController extends BaseController {
+class ProjectController extends ParentController {
 
     /**
      * Company Model
@@ -28,7 +28,7 @@ class CompanyController extends BaseController {
     {
         $projects = $this->project->orderBy('updated_at', 'DESC')->paginate(20);
         // Show the page
-        return View::make('mwork/project', compact('projects'), $this->Titles());
+        return View::make('mwork/project/list', compact('projects'), $this->Titles());
     }
 
 	/**
