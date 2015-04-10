@@ -64,14 +64,19 @@ Route::group(array('before' => 'auth'), function(){
         return View::make('mwork/candidate/admin', Titles());
     });
 
-    // manage
+    // manage - get
     Route::get('/manage/company', 'CompanyController@getIndex');
     Route::get('/manage/position', 'PositionController@getIndex');
-    Route::post('/manage/company', 'CompanyController@postCreate');
-    Route::post('/manage/user', 'HUserController@getIndex');
+    Route::get('/manage/user', 'HUserController@getIndex');
 
+    // manage - post
+    Route::post('/manage/company', 'CompanyController@postCreate');
+
+    // client
     Route::get('/client', 'ClientController@getIndex');
+    // project
     Route::get('/project', 'ProjectController@getIndex');
+    // team
     Route::get('/team', 'TeamController@getIndex');
 
 
