@@ -19,6 +19,15 @@ class CompanyController extends ParentController {
         $this->company = $company;
     }
 
+    public function getManage()
+    {
+        $companys = $this->company->orderBy('updated_at', 'DESC')->paginate(20);
+
+        // Show the page
+        return View::make('mwork/manage/company', compact('companys'), $this->Titles('id_manage', 'id_manage_company'));
+    }
+
+
     /**
      * Show a list of all the companys.
      *
@@ -28,7 +37,7 @@ class CompanyController extends ParentController {
     {
         $companys = $this->company->orderBy('updated_at', 'DESC')->paginate(20);
         // Show the page
-        return View::make('mwork/manage/company', compact('companys'), $this->Titles());
+        return View::make('mwork/manage/company', compact('companys'), $this->Titles($this->Titles('id_company', 'id_company_list')));
     }
 
 	/**

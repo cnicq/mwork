@@ -38,7 +38,7 @@
 
 			</li>
 
-			<li class="start active ">
+			<li class="start ">
 
 				<a href="/">
 
@@ -52,13 +52,13 @@
 
 			</li>
 
-			<li class="">
+			<li id="id_candidate">
 
 				<a href="javascript;">
 
 				<i class="icon-cogs"></i> 
 
-				<span class="title">候选人</span>
+				<span class="title active">候选人</span>
 
 				<span class="arrow "></span>
 
@@ -66,7 +66,7 @@
 
 				<ul class="sub-menu">
 
-					<li >
+					<li id="id_candidate_list">
 
 						<a href="/candidate">
 
@@ -74,7 +74,7 @@
 
 					</li>
 
-					<li >
+					<li id="id_candidate_add">
 
 						<a href="/candidate/add">
 
@@ -82,9 +82,9 @@
 
 					</li>
 
-					<li >
+					<li id="id_candidate_manage">
 
-						<a href="/candidate/admin">
+						<a href="/candidate/manage">
 
 						管理</a>
 
@@ -96,7 +96,7 @@
 			</li>
 
 			
-			<li class="">
+			<li id="id_project">
 
 				<a href="/bootstrap2/javascript:;">
 
@@ -110,7 +110,7 @@
 
 				<ul class="sub-menu">
 
-					<li >
+					<li id="id_project_my">
 
 						<a href="/project">
 
@@ -118,9 +118,9 @@
 
 					</li>
 
-					<li >
+					<li id="id_project_manage">
 
-						<a href="/project/admin">
+						<a href="/project/manage">
 
 						项目管理</a>
 
@@ -130,7 +130,7 @@
 
 			</li>
 
-			<li class="">
+			<li id="id_client">
 
 				<a href="/bootstrap2/javascript:;">
 
@@ -144,17 +144,17 @@
 
 				<ul class="sub-menu">
 
-					<li >
+					<li id="id_client_my">
 
-						<a href="/client/admin">
+						<a href="/client">
 
 						我的客户</a>
 
 					</li>
 
-					<li >
+					<li id="id_client_my_manage">
 
-						<a href="/client/admin">
+						<a href="/client/manage">
 
 						客户管理</a>
 
@@ -164,7 +164,7 @@
 
 			</li>
 
-			<li class="">
+			<li id="id_plane">
 
 				<a href="/bootstrap2/javascript:;">
 
@@ -178,13 +178,11 @@
 
 				<ul class="sub-menu">
 
-					
-
 				</ul>
 
 			</li>
 
-			<li class="">
+			<li id="id_team">
 
 				<a href="/bootstrap2/javascript:;">
 
@@ -198,7 +196,7 @@
 
 				<ul class="sub-menu">
 
-					<li >
+					<li id="id_team_my">
 
 						<a href="/team">
 
@@ -206,9 +204,9 @@
 
 					</li>
 
-					<li >
+					<li id="id_team_manange">
 
-						<a href="/team">
+						<a href="/team/manage">
 
 						团队管理</a>
 
@@ -217,7 +215,7 @@
 
 			</li>
 
-			<li class="">
+			<li id="id_manage">
 
 				<a href="javascript;">
 
@@ -231,7 +229,7 @@
 
 				<ul class="sub-menu">
 
-					<li >
+					<li id="id_manage_company">
 
 						<a href="/manage/company">
 
@@ -239,15 +237,15 @@
 
 					</li>
 
-					<li >
+					<li id="id_manage_position">
 
 						<a href="/manage/position">
 
 						职位</a>
 
 					</li>
-					<li >
-						<a href="/manage/position">
+					<li id="id_manage_user">
+						<a href="/manage/user">
 
 						用户</a>
 
@@ -264,5 +262,3 @@
 		<!-- END SIDEBAR MENU -->
 
 	</div>
-
-	<!-- END SIDEBAR -->

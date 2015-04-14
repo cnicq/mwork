@@ -36,48 +36,34 @@ Route::get('user/login', 'UserController@getLogin');
 Route::get('user/logout', 'UserController@getLogout');
 
 
-function Titles()
-{
-    $PageTitle = 'MAPPING';
-    $NickName = 'TODO';
-    $BigTitle = '桌面';
-    $SmallTitle = '';
-    $Menu1 = '';
-    $Menu2 = '';
-    return compact('PageTitle', 'NickName', 'BigTitle', 'SmallTitle', 'Menu1', 'Menu2');
-}
-
 Route::group(array('before' => 'auth'), function(){
-    Route::get('/', function()
-    {
-        return View::make('mwork/index', Titles());
-    });
+    // desktop
+    Route::get('/', 'DesktopController@getIndex');
 
     // candidate
     Route::get('/candidate', 'CandidateController@getIndex');
-    Route::get('/candidate/add', function()
-    {
-        return View::make('mwork/candidate/add', Titles());
-    });
-    Route::get('/candidate/admin', function()
-    {
-        return View::make('mwork/candidate/admin', Titles());
-    });
+    Route::get('/candidate/add', 'CandidateController@getAdd');
+    Route::get('/candidate/manage', 'CandidateController@getManage');
 
     // manage - get
-    Route::get('/manage/company', 'CompanyController@getIndex');
-    Route::get('/manage/position', 'PositionController@getIndex');
-    Route::get('/manage/user', 'HUserController@getIndex');
-
+    Route::get('/manage/company', 'CompanyController@getManage');
+    Route::get('/manage/position', 'PositionController@getManage');
+    Route::get('/manage/user', 'HUserController@getManage');
+    Route::get('/manage/team', 'TeamController@getManage');
     // manage - post
     Route::post('/manage/company', 'CompanyController@postCreate');
 
     // client
     Route::get('/client', 'ClientController@getIndex');
+    Route::get('/client/manage', 'ClientController@getIndex');
+
     // project
     Route::get('/project', 'ProjectController@getIndex');
+    Route::get('/project/manage', 'ProjectController@getIndex');
+    
     // team
     Route::get('/team', 'TeamController@getIndex');
+    Route::get('/team/manage', 'TeamController@getIndex');
 
 
 });

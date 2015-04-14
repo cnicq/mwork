@@ -27,6 +27,7 @@ class CreateProjectsTable extends Migration {
             $table->string('brief');
             $table->string('search_strategy');
             $table->string('created_at');
+            $table->string('update_at');
         });
 	}
 

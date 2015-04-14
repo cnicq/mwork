@@ -2,10 +2,10 @@
 
 use Illuminate\Support\Facades\URL;
 
-class Candidate extends Eloquent {
+class Team extends Eloquent {
 
 	/**
-	 * Deletes a candidate and all
+	 * Deletes a team and all
 	 * the associated comments.
 	 *
 	 * @return bool
@@ -19,7 +19,7 @@ class Candidate extends Eloquent {
 	}
 
 	/**
-	 * Returns a formatted candidate entry,
+	 * Returns a formatted team entry,
 	 * this ensures that line breaks are returned.
 	 *
 	 * @return string
@@ -30,13 +30,13 @@ class Candidate extends Eloquent {
 	}
 
 	/**
-	 * Get the candidate owner.
+	 * Get the team owner.
 	 *
 	 * @return User
 	 */
 	public function owner()
 	{
-		return $this->belongsTo('Candidate', 'userid');
+		return $this->belongsTo('Team', 'userid');
 	}
 
 	/**

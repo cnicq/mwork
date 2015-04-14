@@ -536,10 +536,8 @@
 
 	<div class="page-container row-fluid">
 
-		@section('sidebar')
-            This is the master sidebar.
-        @show
-
+		@include('mwork.layouts.menu')
+		
 		<!-- BEGIN PAGE -->
 
 		<div class="page-content">
@@ -802,6 +800,9 @@
 
 		   TableAdvanced.init();
 		   TableEditable.init();
+
+		   $("#{{$BigTitle}}").addClass("active");
+		   $("#{{$SmallTitle}}").addClass("active");
 
 		});
 

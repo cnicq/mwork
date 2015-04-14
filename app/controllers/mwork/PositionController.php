@@ -18,21 +18,31 @@ class PositionController extends ParentController {
         $this->position = $position;
     }
 
+    public function getManage()
+    {
+        // Title
+        $title = Lang::get('mwork/position/title.blog_management');
+
+        $positions = $this->position->orderBy('updated_at', 'DESC')->paginate(20);
+
+        // Show the page
+        return View::make('mwork/manage/position', compact('positions'), $this->Titles('id_manage', 'id_manage_position'));
+    }
+
     /**
-     * Show a list of all the blog posts.
+     * Show a list of all the positions.
      *
      * @return View
      */
     public function getIndex()
     {
         // Title
-        $title = Lang::get('mwork/admin/title.blog_management');
+        $title = Lang::get('mwork/position/title.blog_management');
 
-        // Grab all the blog posts
-        $posts = $this->position;
+        $positions = $this->position->orderBy('updated_at', 'DESC')->paginate(20);
 
         // Show the page
-        return View::make('mwork/position/index', compact('position', 'title'));
+        return View::make('mwork/position/list', compact('positions'), $this->Titles());
     }
 
 	/**

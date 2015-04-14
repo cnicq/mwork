@@ -26,7 +26,7 @@ class ProjectController extends ParentController {
      */
     public function getIndex()
     {
-        $projects = $this->project->orderBy('updated_at', 'DESC')->paginate(20);
+        $projects = $this->project->orderBy('created_at', 'DESC')->paginate(20);
         // Show the page
         return View::make('mwork/project/list', compact('projects'), $this->Titles());
     }

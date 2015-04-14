@@ -3,7 +3,8 @@
 use Illuminate\Support\Facades\URL;
 
 class HUser extends Eloquent {
-
+	
+	protected $table = 'husers';
 	/**
 	 * Deletes a huser and all
 	 * the associated comments.

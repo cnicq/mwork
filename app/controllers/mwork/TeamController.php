@@ -16,8 +16,16 @@ class TeamController extends ParentController {
         parent::__construct();
 
         $this->team = $team;
+        $this->bigTitle = 'id_team';
     }
 
+    public function getManage()
+    {
+        $teams = $this->team->orderBy('updated_at', 'DESC')->paginate(20);
+
+        // Show the page
+        return View::make('mwork/manage/team', compact('teams'), $this->Titles('id_manage', 'id_manage_team'));
+    }
     /**
      * Show a list of all the teams.
      *

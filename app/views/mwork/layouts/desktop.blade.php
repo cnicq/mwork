@@ -208,9 +208,7 @@
 
 	<div class="page-container">
 
-		@section('sidebar')
-            This is the master sidebar.
-        @show
+		@include('mwork.layouts.menu')
 
 		<!-- BEGIN PAGE -->
 

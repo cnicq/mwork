@@ -13,7 +13,7 @@
 
 							<div class="portlet-title">
 
-								<div class="caption"><i class="icon-globe"></i>项目列表</div>
+								<div class="caption"><i class="icon-globe"></i>职位列表</div>
 
 								<div class="tools">
 
@@ -44,13 +44,13 @@
 
 									<tbody>
 
-										@foreach ($husers as $huser)
+										@foreach ($positions as $position)
 										<tr>
 
-											<td>{{$huser['name']}}</td>
-											<td>{{$huser['owner_id']}}</td>
-											<td>{{$huser['created_date']}}</td>
-											<td>{{$huser['location']}}</td>
+											<td>{{$position['name']}}</td>
+											<td>{{$position['owner_id']}}</td>
+											<td>{{$position['created_date']}}</td>
+											<td>{{$position['location']}}</td>
 											
 										</tr>
 
@@ -61,7 +61,7 @@
 									</tbody>
 								</table>
 				<ul class="pagination">
-				{{$husers->links()}}
+				{{$positions->links()}}
     			</ul>
 							</div>
 							

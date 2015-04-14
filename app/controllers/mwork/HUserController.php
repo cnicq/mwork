@@ -9,13 +9,25 @@ class HUserController extends ParentController {
 
     /**
      * Inject the models.
-     * @param Huser $huser
+     * @param HUser $huser
      */
-    public function __construct(Huser $huser)
+    public function __construct(HUser $huser)
     {
         parent::__construct();
 
         $this->huser = $huser;
+        $this->bigTitle = 'id_huser';
+    }
+
+    public function getManage()
+    {
+        $this->bigTitle = 'id_manage';
+        $this->smallTitle = 'id_manage_huser';
+
+        $husers = $this->huser->orderBy('updated_at', 'DESC')->paginate(20);
+
+        // Show the page
+        return View::make('mwork/manage/user', compact('husers'), $this->Titles('id_manage', 'id_manage_user'));
     }
 
     /**

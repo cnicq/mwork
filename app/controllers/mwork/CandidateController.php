@@ -2,6 +2,8 @@
 
 class CandidateController extends ParentController {
 
+    
+
     /**
      * candidate Model
      * @var candidate
@@ -28,11 +30,31 @@ class CandidateController extends ParentController {
      */
     public function getIndex()
     {
-        // Get all the blog posts
+         
+        $candidates = $this->candidate->orderBy('updated_at', 'DESC')->paginate(20);
+        
+        // Show the page
+        return View::make('mwork/candidate/list', compact('candidates'), $this->Titles("id_candidate", 'id_candidate_list'));
+    }
+
+    public function getAdd()
+    {
+        $this->smallTitle = 'id_candidate_add';
+
         $candidates = $this->candidate->orderBy('updated_at', 'DESC')->paginate(20);
 
         // Show the page
-        return View::make('mwork/candidate/list', compact('candidates'), $this->Titles());
+        return View::make('mwork/candidate/add', compact('candidates'),$this->Titles("id_candidate", 'id_candidate_add'));
+    }
+
+    public function getManage()
+    {
+        $this->smallTitle = 'id_candidate_manage';
+
+        $candidates = $this->candidate->orderBy('updated_at', 'DESC')->paginate(20);
+
+        // Show the page
+        return View::make('mwork/candidate/manage', compact('candidates'), $this->Titles("id_manage", 'id_manage_candidate'));
     }
 
     /**
