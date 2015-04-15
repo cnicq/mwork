@@ -12,7 +12,7 @@ class DesktopController extends ParentController {
     {
     	$this->smallTitle = 'id_desktop';
 
-        return View::make('mwork/index', $this->Titles());
+        return View::make('mwork/index', $this->Titles("", ""));
     }
 
 }

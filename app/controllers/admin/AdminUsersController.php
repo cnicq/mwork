@@ -78,7 +78,9 @@ class AdminUsersController extends AdminController {
 		$mode = 'create';
 
 		// Show the page
-		return View::make('admin/users/create_edit', compact('roles', 'permissions', 'selectedRoles', 'selectedPermissions', 'title', 'mode'));
+		return View::make('mwork/manage/user', 
+            compact('roles', 'permissions', 'selectedRoles', 'selectedPermissions', 'title', 'mode'),
+            $this->Titles());
     }
 
     /**

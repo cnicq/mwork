@@ -1,4 +1,4 @@
- s 	 	@extends('mwork.layouts.default')
+@extends('mwork.layouts.default')
 
 @section('content')
 

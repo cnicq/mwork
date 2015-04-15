@@ -250,6 +250,13 @@
 						用户</a>
 
 					</li>
+
+					<li id="id_manage_permission">
+						<a href="/manage/permission">
+
+						权限</a>
+
+					</li>
 					
 
 				</ul>
