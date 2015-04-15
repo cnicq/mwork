@@ -1,4 +1,4 @@
- s 	 	@extends('mwork.layouts.default')
+@extends('mwork.layouts.default')
 
 @section('content')
 
@@ -41,7 +41,7 @@
 
 						<div class="controls">
 
-							<input type="text" class="m-wrap span12" placeholder="软件工程师">
+							<input type="text" class="m-wrap span12" placeholder="">
 
 						</div>
 
@@ -59,7 +59,7 @@
 
 						<div class="controls">
 
-							<input type="text" class="m-wrap span12" placeholder="Software Engineer">
+							<input type="text" class="m-wrap span12" placeholder="">
 
 						</div>
 
@@ -83,7 +83,7 @@
 
 						<div class="controls">
 
-							<input type="text" class="m-wrap span12" placeholder="软件工程师">
+							<input type="text" class="m-wrap span12" placeholder="">
 
 						</div>
 
@@ -97,11 +97,11 @@
 
 					<div class="control-group">
 
-						<label class="control-label">权限</label>
+						<label class="control-label">用户组</label>
 
 						<div class="controls">
 
-							<input type="text" class="m-wrap span12" placeholder="Software Engineer">
+							<input type="text" class="m-wrap span12" placeholder="">
 
 						</div>
 

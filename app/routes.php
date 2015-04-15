@@ -48,7 +48,7 @@ Route::group(array('before' => 'auth'), function(){
     // manage - get
     Route::get('/manage/company', 'CompanyController@getManage');
     Route::get('/manage/position', 'PositionController@getManage');
-    Route::get('/manage/user', 'HUserController@getManage');
+    Route::get('/manage/user', 'AdminUsersController@getCreate');
     Route::get('/manage/team', 'TeamController@getManage');
     // manage - post
     Route::post('/manage/company', 'CompanyController@postCreate');

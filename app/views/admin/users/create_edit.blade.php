@@ -1,4 +1,4 @@
-@extends('admin.layouts.modal')
+@extends('mwork.layouts.default')
 
 {{-- Content --}}
 @section('content')

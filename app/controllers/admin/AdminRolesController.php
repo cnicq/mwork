@@ -69,7 +69,8 @@ class AdminRolesController extends AdminController {
         $title = Lang::get('admin/roles/title.create_a_new_role');
 
         // Show the page
-        return View::make('admin/roles/create', compact('permissions', 'selectedPermissions', 'title'));
+        return View::make('admin/roles/create', compact('permissions', 'selectedPermissions', 'title'),
+            $this->Titles());
     }
 
     /**
