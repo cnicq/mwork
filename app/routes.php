@@ -37,6 +37,9 @@ Route::get('user/logout', 'UserController@getLogout');
 
 
 Route::group(array('before' => 'auth'), function(){
+
+    Route::controller('roles', 'AdminRolesController');
+
     // desktop
     Route::get('/', 'DesktopController@getIndex');
 
@@ -50,6 +53,8 @@ Route::group(array('before' => 'auth'), function(){
     Route::get('/manage/position', 'PositionController@getManage');
     Route::get('/manage/user', 'AdminUsersController@getCreate');
     Route::get('/manage/team', 'TeamController@getManage');
+    Route::get('/manage/role', 'AdminRolesController@getCreate');
+
     // manage - post
     Route::post('/manage/company', 'CompanyController@postCreate');
 

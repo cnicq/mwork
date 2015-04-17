@@ -251,8 +251,8 @@
 
 					</li>
 
-					<li id="id_manage_permission">
-						<a href="/manage/permission">
+					<li id="id_manage_role">
+						<a href="/manage/role">
 
 						权限</a>
 
@@ -269,3 +269,14 @@
 		<!-- END SIDEBAR MENU -->
 
 	</div>
+
+	@section('scripts')
+	<script type="text/javascript">
+		var oTable;
+		$(document).ready(function() {
+				$("#{{$BigTitle}}").addClass("active");
+		  		$("#{{$SmallTitle}}").addClass("active");
+			});
+		});
+	</script>
+@stop

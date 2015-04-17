@@ -67,10 +67,11 @@ class AdminRolesController extends AdminController {
 
         // Title
         $title = Lang::get('admin/roles/title.create_a_new_role');
-
+        $mode = "create";
+        
         // Show the page
-        return View::make('admin/roles/create', compact('permissions', 'selectedPermissions', 'title'),
-            $this->Titles());
+        return View::make('admin/roles/create', compact('permissions', 'selectedPermissions', 'title', 'mode'),
+            $this->Titles('id_manage', 'id_manage_role'));
     }
 
     /**
@@ -149,6 +150,8 @@ class AdminRolesController extends AdminController {
 
         // Title
         $title = Lang::get('admin/roles/title.role_update');
+
+        $mode = "edit";
 
         // Show the page
         return View::make('admin/roles/edit', compact('role', 'permissions', 'title'));

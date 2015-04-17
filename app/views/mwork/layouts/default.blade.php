@@ -801,12 +801,12 @@
 		   TableAdvanced.init();
 		   TableEditable.init();
 
-		   $("#{{$BigTitle}}").addClass("active");
-		   $("#{{$SmallTitle}}").addClass("active");
-
+		  
 		});
 
 	</script>
+
+	@yield('scripts')
 
 </body>
 

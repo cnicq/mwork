@@ -2,59 +2,97 @@
 
 {{-- Content --}}
 @section('content')
-	<!-- Tabs -->
-		<ul class="nav nav-tabs">
-			<li class="active"><a href="#tab-general" data-toggle="tab">General</a></li>
-			<li><a href="#tab-permissions" data-toggle="tab">Permissions</a></li>
-		</ul>
-	<!-- ./ tabs -->
-
 	{{-- Create Role Form --}}
+	<div class="page-header">
+		<h3>
+			权限组设置
+		</h3>
+	</div>
 	<form class="form-horizontal" method="post" action="" autocomplete="off">
 		<!-- CSRF Token -->
 		<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
 		<!-- ./ csrf token -->
-
-		<!-- Tabs Content -->
-		<div class="tab-content">
-			<!-- Tab General -->
-			<div class="tab-pane active" id="tab-general">
-				<!-- Name -->
-				<div class="form-group {{{ $errors->has('name') ? 'error' : '' }}}">
-					<label class="col-md-2 control-label" for="name">Name</label>
-                    <div class="col-md-10">
-    					<input class="form-control" type="text" name="name" id="name" value="{{{ Input::old('name') }}}" />
-    					{{ $errors->first('name', '<span class="help-inline">:message</span>') }}
-                    </div>
-				</div>
-				<!-- ./ name -->
-			</div>
-			<!-- ./ tab general -->
-
-	        <!-- Permissions tab -->
-	        <div class="tab-pane" id="tab-permissions">
-                <div class="form-group">
-                    @foreach ($permissions as $permission)
-                    <label>
-                        <input class="control-label" type="hidden" id="permissions[{{{ $permission['id'] }}}]" name="permissions[{{{ $permission['id'] }}}]" value="0" />
-                        <input class="form-control" type="checkbox" id="permissions[{{{ $permission['id'] }}}]" name="permissions[{{{ $permission['id'] }}}]" value="1"{{{ (isset($permission['checked']) && $permission['checked'] == true ? ' checked="checked"' : '')}}} />
-                        {{{ $permission['display_name'] }}}
-                    </label>
-                    @endforeach
-                </div>
-	        </div>
-	        <!-- ./ permissions tab -->
+		<!-- Name -->
+		<div class="form-group {{{ $errors->has('name') ? 'error' : '' }}}">
+			组名称:
+			<br>
+            <div class="col-md-10">
+				<input class="form-control" type="text" name="name" id="name" value="{{{ Input::old('name') }}}" />
+				{{ $errors->first('name', '<span class="help-inline">:message</span>') }}
+            </div>
 		</div>
-		<!-- ./ tabs content -->
+		<!-- ./ name -->
+	
+		<br>
+		权限:
+		<br>
+        <div class="form-group">
+            @foreach ($permissions as $permission)
+            <label>
+                <input class="control-label" type="hidden" id="permissions[{{{ $permission['id'] }}}]" name="permissions[{{{ $permission['id'] }}}]" value="0" />
+                <input class="form-control" type="checkbox" id="permissions[{{{ $permission['id'] }}}]" name="permissions[{{{ $permission['id'] }}}]" value="1"{{{ (isset($permission['checked']) && $permission['checked'] == true ? ' checked="checked"' : '')}}} />
+                {{{ $permission['display_name'] }}}
+            </label>
+            @endforeach
+        </div>
 
 		<!-- Form Actions -->
 		<div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-				<element class="btn-cancel close_popup">Cancel</element>
-				<button type="reset" class="btn btn-default">Reset</button>
-				<button type="submit" class="btn btn-success">Create Role</button>
+            	@if ($mode == 'edit')
+            	<input type="hidden" name="mode" value="edit" />
+				<button type="submit" class="btn btn-success">修改</button>
+				@endif
+				@if ($mode == 'create')
+				<input type="hidden" name="mode" value="create" />
+				<button type="submit" class="btn btn-success">创建</button>
+				@endif
             </div>
 		</div>
 		<!-- ./ form actions -->
 	</form>
+
+	{{-- Role list --}}
+
+	<div class="page-header">
+		<h3>
+			权限组列表
+		</h3>
+	</div>
+
+	<table id="roles" class="table table-striped table-hover">
+		<thead>
+			<tr>
+				<th class="col-md-6">{{{ Lang::get('admin/roles/table.name') }}}</th>
+				<th class="col-md-2">{{{ Lang::get('admin/roles/table.users') }}}</th>
+				<th class="col-md-2">{{{ Lang::get('admin/roles/table.created_at') }}}</th>
+				<th class="col-md-2">{{{ Lang::get('table.actions') }}}</th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+
+@stop
+
+{{-- Scripts --}}
+@section('scripts')
+	<script type="text/javascript">
+		var oTable;
+		$(document).ready(function() {
+				oTable = $('#roles').dataTable( {
+				"sDom": "<'row'<'col-md-6'l><'col-md-6'f>r>t<'row'<'col-md-6'i><'col-md-6'p>>",
+				"sPaginationType": "bootstrap",
+				"oLanguage": {
+					"sLengthMenu": "_MENU_ records per page"
+				},
+				"bProcessing": true,
+		        "bServerSide": true,
+		        "sAjaxSource": "{{ URL::to('roles/data') }}",
+		        "fnDrawCallback": function ( oSettings ) {
+	           		$(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
+	     		}
+			});
+		});
+	</script>
 @stop

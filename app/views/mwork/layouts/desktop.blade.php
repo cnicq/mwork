@@ -530,6 +530,8 @@
 
 	</script>
 
+	@yield('scripts')
+	
 	<!-- END JAVASCRIPTS -->
 
 </body>
