@@ -269,14 +269,11 @@
 		<!-- END SIDEBAR MENU -->
 
 	</div>
-
 	@section('scripts')
 	<script type="text/javascript">
-		var oTable;
 		$(document).ready(function() {
 				$("#{{$BigTitle}}").addClass("active");
 		  		$("#{{$SmallTitle}}").addClass("active");
-			});
 		});
 	</script>
-@stop
+	@stop

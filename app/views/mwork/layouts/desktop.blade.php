@@ -525,13 +525,12 @@
 		   Index.initIntro();
 
 		   //TableAdvanced.init();
+		   
 
 		});
 
 	</script>
-
 	@yield('scripts')
-	
 	<!-- END JAVASCRIPTS -->
 
 </body>

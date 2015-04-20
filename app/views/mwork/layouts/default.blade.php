@@ -800,12 +800,9 @@
 
 		   TableAdvanced.init();
 		   TableEditable.init();
-
-		  
 		});
 
 	</script>
-
 	@yield('scripts')
 
 </body>
