@@ -86,7 +86,7 @@
 				},
 				"bProcessing": false,
 		        "bServerSide": true,
-		        "sAjaxSource": "{{ URL::to('roles/data') }}"
+		        "sAjaxSource": "{{ URL::to('roles/datas') }}"
 			});
 		});
 
