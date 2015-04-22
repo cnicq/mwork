@@ -244,7 +244,7 @@ class AdminRolesController extends AdminController {
         return Datatables::of($roles)
         // ->edit_column('created_at','{{{ Carbon::now()->diffForHumans(Carbon::createFromFormat(\'Y-m-d H\', $test)) }}}')
         ->edit_column('users', '{{{ DB::table(\'assigned_roles\')->where(\'role_id\', \'=\', $id)->count()  }}}')
-        ->add_column('actions', '<a href="#" onClick="editRole({{{$id}}}})" class="iframe btn btn-xs btn-default">{{{ Lang::get(\'button.edit\') }}}</a>
+        ->add_column('actions', '<a href="#" onClick="editRole({{{$id}}})" class="iframe btn btn-xs btn-default">{{{ Lang::get(\'button.edit\') }}}</a>
                                  <a href="#" onClick="deleteRole({{{$id}}})" class="iframe btn btn-xs btn-danger">{{{ Lang::get(\'button.delete\') }}}</a>')
 
         ->remove_column('id')
@@ -252,11 +252,12 @@ class AdminRolesController extends AdminController {
         ->make();
     }
 
-    public function getData($roleId)
+    public function getData($id)
     {
-         $name = DB::table('roles')->where('role_id','=',$roleId)->pluck('name');
-         $permissionIds = DB::table('permission_role')->where('role_id','=',$roleId)->lists('permission_id');
-         return Response::json(array('name' => 'Steve', 'state' => 'CA'));
+         $name = DB::table('roles')->where('id','=',$id)->pluck('name');
+         $permissionIds = DB::table('permission_role')->where('role_id','=',$id)->lists('permission_id');
+         $mode = "edit";
+         return Response::json(compact('name', 'permissionIds', 'mode'));
     }
 
 }

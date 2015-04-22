@@ -17,7 +17,7 @@
 			组名称:
 			<br>
             <div class="col-md-10">
-				<input class="form-control" type="text" name="name" id="name" value="{{{ Input::old('name') }}}" />
+				<input class="form-control" type="text" name="name" id="group_name" value="{{{ Input::old('name') }}}" />
 				{{ $errors->first('name', '<span class="help-inline">:message</span>') }}
             </div>
 		</div>
@@ -27,13 +27,15 @@
 		权限:
 		<br>
         <div class="form-group">
+        	<select id="permission_select">
             @foreach ($permissions as $permission)
-           
+           	<option value=""> </option>
                 <input class="control-label" type="hidden" id="permissions[{{{ $permission['id'] }}}]" name="permissions[{{{ $permission['id'] }}}]" value="0" />
                 <input class="form-control" type="checkbox" id="permissions[{{{ $permission['id'] }}}]" name="permissions[{{{ $permission['id'] }}}]" value="1"{{{ (isset($permission['checked']) && $permission['checked'] == true ? ' checked="checked"' : '')}}} />
                 {{{ $permission['display_name'] }}}
             
             @endforeach
+            </select>
         </div>
 
 		<!-- Form Actions -->
@@ -134,16 +136,16 @@
 			alert(1);
 		}
 
-		function updateRole(id){
+		function editRole(id){
 			// set data
 			$.ajax({
 				type: "GET",
-				url: "roles/data/" + id,  // current page
+				url: "/manage/role/" + id,  // current page
 				contentType: "application/json; charset=utf-8",
 				dataType: "json",
 				success: function (result) {
-					$("#name").text = result;
-					$("#name").text = result;
+					$("#group_name").val(result['name']);
+					//$("#name").text = result;
 				}
 			});
 		}
