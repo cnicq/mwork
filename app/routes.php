@@ -55,6 +55,8 @@ Route::group(array('before' => 'auth'), function(){
     Route::get('/manage/team', 'TeamController@getManage');
     Route::get('/manage/role', 'AdminRolesController@getCreate');
     Route::get('/manage/role/{id}', 'AdminRolesController@getData');
+    Route::post('/manage/role', 'AdminRolesController@postEdit');
+   // Route::post('/manage/role/create', 'AdminRolesController@postCreate');
 
     // manage - post
     Route::post('/manage/company', 'CompanyController@postCreate');

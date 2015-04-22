@@ -8,9 +8,10 @@
 			权限组设置
 		</h3>
 	</div>
-	<form id="form_role" class="form-horizontal" method="post" action="" autocomplete="off">
+	<form id="form_role" class="form-horizontal"  method="POST" autocomplete="off">
 		<!-- CSRF Token -->
 		<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
+		<input type="hidden" id="role_id" value="" />
 		<!-- ./ csrf token -->
 		<!-- Name -->
 		<div class="form-group {{{ $errors->has('name') ? 'error' : '' }}}">
@@ -27,28 +28,22 @@
 		权限:
 		<br>
         <div class="form-group">
-        	<select id="permission_select">
-            @foreach ($permissions as $permission)
-           	<option value=""> </option>
-                <input class="control-label" type="hidden" id="permissions[{{{ $permission['id'] }}}]" name="permissions[{{{ $permission['id'] }}}]" value="0" />
-                <input class="form-control" type="checkbox" id="permissions[{{{ $permission['id'] }}}]" name="permissions[{{{ $permission['id'] }}}]" value="1"{{{ (isset($permission['checked']) && $permission['checked'] == true ? ' checked="checked"' : '')}}} />
-                {{{ $permission['display_name'] }}}
-            
-            @endforeach
-            </select>
+        	@foreach ($permissions as $permission)
+					<label>
+						<input type="hidden" id="permissions[{{{ $permission['id'] }}}]" name="permissions[{{{ $permission['id'] }}}]" value="0" />
+						<input type="checkbox" id="permissions[{{{ $permission['id'] }}}]" name="permissions[{{{ $permission['id'] }}}]" value="1"{{{ (isset($permission['checked']) && $permission['checked'] == true ? ' checked="checked"' : '')}}} />
+						{{{ $permission['display_name'] }}}
+					</label>
+					@endforeach
+
         </div>
 
 		<!-- Form Actions -->
 		<div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-            	@if ($mode == 'edit')
-            	<input type="hidden" name="mode" value="edit" />
-				<button type="submit" class="btn btn-success" id="role_update">修改</button>
-				@endif
-				@if ($mode == 'create')
-				<input type="hidden" name="mode" value="create" />
-				<button type="submit" class="btn btn-success" id="role_create">创建</button>
-				@endif
+            	<input type="hidden" name="role_mode_val" value="create" />
+				<button type="submit" class="btn btn-success" id="role_create" >创建</button>
+				<button type="submit" class="btn btn-success" id="role_edit" disabled="disabled">修改</button>
             </div>
 		</div>
 		<!-- ./ form actions -->
@@ -90,7 +85,38 @@
 		        "bServerSide": true,
 		        "sAjaxSource": "{{ URL::to('roles/datas') }}"
 			});
+
+			$("#form_role").bind("submit", function(){
+				ajaxSubmit(this, function(result){
+					// result
+				});
+			});
 		});
+
+		function ajaxSubmit(fm, cb){
+			$.ajax({
+				type:fm.method,
+				url:fm.url,
+				data:getFormJson(fm), // form data
+				success: cb
+			});
+		}
+
+		function getFormJson(frm) {
+		    var o = {};
+		    var a = $(frm).serializeArray();
+		    $.each(a, function () {
+		        if (o[this.name] !== undefined) {
+		            if (!o[this.name].push) {
+		                o[this.name] = [o[this.name]];
+		            }
+		            o[this.name].push(this.value || '');
+		        } else {
+		            o[this.name] = this.value || '';
+		        }
+		    });
+		    return o;
+		}
 
 		function deleteRole(id){
 			if(confirm('确定要删除用户权限组吗（无法恢复）?')){
@@ -106,35 +132,6 @@
 			}
 		}
 
-		$("#role_update").click(function(){
-			$.ajax({
-				type: "POST",
-				url: "roles/update/" + id,  // current page
-				data:$('#form_role').serialize(), // form data
-				contentType: "application/json; charset=utf-8",
-				dataType: "json",
-				success: function (result) {
-					RefreshRoleTable(result);
-				}
-			});
-		});
-
-		$("#role_create").click(function(){
-			$.ajax({
-				type: "POST",
-				url: "roles/create/",  // current page
-				data:$('#form_role').serialize(), // form data
-				contentType: "application/json; charset=utf-8",
-				dataType: "json",
-				success: function (result) {
-					RefreshRoleTable(result);
-				}
-			});
-		});
-
-		function RefreshRoleTable(data){
-			alert(1);
-		}
 
 		function editRole(id){
 			// set data
@@ -145,7 +142,15 @@
 				dataType: "json",
 				success: function (result) {
 					$("#group_name").val(result['name']);
-					//$("#name").text = result;
+					$("#role_edit").removeAttr("disabled");
+					$("#role_create").attr("disabled","disabled");
+					$("#role_mode_val").val("edit");
+					$("#role_id").val(id);
+					$("input").prop("checked", false);
+					for(var i = 0; i < result['permissionIds'].length; ++i){
+						$("#permissions[" + result['permissionIds'][i] + "]").prop('checked',true);
+					}
+					$.uniform.update();
 				}
 			});
 		}

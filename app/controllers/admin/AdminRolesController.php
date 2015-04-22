@@ -81,7 +81,6 @@ class AdminRolesController extends AdminController {
      */
     public function postCreate()
     {
-
         // Declare the rules for the form validation
         $rules = array(
             'name' => 'required'
@@ -105,18 +104,18 @@ class AdminRolesController extends AdminController {
             if ($this->role->id)
             {
                 // Redirect to the new role page
-                return Redirect::to('admin/roles/' . $this->role->id . '/edit')->with('success', Lang::get('admin/roles/messages.create.success'));
+                return Redirect::to('admin/roles/index' . $this->role->id . '/edit')->with('success', Lang::get('admin/roles/messages.create.success'));
             }
 
             // Redirect to the new role page
-            return Redirect::to('admin/roles/create')->with('error', Lang::get('admin/roles/messages.create.error'));
+            return Redirect::to('admin/roles/index')->with('error', Lang::get('admin/roles/messages.create.error'));
 
             // Redirect to the role create page
-            return Redirect::to('admin/roles/create')->withInput()->with('error', Lang::get('admin/roles/messages.' . $error));
+            return Redirect::to('admin/roles/index')->withInput()->with('error', Lang::get('admin/roles/messages.' . $error));
         }
 
         // Form validation failed
-        return Redirect::to('admin/roles/create')->withInput()->withErrors($validator);
+        return Redirect::to('admin/roles/index')->withInput()->withErrors($validator);
     }
 
     /**
@@ -163,7 +162,7 @@ class AdminRolesController extends AdminController {
      * @param $role
      * @return Response
      */
-    public function postEdit($role)
+    public function postEdit()
     {
         // Declare the rules for the form validation
         $rules = array(
@@ -176,6 +175,15 @@ class AdminRolesController extends AdminController {
         // Check if the form validates with success
         if ($validator->passes())
         {
+            $mode = Input::get('role_mode_val');
+            return Input::get('permissions');
+            if($mode == 'create'){
+
+            }
+            else if($mode == 'edit'){
+
+            }
+
             // Update the role data
             $role->name        = Input::get('name');
             $role->perms()->sync($this->permission->preparePermissionsForSave(Input::get('permissions')));
@@ -259,5 +267,4 @@ class AdminRolesController extends AdminController {
          $mode = "edit";
          return Response::json(compact('name', 'permissionIds', 'mode'));
     }
-
 }
