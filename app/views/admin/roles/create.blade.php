@@ -8,7 +8,7 @@
 			权限组设置
 		</h3>
 	</div>
-	<form id="form_role" class="form-horizontal"  method="POST" autocomplete="off">
+	<form id="form_role" class="form-horizontal" method="POST" autocomplete="off">
 		<!-- CSRF Token -->
 		<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
 		<input type="hidden" id="role_id" value="" />
@@ -41,7 +41,7 @@
 		<!-- Form Actions -->
 		<div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-            	<input type="hidden" name="role_mode_val" value="create" />
+            	<input type="hidden" id="role_mode_val" value="create" />
 				<button type="submit" class="btn btn-success" id="role_create" >创建</button>
 				<button type="submit" class="btn btn-success" id="role_edit" disabled="disabled">修改</button>
             </div>
@@ -87,16 +87,36 @@
 			});
 
 			$("#form_role").bind("submit", function(){
-				ajaxSubmit(this, function(result){
+				if($("#role_mode_val").val() == 'edit'){
+					ajaxSubmitEdit(this, function(result){
 					// result
-				});
+					});
+				}
+				else{
+					ajaxSubmitCreate(this, function(result){
+					// result
+					});
+				}
 			});
+
 		});
 
-		function ajaxSubmit(fm, cb){
+		function ajaxSubmitEdit(fm, cb){
+			urlTo = "{{ URL::route('post_role_edit', ['%roleId%']) }}";
+			urlTo = urlTo.replace('%roleId%', $("#role_id").val());
 			$.ajax({
 				type:fm.method,
-				url:fm.url,
+				url:rulTo,//"/manage/role/edit/" + $("#role_id").val(),
+				data:getFormJson(fm), // form data
+				success: cb
+			});
+		}
+
+		function ajaxSubmitCreate(fm, cb){
+			urlTo = "{{ URL::route('post_role_create')}}";
+			$.ajax({
+				type:fm.method,
+				url:rulTo,//"/manage/role/create",
 				data:getFormJson(fm), // form data
 				success: cb
 			});

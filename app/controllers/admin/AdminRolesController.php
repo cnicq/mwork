@@ -162,7 +162,7 @@ class AdminRolesController extends AdminController {
      * @param $role
      * @return Response
      */
-    public function postEdit()
+    public function postEdit($role)
     {
         // Declare the rules for the form validation
         $rules = array(
@@ -178,10 +178,7 @@ class AdminRolesController extends AdminController {
             $mode = Input::get('role_mode_val');
             return Input::get('permissions');
             if($mode == 'create'){
-
-            }
-            else if($mode == 'edit'){
-
+                return $this->postCreate($role);
             }
 
             // Update the role data
