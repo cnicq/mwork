@@ -81,6 +81,7 @@ class AdminRolesController extends AdminController {
      */
     public function postCreate()
     {
+        return 123;
         // Declare the rules for the form validation
         $rules = array(
             'name' => 'required'
@@ -227,14 +228,15 @@ class AdminRolesController extends AdminController {
      */
     public function postDelete($role)
     {
-            // Was the role deleted?
-            if($role->delete()) {
-                // Redirect to the role management page
-                return $this->getData();
-            }
+        return 123;
+        // Was the role deleted?
+        if($role->delete()) {
+            // Redirect to the role management page
+            return $this->getData();
+        }
 
-            // There was a problem deleting the role
-            return Redirect::to('admin/roles')->with('error', Lang::get('admin/roles/messages.delete.error'));
+        // There was a problem deleting the role
+        return Redirect::to('admin/roles')->with('error', Lang::get('admin/roles/messages.delete.error'));
     }
 
     /**

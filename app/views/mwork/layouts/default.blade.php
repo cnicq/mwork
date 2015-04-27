@@ -748,7 +748,7 @@
 
 	<!-- BEGIN CORE PLUGINS -->
 
-	<script src="/bootstrap2/media/js/jquery-1.10.1.min.js" type="text/javascript"></script>
+	<script src="/bootstrap2/media/js/jquery-1.10.1.js" type="text/javascript"></script>
 
 	<script src="/bootstrap2/media/js/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
 

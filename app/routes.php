@@ -55,8 +55,13 @@ Route::group(array('before' => 'auth'), function(){
     Route::get('/manage/team', 'TeamController@getManage');
     Route::get('/manage/role', 'AdminRolesController@getCreate');
     Route::get('/manage/role/{id}', 'AdminRolesController@getData');
-    Route::post('/manage/role/edit/{role}', array('as'=>'post_role_edit', 'uses'=>'AdminRolesController@postEdit'));
-    Route::post('/manage/role/create', array('as'=>'post_role_create', 'uses'=>'AdminRolesController@postCreate'));
+    Route::post('/manage/role/edit/{role}', 
+        array('as'=>'post_role_edit', 'uses'=>'AdminRolesController@postEdit'));
+    Route::post('/manage/role/create', 
+        array('as'=>'post_role_create', 'uses'=>'AdminRolesController@postCreate'));
+    Route::post('/manage/role/delete/{role}', 
+        array('as'=>'post_role_delete', 'uses'=>'AdminRolesController@postDelete'));
+
     // manage - post
     Route::post('/manage/company', 'CompanyController@postCreate');
 

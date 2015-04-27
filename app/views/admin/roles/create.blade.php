@@ -87,14 +87,18 @@
 			});
 
 			$("#form_role").bind("submit", function(){
+				event.preventDefault();
+
 				if($("#role_mode_val").val() == 'edit'){
 					ajaxSubmitEdit(this, function(result){
 					// result
+					alert(1);
 					});
 				}
 				else{
 					ajaxSubmitCreate(this, function(result){
 					// result
+					alert(1);
 					});
 				}
 			});
@@ -106,7 +110,7 @@
 			urlTo = urlTo.replace('%roleId%', $("#role_id").val());
 			$.ajax({
 				type:fm.method,
-				url:rulTo,//"/manage/role/edit/" + $("#role_id").val(),
+				url:urlTo,//"/manage/role/edit/" + $("#role_id").val(),
 				data:getFormJson(fm), // form data
 				success: cb
 			});
@@ -116,7 +120,7 @@
 			urlTo = "{{ URL::route('post_role_create')}}";
 			$.ajax({
 				type:fm.method,
-				url:rulTo,//"/manage/role/create",
+				url:urlTo,//"/manage/role/create",
 				data:getFormJson(fm), // form data
 				success: cb
 			});
@@ -142,7 +146,7 @@
 			if(confirm('确定要删除用户权限组吗（无法恢复）?')){
 				$.ajax({
 					type: "POST",
-					url: "roles/delete/" + id,  // current page
+					url: "/manage/role/delete/" + id,  // current page
 					contentType: "application/json; charset=utf-8",
 					dataType: "json",
 					success: function (result) {
