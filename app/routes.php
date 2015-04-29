@@ -59,8 +59,8 @@ Route::group(array('before' => 'auth'), function(){
         array('as'=>'post_role_edit', 'uses'=>'AdminRolesController@postEdit'));
     Route::post('/manage/role/create', 
         array('as'=>'post_role_create', 'uses'=>'AdminRolesController@postCreate'));
-    Route::post('/manage/role/delete/{role}', 
-        array('as'=>'post_role_delete', 'uses'=>'AdminRolesController@postDelete'));
+    Route::get('/manage/role/delete/{role}', 'AdminRolesController@getDelete');
+    //Route::get('/manage/role/delete', 'AdminRolesController@getDelete');
 
     // manage - post
     Route::post('/manage/company', 'CompanyController@postCreate');

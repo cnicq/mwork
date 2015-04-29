@@ -212,11 +212,14 @@ class AdminRolesController extends AdminController {
      */
     public function getDelete($role)
     {
-        // Title
-        $title = Lang::get('admin/roles/title.role_delete');
+        // Was the role deleted?
+        if($role->delete()) {
+            // Redirect to the role management page
+            return $this->getData();
+        }
 
-        // Show the page
-        return View::make('admin/roles/delete', compact('role', 'title'));
+        // There was a problem deleting the role
+        return $this->getData();
     }
 
     /**
@@ -228,7 +231,7 @@ class AdminRolesController extends AdminController {
      */
     public function postDelete($role)
     {
-        return 123;
+        return View::make('admin/roles/delete', compact('role', 'title'));
         // Was the role deleted?
         if($role->delete()) {
             // Redirect to the role management page
@@ -236,7 +239,7 @@ class AdminRolesController extends AdminController {
         }
 
         // There was a problem deleting the role
-        return Redirect::to('admin/roles')->with('error', Lang::get('admin/roles/messages.delete.error'));
+        return $this->getData();
     }
 
     /**
