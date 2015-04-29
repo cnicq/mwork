@@ -1,5 +1,7 @@
 <?php
 
+use Prophecy\Util\StringUtil;
+
 class AdminRolesController extends AdminController {
 
 
@@ -21,6 +23,8 @@ class AdminRolesController extends AdminController {
      */
     protected $permission;
 
+    private $util;
+
     /**
      * Inject the models.
      * @param User $user
@@ -33,6 +37,7 @@ class AdminRolesController extends AdminController {
         $this->user = $user;
         $this->role = $role;
         $this->permission = $permission;
+        $this->util  = new StringUtil();
     }
 
     /**
@@ -81,7 +86,6 @@ class AdminRolesController extends AdminController {
      */
     public function postCreate()
     {
-        return 123;
         // Declare the rules for the form validation
         $rules = array(
             'name' => 'required'
@@ -98,25 +102,27 @@ class AdminRolesController extends AdminController {
             $this->role->name = $inputs['name'];
             $this->role->save();
 
+            $ps = $this->permission->preparePermissionsForSave($inputs['permissions']);
+            return  Config::get('entrust::permission');
             // Save permissions
-            $this->role->perms()->sync($this->permission->preparePermissionsForSave($inputs['permissions']));
-
+            $this->role->perms()->sync($ps);
+            
             // Was the role created?
             if ($this->role->id)
             {
                 // Redirect to the new role page
-                return Redirect::to('admin/roles/index' . $this->role->id . '/edit')->with('success', Lang::get('admin/roles/messages.create.success'));
+                return "done";
             }
 
             // Redirect to the new role page
-            return Redirect::to('admin/roles/index')->with('error', Lang::get('admin/roles/messages.create.error'));
+            return Lang::get('admin/roles/messages.create.error');
 
             // Redirect to the role create page
-            return Redirect::to('admin/roles/index')->withInput()->with('error', Lang::get('admin/roles/messages.' . $error));
+            return Lang::get('admin/roles/messages.' . $error);
         }
 
         // Form validation failed
-        return Redirect::to('admin/roles/index')->withInput()->withErrors($validator);
+        return "error";
     }
 
     /**
@@ -215,11 +221,11 @@ class AdminRolesController extends AdminController {
         // Was the role deleted?
         if($role->delete()) {
             // Redirect to the role management page
-            return $this->getData();
+            return "";
         }
 
         // There was a problem deleting the role
-        return $this->getData();
+        return "";
     }
 
     /**

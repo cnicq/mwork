@@ -29,12 +29,12 @@
 		<br>
         <div class="form-group">
         	@foreach ($permissions as $permission)
-					<label>
-						<input type="hidden" id="permissions[{{{ $permission['id'] }}}]" name="permissions[{{{ $permission['id'] }}}]" value="0" />
-						<input type="checkbox" id="permissions[{{{ $permission['id'] }}}]" name="permissions[{{{ $permission['id'] }}}]" value="1"{{{ (isset($permission['checked']) && $permission['checked'] == true ? ' checked="checked"' : '')}}} />
-						{{{ $permission['display_name'] }}}
-					</label>
-					@endforeach
+			<label>
+				
+				<input type="checkbox" id="permissions[{{{ $permission['id'] }}}]" name="permissions[{{{ $permission['id'] }}}]" value="1"{{{ (isset($permission['checked']) && $permission['checked'] == true ? ' checked="checked"' : '')}}} />
+				{{{ $permission['display_name'] }}}
+			</label>
+			@endforeach
 
         </div>
 
@@ -88,27 +88,34 @@
 
 			$("#form_role").bind("submit", function(){
 				event.preventDefault();
-
 				if($("#role_mode_val").val() == 'edit'){
 					ajaxSubmitEdit(this, function(result){
 					// result
-					RefreshDataTable();
+					RefreshDataTable(result);
 					});
 				}
 				else{
 					ajaxSubmitCreate(this, function(result){
 					// result
-					RefreshDataTable();
+					RefreshDataTable(result);
 					});
 				}
 			});
 
 		});
 
-		function RefreshDataTable()
+		function RefreshDataTable(result)
 		{
-			alert(1);
+			alert(result);
 			oTable.DataTable().ajax.reload();
+
+			// clear form
+			$("#role_create").removeAttr("disabled");
+			$("#role_edit").attr("disabled","disabled");
+			$(".checked").removeClass("checked");
+			$("#form_role").each(function() {   
+			  this.reset(); 
+			});   
 		}
 
 		function ajaxSubmitEdit(fm, cb){
@@ -151,7 +158,6 @@
 		function deleteRole(id){
 			if(confirm('确定要删除用户权限组吗（无法恢复）?')){
 				event.preventDefault();
-
 				$.ajax({
 					type: "GET",
 					url: "/manage/role/delete/" + id,  // current page
@@ -163,7 +169,6 @@
 				});
 			}
 		}
-
 
 		function editRole(id){
 			// set data
