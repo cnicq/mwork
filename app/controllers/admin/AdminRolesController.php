@@ -100,10 +100,9 @@ class AdminRolesController extends AdminController {
             $inputs = Input::except('csrf_token');
 
             $this->role->name = $inputs['name'];
-            $this->role->save();
-
+            $r = $this->role->save();
             $ps = $this->permission->preparePermissionsForSave($inputs['permissions']);
-            return  Config::get('entrust::permission');
+            
             // Save permissions
             $this->role->perms()->sync($ps);
             

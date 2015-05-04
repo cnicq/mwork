@@ -106,8 +106,7 @@
 
 		function RefreshDataTable(result)
 		{
-			alert(result);
-			oTable.DataTable().ajax.reload();
+			oTable._fnAjaxUpdate();
 
 			// clear form
 			$("#role_create").removeAttr("disabled");
