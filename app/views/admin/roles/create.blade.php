@@ -30,7 +30,7 @@
         <div class="form-group">
         	@foreach ($permissions as $permission)
 			<label>
-				<input type="checkbox" id="permissions[{{{ $permission['id'] }}}]" name="permissions[{{{ $permission['id'] }}}]" value="1"{{{ (isset($permission['checked']) && $permission['checked'] == true ? ' checked="checked"' : '')}}} />
+				<input type="checkbox" id="permissions[{{{ $permission['id'] }}}]" name="permissions[{{{ $permission['id'] }}}]" value="{{{ $permission['id'] }}}"{{{ (isset($permission['checked']) && $permission['checked'] == true ? ' checked="checked"' : '')}}} />
 				{{{ $permission['display_name'] }}}
 			</label>
 			@endforeach
@@ -181,14 +181,16 @@
 					$("#role_create").attr("disabled","disabled");
 					$("#role_mode_val").val("edit");
 					$("#role_id").val(id);
-					$("input[type='checkbox']").prop("checked", false);
-					for(var i = 0; i < result['permissionIds'].length; ++i){
-						//$("#permissions[" + result['permissionIds'][i] + "]").click()
-						var p = $("#permissions[" + result['permissionIds'][i] + "]");
-						p.prop("disabled", true);
-						alert(($("#permissions[89]").prop('type')));
-						$.uniform.update(p);
-					}
+					$("input").prop("checked", false);
+					$("#form_role input:checkbox").each(function(){
+						var val = $(this).val();
+						for(i = 0; i < result['permissionIds'].length; ++i){
+							if(result['permissionIds'][i] == val){
+								$(this).prop('checked',true);
+								break;
+							}
+						}
+					});
 					$.uniform.update();
 				}
 			});
