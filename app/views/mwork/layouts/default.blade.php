@@ -803,7 +803,6 @@
 		});
 
 	</script>
-	@yield('menuScripts')
 	@yield('scripts')
 
 </body>

@@ -59,7 +59,6 @@ class AdminUsersController extends AdminController {
      */
     public function getCreate()
     {
-
         // All roles
         $roles = $this->role->all();
 
@@ -80,8 +79,8 @@ class AdminUsersController extends AdminController {
 
 		// Show the page
 		return View::make('mwork/manage/user', 
-            compact('users', 'roles', 'permissions', 'selectedRoles', 'selectedPermissions', 'title', 'mode'),
-            $this->Titles('id_manage', 'id_manage_user'));
+            compact('roles', 'permissions', 'selectedRoles', 'selectedPermissions', 'title', 'mode'),
+            $this->Titles());
     }
 
     /**
@@ -103,9 +102,8 @@ class AdminUsersController extends AdminController {
         // Generate a random confirmation code
         $this->user->confirmation_code = md5(uniqid(mt_rand(), true));
 
-        $this->user->confirmed = true;
         if (Input::get('confirm')) {
-            //$this->user->confirmed = Input::get('confirm');
+            $this->user->confirmed = Input::get('confirm');
         }
 
         // Permissions are currently tied to roles. Can't do this yet.
@@ -113,7 +111,7 @@ class AdminUsersController extends AdminController {
 
         // Save if valid. Password field will be hashed before save
         $this->user->save();
-        return $this->user->id;
+
         if ( $this->user->id ) {
             // Save roles. Handles updating.
             $this->user->saveRoles(Input::get( 'roles' ));
@@ -133,13 +131,14 @@ class AdminUsersController extends AdminController {
             }
 
             // Redirect to the new user page
-            return Lang::get('admin/users/messages.create.success');
+            return Redirect::to('admin/users/' . $this->user->id . '/edit')
+                ->with('success', Lang::get('admin/users/messages.create.success'));
 
         } else {
 
             // Get validation errors (see Ardent package)
             $error = $this->user->errors()->all();
-            return json_encode($error);
+
             return Redirect::to('admin/users/create')
                 ->withInput(Input::except('password'))
                 ->with( 'error', $error );
@@ -220,7 +219,8 @@ class AdminUsersController extends AdminController {
             // Save roles. Handles updating.
             $user->saveRoles(Input::get( 'roles' ));
         } else {
-            return Lang::get('admin/users/messages.edit.error');
+            return Redirect::to('admin/users/' . $user->id . '/edit')
+                ->with('error', Lang::get('admin/users/messages.edit.error'));
         }
 
         // Get validation errors (see Ardent package)
@@ -228,10 +228,25 @@ class AdminUsersController extends AdminController {
 
         if(empty($error)) {
             // Redirect to the new user page
-            return Lang::get('admin/users/messages.edit.success');
+            return Redirect::to('admin/users/' . $user->id . '/edit')->with('success', Lang::get('admin/users/messages.edit.success'));
         } else {
             return Redirect::to('admin/users/' . $user->id . '/edit')->with('error', Lang::get('admin/users/messages.edit.error'));
         }
+    }
+
+    /**
+     * Remove user page.
+     *
+     * @param $user
+     * @return Response
+     */
+    public function getDelete($user)
+    {
+        // Title
+        $title = Lang::get('admin/users/title.user_delete');
+
+        // Show the page
+        return View::make('admin/users/delete', compact('user', 'title'));
     }
 
     /**
@@ -240,14 +255,13 @@ class AdminUsersController extends AdminController {
      * @param $user
      * @return Response
      */
-    public function getDelete($user)
+    public function postDelete($user)
     {
-        return "TODO";
-
         // Check if we are not trying to delete ourselves
         if ($user->id === Confide::user()->id)
         {
-            return Lang::get('admin/users/messages.delete.impossible');
+            // Redirect to the user management page
+            return Redirect::to('admin/users')->with('error', Lang::get('admin/users/messages.delete.impossible'));
         }
 
         AssignedRoles::where('user_id', $user->id)->delete();
@@ -260,7 +274,7 @@ class AdminUsersController extends AdminController {
         if ( empty($user) )
         {
             // TODO needs to delete all of that user's content
-            return Lang::get('admin/users/messages.delete.success');
+            return Redirect::to('admin/users')->with('success', Lang::get('admin/users/messages.delete.success'));
         }
         else
         {
@@ -269,19 +283,11 @@ class AdminUsersController extends AdminController {
         }
     }
 
-    public function getData($id)
-    {
-         $userData = DB::table('users')->where('id','=',$id)->first();
-         $mode = "edit";
-         return Response::json(compact('userData', 'mode'));
-    }
-
     /**
      * Show a list of all the users formatted for Datatables.
      *
      * @return Datatables JSON
      */
-    /*
     public function getData()
     {
         $users = User::leftjoin('assigned_roles', 'assigned_roles.user_id', '=', 'users.id')
@@ -289,6 +295,7 @@ class AdminUsersController extends AdminController {
                     ->select(array('users.id', 'users.username','users.email', 'roles.name as rolename', 'users.confirmed', 'users.created_at'));
 
         return Datatables::of($users)
+        // ->edit_column('created_at','{{{ Carbon::now()->diffForHumans(Carbon::createFromFormat(\'Y-m-d H\', $test)) }}}')
 
         ->edit_column('confirmed','@if($confirmed)
                             Yes
@@ -302,24 +309,6 @@ class AdminUsersController extends AdminController {
                                     <a href="{{{ URL::to(\'admin/users/\' . $id . \'/delete\' ) }}}" class="iframe btn btn-xs btn-danger">{{{ Lang::get(\'button.delete\') }}}</a>
                                 @endif
             ')
-
-        ->remove_column('id')
-
-        ->make();
-    }
-    */
-
-     /**
-     * Show a list of all the roles formatted for Datatables.
-     *
-     * @return Datatables JSON
-     */
-    public function getDatas()
-    {
-        $users = User::select(array('users.username', 'users.id'));
-
-        return Datatables::of($users)
-        ->add_column('actions', '<a href="#" onClick="editUser({{{$id}}})" class="iframe btn btn-xs btn-default">{{{ Lang::get(\'button.edit\') }}}</a>')
 
         ->remove_column('id')
 

@@ -1,6 +1,6 @@
 <?php
 
-class HUserController extends AdminUsersController {
+class HUserController extends ParentController {
     /**
      * Huser Model
      * @var Huser
@@ -22,7 +22,7 @@ class HUserController extends AdminUsersController {
     public function getManage()
     {
         $this->bigTitle = 'id_manage';
-        $this->smallTitle = 'id_manage_user';
+        $this->smallTitle = 'id_manage_huser';
 
         $husers = $this->huser->orderBy('updated_at', 'DESC')->paginate(20);
 
@@ -40,7 +40,7 @@ class HUserController extends AdminUsersController {
         $husers = $this->huser->orderBy('updated_at', 'DESC')->paginate(20);
 
         // Show the page
-        return View::make('mwork/user/list', compact('husers'), $this->Titles('id_manage', 'id_manage_user'));
+        return View::make('mwork/user/list', compact('husers'), $this->Titles());
     }
 
 	/**
