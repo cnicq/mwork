@@ -31,7 +31,7 @@
         	@foreach ($permissions as $permission)
 			<label>
 				
-				<input type="checkbox" id="permissions[{{{ $permission['id'] }}}]" name="permissions[{{{ $permission['id'] }}}]" value="1"{{{ (isset($permission['checked']) && $permission['checked'] == true ? ' checked="checked"' : '')}}} />
+				<input type="checkbox" id="permissions[{{{ $permission['id'] }}}]" name="permissions[{{{ $permission['id'] }}}]" value="{{{ $permission['id'] }}}"{{{ (isset($permission['checked']) && $permission['checked'] == true ? ' checked="checked"' : '')}}} />
 				{{{ $permission['display_name'] }}}
 			</label>
 			@endforeach
@@ -183,9 +183,15 @@
 					$("#role_mode_val").val("edit");
 					$("#role_id").val(id);
 					$("input").prop("checked", false);
-					for(var i = 0; i < result['permissionIds'].length; ++i){
-						$("#permissions[" + result['permissionIds'][i] + "]").prop('checked',true);
-					}
+					$("#form_role input:checkbox").each(function(){
+						var val = $(this).val();
+						for(i = 0; i < result['permissionIds'].length; ++i){
+							if(result['permissionIds'][i] == val){
+								$(this).prop('checked',true);
+								break;
+							}
+						}
+					});
 					$.uniform.update();
 				}
 			});
