@@ -75,7 +75,8 @@ class AdminRolesController extends AdminController {
         $mode = "create";
         
         // Show the page
-        return View::make('admin/roles/create', compact('permissions', 'selectedPermissions', 'title', 'mode'),
+        return View::make('admin/roles/create', 
+            compact('permissions', 'selectedPermissions', 'title', 'mode'),
             $this->Titles('id_manage', 'id_manage_role'));
     }
 
@@ -220,11 +221,11 @@ class AdminRolesController extends AdminController {
         // Was the role deleted?
         if($role->delete()) {
             // Redirect to the role management page
-            return "";
+            return "done";
         }
 
         // There was a problem deleting the role
-        return "";
+        return "error";
     }
 
     /**

@@ -39,6 +39,7 @@ Route::get('user/logout', 'UserController@getLogout');
 Route::group(array('before' => 'auth'), function(){
 
     Route::controller('roles', 'AdminRolesController');
+    Route::controller('users', 'AdminUsersController');
 
     // desktop
     Route::get('/', 'DesktopController@getIndex');
@@ -51,8 +52,19 @@ Route::group(array('before' => 'auth'), function(){
     // manage - get
     Route::get('/manage/company', 'CompanyController@getManage');
     Route::get('/manage/position', 'PositionController@getManage');
-    Route::get('/manage/user', 'AdminUsersController@getCreate');
+    
     Route::get('/manage/team', 'TeamController@getManage');
+
+    // user
+    Route::get('/manage/user', 'AdminUsersController@getCreate');
+    Route::get('/manage/user/{id}', 'AdminUsersController@getData');
+    Route::post('/manage/user/edit/{user}', 
+        array('as'=>'post_user_edit', 'uses'=>'AdminUsersController@postEdit'));
+    Route::post('/manage/user/create', 
+        array('as'=>'post_user_create', 'uses'=>'AdminUsersController@postCreate'));
+    Route::get('/manage/user/delete/{user}', 'AdminUsersController@getDelete');
+
+    // role
     Route::get('/manage/role', 'AdminRolesController@getCreate');
     Route::get('/manage/role/{id}', 'AdminRolesController@getData');
     Route::post('/manage/role/edit/{role}', 
@@ -60,7 +72,6 @@ Route::group(array('before' => 'auth'), function(){
     Route::post('/manage/role/create', 
         array('as'=>'post_role_create', 'uses'=>'AdminRolesController@postCreate'));
     Route::get('/manage/role/delete/{role}', 'AdminRolesController@getDelete');
-    //Route::get('/manage/role/delete', 'AdminRolesController@getDelete');
 
     // manage - post
     Route::post('/manage/company', 'CompanyController@postCreate');

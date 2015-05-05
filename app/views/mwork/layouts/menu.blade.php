@@ -269,7 +269,7 @@
 		<!-- END SIDEBAR MENU -->
 
 	</div>
-	@section('scripts')
+	@section('menuScripts')
 	<script type="text/javascript">
 		$(document).ready(function() {
 				$("#{{$BigTitle}}").addClass("active");
