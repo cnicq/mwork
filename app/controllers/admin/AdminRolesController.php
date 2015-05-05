@@ -171,6 +171,7 @@ class AdminRolesController extends AdminController {
      */
     public function postEdit($role)
     {
+
         // Declare the rules for the form validation
         $rules = array(
             'name' => 'required'
@@ -183,7 +184,7 @@ class AdminRolesController extends AdminController {
         if ($validator->passes())
         {
             $mode = Input::get('role_mode_val');
-            return Input::get('permissions');
+
             if($mode == 'create'){
                 return $this->postCreate($role);
             }
@@ -191,22 +192,23 @@ class AdminRolesController extends AdminController {
             // Update the role data
             $role->name        = Input::get('name');
             $role->perms()->sync($this->permission->preparePermissionsForSave(Input::get('permissions')));
-
+            //return Input::get('permissions');
             // Was the role updated?
             if ($role->save())
             {
                 // Redirect to the role page
-                return Redirect::to('admin/roles/' . $role->id . '/edit')->with('success', Lang::get('admin/roles/messages.update.success'));
+                return Lang::get('admin/roles/messages.update.success');
             }
             else
             {
+
                 // Redirect to the role page
-                return Redirect::to('admin/roles/' . $role->id . '/edit')->with('error', Lang::get('admin/roles/messages.update.error'));
+                return Lang::get('admin/roles/messages.update.error');
             }
         }
 
         // Form validation failed
-        return Redirect::to('admin/roles/' . $role->id . '/edit')->withInput()->withErrors($validator);
+        return json_encode($validator);
     }
 
 

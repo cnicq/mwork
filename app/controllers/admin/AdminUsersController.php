@@ -168,14 +168,13 @@ class AdminUsersController extends AdminController {
         if ( $user->id )
         {
             $roles = $this->role->all();
-            $permissions = $this->permission->all();
 
             // Title
         	$title = Lang::get('admin/users/title.user_update');
         	// mode
         	$mode = 'edit';
 
-        	return View::make('admin/users/create_edit', compact('user', 'roles', 'permissions', 'title', 'mode'));
+        	return View::make('admin/users/create_edit', compact('user', 'roles', 'title', 'mode'));
         }
         else
         {
@@ -271,9 +270,10 @@ class AdminUsersController extends AdminController {
 
     public function getData($id)
     {
-         $userData = DB::table('users')->where('id','=',$id)->first();
-         $mode = "edit";
-         return Response::json(compact('userData', 'mode'));
+        $user = User::find($id);
+        $userData = DB::table('users')->where('id','=',$id)->first();
+        $roles = $user->currentRoleIds();
+        return compact('userData', 'roles');
     }
 
     /**

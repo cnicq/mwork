@@ -162,6 +162,7 @@
 				<input type="hidden" id="user_mode_val" value="create" />
 				<button type="submit" class="btn btn-success" id="user_create" >创建</button>
 				<button type="submit" class="btn btn-success" id="user_edit" disabled="disabled">修改</button>
+				<button class="btn btn-success" id="user_cancel" >取消</button>
 			</div>
 		</form>
 
@@ -217,6 +218,10 @@
 					RefreshDataTable(result);
 					});
 				}
+			});
+
+			$("#user_cancel").bind("click", function(){
+				RefreshDataTable();
 			});
 
 		});
@@ -295,8 +300,10 @@
 				contentType: "application/json; charset=utf-8",
 				dataType: "json",
 				success: function (result) {
+
 					var userData = result['userData'];
-					alert(userData['confirmed']);
+					alert(userData['id']);
+					alert(result['roles']);
 					$("#user_id").val(userData['id']);
 					$("#username").val(userData['username']);
 					$("#email").val(userData['email']);
@@ -305,6 +312,16 @@
 					$("#user_create").attr("disabled","disabled");
 					$("#user_mode_val").val("edit");
 					$("#confirm").val(userData['confirmed']);
+
+					$("#roles").removeAttr("selected");
+					$("#roles").each(function(){
+						for(var i = 0; i < result['roles'].length; ++i){
+							if($(this).val() == result['roles']){
+								$(this).prop("selected")
+							}
+						}
+						
+					})
 					$.uniform.update();
 				}
 			});
