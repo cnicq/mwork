@@ -143,7 +143,7 @@
 				<div class="span6 ">
 						<label class="control-label">用户权限组</label>
 						<div class="controls">
-			                <select class="form-control" name="roles[]" id="roles[]" multiple>
+			                <select class="form-control" name="roles[]" id="rolesId" multiple>
 			                        @foreach ($roles as $role)
 										@if ($mode == 'create')
 			                        		<option value="{{{ $role->id }}}"{{{ ( in_array($role->id, $selectedRoles) ? ' selected="selected"' : '') }}}>{{{ $role->name }}}</option>
@@ -300,10 +300,8 @@
 				contentType: "application/json; charset=utf-8",
 				dataType: "json",
 				success: function (result) {
-
 					var userData = result['userData'];
-					alert(userData['id']);
-					alert(result['roles']);
+					
 					$("#user_id").val(userData['id']);
 					$("#username").val(userData['username']);
 					$("#email").val(userData['email']);
@@ -313,14 +311,13 @@
 					$("#user_mode_val").val("edit");
 					$("#confirm").val(userData['confirmed']);
 
-					$("#roles").removeAttr("selected");
-					$("#roles").each(function(){
+					$("#rolesId option").removeAttr("selected");
+					$("#rolesId option").each(function(){
 						for(var i = 0; i < result['roles'].length; ++i){
-							if($(this).val() == result['roles']){
-								$(this).prop("selected")
+							if($(this).val() == result['roles'][i]){
+								$(this).prop("selected", "selected")
 							}
 						}
-						
 					})
 					$.uniform.update();
 				}
