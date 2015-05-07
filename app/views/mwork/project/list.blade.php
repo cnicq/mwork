@@ -2,7 +2,46 @@
 
 @section('content')
   <!-- BEGIN PAGE CONTENT-->
+<div class="tabbable tabbable-custom tabbable-full-width">
 
+							<ul class="nav nav-tabs">
+
+								<li class="active"><a href="#tab_1_1" data-toggle="tab">我的项目</a></li>
+
+								<li class=""><a href="#tab_1_2" data-toggle="tab">详细</a></li>
+
+								<li class=""><a href="#tab_1_3" data-toggle="tab">新增</a></li>
+
+							</ul>
+
+							<div class="tab-content">
+
+								<div class="tab-pane row-fluid" id="tab_1_1">
+
+									
+
+									
+								</div>	
+
+								<!--end tab-pane-->
+
+								<div class="tab-pane profile-classic row-fluid" id="tab_1_2">
+
+									
+
+								</div>
+
+								<!--tab_1_2-->
+
+								<div class="tab-pane row-fluid profile-account" id="tab_1_3">
+
+									
+
+								</div>
+
+								<!--end tab-pane-->
+
+						</div>
 				<div class="row-fluid">
 
 					<div class="span12">
