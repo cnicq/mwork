@@ -82,7 +82,7 @@ Route::group(array('before' => 'auth'), function(){
 
     // project
     Route::get('/project', 'ProjectController@getIndex');
-    Route::get('/project/manage', 'ProjectController@getIndex');
+    Route::get('/project/manage', 'ProjectController@getCreate');
     
     // team
     Route::get('/team', 'TeamController@getIndex');

@@ -42,7 +42,7 @@ class ProjectController extends ParentController {
         $title = Lang::get('mwork/project.add');
 
         // Show the page
-        return View::make('mwork/manage/project', compact('title'));
+        return View::make('mwork/project/add', $this->Titles('id_project', 'id_project_manage'));
 	}
 
 	/**
