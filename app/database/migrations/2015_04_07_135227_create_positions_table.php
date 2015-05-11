@@ -31,6 +31,6 @@ class CreatePositionsTable extends Migration {
      */
     public function down()
     {
-		Schema::drop('companys');
+		Schema::drop('positions');
     }
 }

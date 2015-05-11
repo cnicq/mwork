@@ -78,7 +78,7 @@ Route::group(array('before' => 'auth'), function(){
 
     // client
     Route::get('/client', 'ClientController@getIndex');
-    Route::get('/client/manage', 'ClientController@getIndex');
+    Route::get('/client/manage', 'ClientController@getCreate');
 
     // project
     Route::get('/project', 'ProjectController@getIndex');
@@ -86,7 +86,8 @@ Route::group(array('before' => 'auth'), function(){
     
     // team
     Route::get('/team', 'TeamController@getIndex');
-    Route::get('/team/manage', 'TeamController@getIndex');
+    Route::get('/team/manage', 'TeamController@getCreate');
+    Route::post('/team/manage', 'TeamController@postCreate');
 
 
 });

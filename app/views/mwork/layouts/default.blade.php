@@ -50,6 +50,8 @@
 
 	<link rel="shortcut icon" href="/bootstrap2/media/image/favicon.ico" />
 
+	@yield('csss')
+
 </head>
 
 <!-- END HEAD -->
@@ -666,34 +668,7 @@
 
 						<!-- BEGIN PAGE TITLE & BREADCRUMB-->
 
-						<h3 class="page-title">
-
-							{{$BigTitle}} <small>{{$SmallTitle}}</small>
-
-						</h3>
-
-						<ul class="breadcrumb">
-
-							<li>
-
-								<i class="icon-home"></i>
-
-								<a href="/">桌面</a> 
-
-								<i class="icon-angle-right"></i>
-
-							</li>
-
-							@if ($Menu1 != '')
-							<li><a href="/bootstrap2/{{$Menu1}}">{{$Menu1}}</a>
-								<i class="icon-angle-right"></i>
-							</li>
-							@endif
-							@if($Menu2 != '')
-
-							<li><a href="/bootstrap2/{{$Menu2}}">{{$Menu2}}</a></li>
-							@endif
-						</ul>
+					
 
 						<!-- END PAGE TITLE & BREADCRUMB-->
 

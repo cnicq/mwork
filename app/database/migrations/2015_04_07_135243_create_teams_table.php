@@ -16,10 +16,10 @@ class CreateTeamsTable extends Migration {
         {
             $table->engine = 'InnoDB';
             $table->increments('id')->unsigned();
-            $table->integer('owner_id')->unsigned()->index();
             $table->string('name');
-            $table->string('create_at');
-            $table->string('update_at');
+            $table->string('lead_name');
+            $table->string('member_names');
+            $table->timestamps('create_at');
         });
 	}
 

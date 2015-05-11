@@ -17,6 +17,7 @@ class CreateProjectsTable extends Migration {
         {
             $table->engine = 'InnoDB';
             $table->increments('id')->unsigned();
+            $table->integer('team_id')->unsigned()->index();
             $table->integer('client_id')->unsigned()->index();
             $table->integer('owner_id')->unsigned()->index();
             $table->string('title');

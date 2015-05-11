@@ -152,7 +152,7 @@
 
 					</li>
 
-					<li id="id_client_my_manage">
+					<li id="id_client_manage">
 
 						<a href="/client/manage">
 
@@ -204,7 +204,7 @@
 
 					</li>
 
-					<li id="id_team_manange">
+					<li id="id_team_manage">
 
 						<a href="/team/manage">
 

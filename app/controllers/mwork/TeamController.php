@@ -21,10 +21,11 @@ class TeamController extends ParentController {
 
     public function getManage()
     {
-        $teams = $this->team->orderBy('updated_at', 'DESC')->paginate(20);
+        $teams = $this->team->paginate(20);
+       
 
         // Show the page
-        return View::make('mwork/manage/team', compact('teams'), $this->Titles('id_manage', 'id_manage_team'));
+        return View::make('mwork/manage/team', compact('teams'), $this->Titles('id_team', 'id_team_my'));
     }
     /**
      * Show a list of all the teams.
@@ -33,10 +34,11 @@ class TeamController extends ParentController {
      */
     public function getIndex()
     {
-        $teams = $this->team->orderBy('updated_at', 'DESC')->paginate(20);
+        $teams = $this->team->paginate(20);
+
 
         // Show the page
-        return View::make('mwork/team/list', compact('teams'), $this->Titles());
+        return View::make('mwork/team/list', compact('teams'), $this->Titles('id_team', 'id_team_my'));
     }
 
 	/**
@@ -48,9 +50,11 @@ class TeamController extends ParentController {
 	{
         // Title
         $title = Lang::get('mwork/team.add');
+        $users = User::select("username", "id")->get();
+
 
         // Show the page
-        return View::make('mwork/team', compact('title'));
+        return View::make('mwork/team/add', compact('users'), $this->Titles('id_team', 'id_team_manage'));
 	}
 
 	/**
@@ -62,8 +66,8 @@ class TeamController extends ParentController {
 	{
         // Declare the rules for the form validation
         $rules = array(
-            'englishname'   => 'required|min:2',
-            'chinesename' => 'required|min:2'
+            'team_name'   => 'required|min:1',
+            'lead_name'     => 'required|min:1'
         );
 
         // Validate the inputs
@@ -72,31 +76,27 @@ class TeamController extends ParentController {
         // Check if the form validates with success
         if ($validator->passes())
         {
-            // Create a new blog team
-            $user = Auth::user();
+
+            $team = new Team;
 
             // Update the blog team data
-            $this->team->chinesename            = Input::get('chinesename');
-            $this->team->content                = Input::get('englishname');
-            $this->team->englishname            = Input::get('city');
-            $this->team->location               = Input::get('location');
-            $this->team->industry               = Input::get('industry');
-            $this->team->contract               = Input::get('contract');
-            $this->team->user_id                = $user->id;
+            $team->name            = Input::get('team_name');
+            $team->lead_name       = Input::get('lead_name');
+            $team->member_names    = Input::get('member_names');
 
             // Was the blog team created?
-            if($this->team->save())
+            if($team->save())
             {
                 // Redirect to the new blog team page
-                return Redirect::to('manage/blogs/' . $this->team->id . '/edit')->with('success', Lang::get('manage/blogs/messages.create.success'));
+                return $this->getIndex();
             }
 
             // Redirect to the blog team create page
-            return Redirect::to('manage/blogs/create')->with('error', Lang::get('manage/blogs/messages.create.error'));
+            return Redirect::to('mwork/team/add')->with('error', Lang::get('manage/blogs/messages.create.error'));
         }
 
         // Form validation failed
-        return Redirect::to('manage/blogs/create')->withInput()->withErrors($validator);
+        return Redirect::to('mwork/team/add')->withInput()->withErrors($validator);
 	}
 
     /**

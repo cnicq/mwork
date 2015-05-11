@@ -25,10 +25,10 @@ class ClientController extends ParentController {
      */
     public function getIndex()
     {
-        $clients = $this->client->orderBy('updated_at', 'DESC')->paginate(20);
+        $clients = $this->client->paginate(20);
 
         // Show the page
-        return View::make('mwork/client', compact('clients'), $this->Titles());
+        return View::make('mwork/client/list', compact('clients'), $this->Titles('id_client', 'id_client_my'));
     }
 
 	/**
@@ -42,7 +42,7 @@ class ClientController extends ParentController {
         $title = Lang::get('mwork/client.add');
 
         // Show the page
-        return View::make('mwork/client', compact('title'));
+        return View::make('mwork/client/add', compact('clients'), $this->Titles('id_client', 'id_client_manage'));
 	}
 
 	/**
