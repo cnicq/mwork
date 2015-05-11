@@ -58,12 +58,11 @@
 
 											@foreach ($teams as $team)
 											<tr>
-												<td>{{$team['name']}}</td>
-												<td>{{$team['lead_name']}}</td>
-												<td>{{$team['member_names']}}</td>
-												<td>{{$team['project_count']}}</td>
+												<td>{{$team->name}}</td>
+												<td>{{$team->lead_name}}</td>
+												<td>{{$team->member_names}}</td>
+												<td>{{$team->project_count}}</td>
 												<td>详细</td>
-												
 											</tr>
 
 											@endforeach

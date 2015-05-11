@@ -34,8 +34,10 @@ class TeamController extends ParentController {
      */
     public function getIndex()
     {
-        $teams = $this->team->paginate(20);
-
+        //$teams = $this->team->paginate(20);
+        $teams = DB::table('teams')->leftjoin('projects', 'teams.id', '=', 'projects.team_id')
+                    ->select('teams.id', 'teams.name', 'teams.lead_name', 'teams.member_names', DB::raw('COUN1T(projects.id) as project_count'))
+                    ->paginate(10, array(''));
 
         // Show the page
         return View::make('mwork/team/list', compact('teams'), $this->Titles('id_team', 'id_team_my'));
