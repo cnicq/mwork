@@ -26,10 +26,17 @@ class ProjectController extends ParentController {
      */
     public function getIndex()
     {
-        $projects = $this->project->orderBy('created_at', 'DESC')->paginate(20);
+        //$clients = $this->client->paginate(20);
+
+        $projects = Project::leftjoin("clients", 'clients.id', '=', 'projects.client_id')
+                ->select('projects.*', 'clients.*')
+                ->paginate(20);
+
+        $positions = DB::table('datavalues')->where('type', '=', 'position')->get();
+        $citys = DB::table('datavalues')->where('type', '=', 'city')->get();
         
         // Show the page
-        return View::make('mwork/project/list', compact('projects'), $this->Titles('id_project', 'id_project_my'));
+        return View::make('mwork/project/list', compact('projects', 'positions', 'citys'), $this->Titles('id_project', 'id_project_my'));
     }
 
 	/**
@@ -39,11 +46,14 @@ class ProjectController extends ParentController {
 	 */
 	public function getCreate()
 	{
-        // Title
-        $title = Lang::get('mwork/project.add');
-
+        $clients = Client::leftjoin('companys', 'clients.company_id', '=', 'companys.id')
+            ->select('clients.*', 'companys.*')->get();
+       
+        $positions = DB::table('datavalues')->where('type', '=', 'position')->get();
+        $citys = DB::table('datavalues')->where('type', '=', 'city')->get();
+        $users = DB::table('users')->get();
         // Show the page
-        return View::make('mwork/project/add', $this->Titles('id_project', 'id_project_manage'));
+        return View::make('mwork/project/add', compact('clients', 'positions', 'citys', 'users'), $this->Titles('id_project', 'id_project_manage'));
 	}
 
 	/**
@@ -90,17 +100,6 @@ class ProjectController extends ParentController {
 
         // Form validation failed
         return Redirect::to('manage/blogs/create')->withInput()->withErrors($validator);
-	}
-
-    /**
-     * Display the specified resource.
-     *
-     * @param $project
-     * @return Response
-     */
-	public function getShow($project)
-	{
-        // redirect to the frontend
 	}
 
     /**

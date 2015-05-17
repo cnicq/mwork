@@ -88,9 +88,9 @@
 
 									</tbody>
 								</table>
-				<ul class="pagination">
-				{{$candidates->links()}}
-    			</ul>
+								<ul class="pagination">
+								{{$candidates->links()}}
+				    			</ul>
 							</div>
 							
 	

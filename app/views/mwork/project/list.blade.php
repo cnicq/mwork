@@ -102,113 +102,36 @@
 						<div class="tab-pane row-fluid" id="tab_1_2">
 							<div class="tabbable tabbable-custom">
 
-											<ul class="nav nav-tabs">
+								<ul class="nav nav-tabs">
 
-												<li class="active"><a href="#subtab_1_1" data-toggle="tab">项目需求</a></li>
+									<li class="active"><a href="#subtab_1_1" data-toggle="tab">项目需求</a></li>
 
-												<li class=""><a href="#subtab_1_2" data-toggle="tab">项目进度</a></li>
+									<li class=""><a href="#subtab_1_2" data-toggle="tab">项目进度</a></li>
 
-												<li class=""><a href="#subtab_1_3" data-toggle="tab">项目后期</a></li>
+									<li class=""><a href="#subtab_1_3" data-toggle="tab">项目后期</a></li>
 
-											</ul>
+								</ul>
 
-											<div class="tab-content">
+								<div class="tab-content">
 
-												<div class="tab-pane active" id="subtab_1_1">
+									<div class="tab-pane active" id="subtab_1_1">
 
-												<div class="portlet ">
-												<div class="portlet-title">
+									<div class="portlet ">
+									<div class="portlet-title">
 
-												<div class="caption"><i class="icon-cogs"></i>项目信息(优先级)</div>
+									<div class="caption"><i class="icon-cogs"></i>项目信息(优先级)</div>
 
-												<div class="tools">
+									<div class="tools">
 
-													<a href="javascript:;" class="collapse"></a>
+										<a href="javascript:;" class="collapse"></a>
 
-												</div>
+									</div>
 
-												</div>
+									</div>
 
-										<div class="portlet-body">
+									<div class="portlet-body">
 										
-										<!--row-fluid start -->		
-										<div class="row-fluid">
-
-										<div class="span6">
-											<div class="well">	
-											<h3>公司信息</h3>
-											<address>
-												<strong>公司名</strong><br>
-												<a href="#">上海麦聘企业管理咨询有限公司</a>
-											</address>
-											<address>
-												<strong>地址</strong><br>
-												<a href="#">上海浦东</a>
-											</address>
-											<address>
-												<strong>电话</strong><br>
-												<a href="#">021-123-68888888</a>
-											</address>
-											</div>
-										</div>
-										<div class="span6">
-											<!--well start -->
-											<div class="well">	
-												<h3>联系人</h3>
-
-												<div class="row-fluid">
-													<div class="span5">
-														<address>
-														<strong>中文名</strong><br>
-														<a href="#">徐艳</a>
-													</address>
-													</div>
-
-													<div class="span5">
-
-													<address>
-														<strong>英文名</strong><br>
-														<a href="#">Joyce</a>
-													</address></div>
-												</div>
-
-												<div class="row-fluid">
-
-													<div class="span5">
-														<address>
-														<strong>移动电话</strong><br>
-														388888888
-													</address>
-													</div>
-													<div class="span5">
-
-													<address>
-														<strong>固定电话</strong><br>
-														-
-													</address>
-													</div>
-												</div>
-										
-												<div class="row-fluid">
-
-													<div class="span5">
-														<address>
-														<strong>QQ</strong><br>
-														9780000
-													</address>
-													</div>
-													<div class="span5">
-
-													<address>
-														<strong>邮箱</strong><br>
-														8777@qq.com
-													</address>
-													</div>
-												</div>
-
-											</div>
-											<!--well end -->
-										</div>
+										@include('mwork.manage.company_detail')
 
 										<div class="row-fluid">
 										<div class="span6">
@@ -283,8 +206,7 @@
 									</div>		
 									</div>
 								</div>
-							</div>
-							</div>
+							
 												<div class="portlet ">
 													<div class="portlet-title">
 
@@ -321,6 +243,7 @@
 													</div>
 													
 											</div>
+										</div>
 
 												<div class="tab-pane" id="subtab_1_2">
 

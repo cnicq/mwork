@@ -12,13 +12,15 @@
 
 	<meta charset="utf-8" />
 
-	<title>Metronic | Data Tables - Advanced Tables</title>
+	<title>Mapping</title>
 
 	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
 	<meta content="" name="description" />
 
 	<meta content="" name="author" />
+
+	@yield('metas')
 
 	<!-- BEGIN GLOBAL MANDATORY STYLES -->
 
@@ -774,7 +776,7 @@
 		   App.init();
 
 		   TableAdvanced.init();
-		   TableEditable.init();
+		   //TableEditable.init();
 		});
 
 	</script>

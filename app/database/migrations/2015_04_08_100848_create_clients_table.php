@@ -16,9 +16,16 @@ class CreateClientsTable extends Migration {
         {
             $table->engine = 'InnoDB';
             $table->increments('id')->unsigned();
-            $table->integer('company_id')->unsigned()->index();
-            $table->string('hr_contact');
-            $table->string('created_at');
+            $table->integer('company_id')->unsigned();
+            $table->integer('owner_user_id')->unsigned();
+            $table->integer('BD_user_id')->unsigned();
+             // contract info
+            $table->timestamp('contract_start');
+            $table->timestamp('contract_end');
+            $table->string('contract_filePath');
+
+            $table->timestamps();
+
         });
 	}
 

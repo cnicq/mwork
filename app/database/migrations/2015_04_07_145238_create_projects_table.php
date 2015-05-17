@@ -27,8 +27,7 @@ class CreateProjectsTable extends Migration {
             $table->integer('job_id');
             $table->string('brief');
             $table->string('search_strategy');
-            $table->string('created_at');
-            $table->string('update_at');
+            $table->timestamps();
         });
 	}
 

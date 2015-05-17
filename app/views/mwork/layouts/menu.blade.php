@@ -152,13 +152,6 @@
 
 					</li>
 
-					<li id="id_client_manage">
-
-						<a href="/client/manage">
-
-						客户管理</a>
-
-					</li>
 
 				</ul>
 
@@ -236,14 +229,6 @@
 						公司</a>
 
 					</li>
-
-					<li id="id_manage_position">
-
-						<a href="/manage/position">
-
-						职位</a>
-
-					</li>
 					<li id="id_manage_user">
 						<a href="/manage/user">
 
@@ -255,6 +240,13 @@
 						<a href="/manage/role">
 
 						权限</a>
+
+					</li>
+
+					<li id="id_manage_datavalue">
+						<a href="/manage/datavalue">
+
+						数据</a>
 
 					</li>
 					

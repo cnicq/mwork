@@ -1,7 +1,5 @@
 @extends('mwork.layouts.default')
-@section('csss')
-<link rel="stylesheet" type="text/css" href="/bootstrap2/media/css/datepicker.css" />
-@stop
+
 @section('content')
 <div class="tabbable tabbable-custom tabbable-full-width">
 				<ul class="nav nav-tabs">
@@ -20,14 +18,15 @@
 
 							<div class="portlet-body">
 
-								<table class="table table-striped table-bordered table-hover table-full-width" id="sample_1">
+								<table class="table table-striped table-bordered table-hover table-full-width" id="sample_3">
 									<thead>
 										<tr>
 											<th>中文名</th>
 											<th>英文名</th>
 											<th>城市</th>
 											<th>详细地址</th>
-											<th>行业</th>
+											<th></th>
+											<th style="display:none">详细</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -38,7 +37,9 @@
 											<td>{{$company['englishname']}}</td>
 											<td>{{$company['city']}}</td>
 											<td>{{$company['location']}}</td>
-											<td>{{$company['industry']}}</td>
+											<td>修改 | <a href="/manage/company/delete/{{$company['id']}}">删除</a></td>
+											<td style="display:none;">@include('mwork.manage.company_detail')</td>
+											
 										</tr>
 
 										@endforeach
@@ -60,7 +61,8 @@
 
 							<!-- BEGIN FORM : company manange-->
 
-							<form action="#" class="form-horizontal">
+							<form action="#" method="POST" class="form-horizontal">
+								<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
 								<h3 class="form-section">公司信息</h3>
 
 								<div class="row-fluid">
@@ -73,7 +75,7 @@
 
 											<div class="controls">
 
-												<input type="text" class="m-wrap span12" placeholder="阿里巴巴">
+												<input type="text" class="m-wrap span12" placeholder="" name='chinesename' id='chinesename'>
 
 											</div>
 
@@ -91,7 +93,7 @@
 
 											<div class="controls">
 
-												<input type="text" class="m-wrap span12" placeholder="Alibaba">
+												<input type="text" class="m-wrap span12" placeholder="" name='englishname' id='englishname'>
 
 											</div>
 
@@ -114,15 +116,11 @@
 											<label class="control-label">所在城市</label>
 
 											<div class="controls">
-
-												<select class="m-wrap span12">
-
-													<option value="1">上海</option>
-													<option value="2">北京</option>
-													<option value="3">广州</option>
-													<option value="4">深圳</option>
-
-												</select>
+											<select class="m-wrap span12" id='city' name='city'>
+												@foreach ($citys as $city)
+													<option value='{{$city->name}}'> {{$city->text}} </option>
+												@endforeach
+											</select>
 
 											</div>
 
@@ -140,7 +138,7 @@
 
 											<div class="controls">
 
-												<input type="text" class="m-wrap span12" placeholder="上海...">
+												<input type="text" class="m-wrap span12" placeholder="" id='location' name='location'>
 
 											</div>
 
@@ -164,14 +162,11 @@
 
 											<div class="controls">
 
-												<select class="m-wrap span12">
-
-													<option value="1">互联网/移动互联网</option>
-													<option value="2">游戏</option>
-													<option value="3">传统IT</option>
-													<option value="4">金融互联网</option>
-
-												</select>
+												<select class="m-wrap span12" id='industry' name='industry'>
+												@foreach ($industrys as $industry)
+													<option value='{{$industry->name}}'> {{$industry->text}} </option>
+												@endforeach
+											</select>
 											</div>
 
 										</div>
@@ -196,7 +191,7 @@
 
 											<div class="controls">
 
-												<input type="text" class="m-wrap span12" placeholder="张三">
+												<input type="text" class="m-wrap span12" placeholder=""  id='linkman_chinesename' name='linkman_chinesename'>
 
 											</div>
 
@@ -214,7 +209,7 @@
 
 											<div class="controls">
 
-												<input type="text" class="m-wrap span12" placeholder="Justin Zhang">
+												<input type="text" class="m-wrap span12" placeholder=""  id='linkman_englishname' name='linkman_englishname'>
 
 											</div>
 
@@ -238,7 +233,7 @@
 
 											<div class="controls">
 
-												<input type="text" class="m-wrap span12" placeholder="">
+												<input type="text" class="m-wrap span12" placeholder=""  id='linkman_mobile' name='linkman_mobile'>
 
 											</div>
 
@@ -256,7 +251,7 @@
 
 											<div class="controls">
 
-												<input type="text" class="m-wrap span12" placeholder="">
+												<input type="text" class="m-wrap span12" placeholder=""  id='linkman_tel' name='linkman_tel'>
 
 											</div>
 
@@ -280,7 +275,7 @@
 
 											<div class="controls">
 
-												<div class="input-prepend"><span class="add-on">@</span><input class="m-wrap " type="text" placeholder="Email Address">
+												<div class="input-prepend"><span class="add-on">@</span><input class="m-wrap span12" type="text" placeholder=""  id='linkman_email' name='linkman_email'>
 
 												</div>
 
@@ -299,7 +294,7 @@
 
 											<div class="controls">
 
-												<input type="text" class="m-wrap span12" placeholder="">
+												<input type="text" class="m-wrap span12" placeholder=""  id='linkman_QQ' name='linkman_QQ'>
 											</div>
 
 										</div>
@@ -312,73 +307,7 @@
 
 								<!--/row-->
 
-								<h3 class="form-section">合同信息</h3>
-
-								<div class="row-fluid">
-
-									<div class="span6 ">
-
-										<div class="control-group">
-
-											<label class="control-label">开始时间</label>
-
-											<div class="controls">
-
-												<input type="text" class="m-wrap span12" placeholder="张三">
-
-											</div>
-
-										</div>
-
-									</div>
-
-									<!--/span-->
-
-									<div class="span6 ">
-
-										<div class="control-group">
-
-											<label class="control-label">截止时间</label>
-
-											<div class="controls">
-
-												<input type="text" class="m-wrap span12" placeholder="Justin Zhang">
-
-											</div>
-
-										</div>
-
-									</div>
-
-									<!--/span-->
-
-								</div>
-
-								<!--/row-->
-
-								<div class="row-fluid">
-
-									<div class="span6 ">
-
-										<div class="control-group">
-
-											<label class="control-label">附件上传</label>
-
-											<div class="controls">
-
-												<input type="text" class="m-wrap span12" placeholder="">
-
-											</div>
-
-										</div>
-
-									</div>
-
-
-
-								</div>
-
-								<!--/row-->        
+								      
 
 								<div class="form-actions">
 
@@ -398,22 +327,3 @@
 	</div>
 @stop
 
-@section("scripts")
-
-<script type="text/javascript" src="/bootstrap2/media/js/form-components.js"></script>
-<script type="text/javascript" src="/bootstrap2/media/js/bootstrap-datepicker.js"></script>
-
-<script>
-
-		jQuery(document).ready(function() {       
-
-		   if (jQuery().datepicker) {
-            $('.date-picker').datepicker({
-                rtl : App.isRTL()
-            });
-        }
-
-		});
-
-	</script>
-@stop

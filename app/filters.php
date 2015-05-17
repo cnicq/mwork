@@ -92,9 +92,10 @@ Entrust::routeNeedsPermission( 'admin/roles*', 'manage_roles', Redirect::to('/ad
 */
 Route::filter('csrf', function()
 {
-	if (Session::getToken() !== Input::get('csrf_token') &&  Session::getToken() !== Input::get('_token'))
+	$token = Request::ajax() ? Request::header('x-csrf-token') : Input::get('_token');
+
+	if (Session::getToken() !== Input::get('csrf_token') && Session::getToken() !== $token )
 	{
-		echo Session::getToken();
 		throw new Illuminate\Session\TokenMismatchException;
 	}
 });

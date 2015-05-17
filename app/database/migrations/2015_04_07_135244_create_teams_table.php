@@ -19,7 +19,7 @@ class CreateTeamsTable extends Migration {
             $table->string('name');
             $table->string('lead_name');
             $table->string('member_names');
-            $table->timestamps('create_at');
+            $table->timestamps();
         });
 	}
 

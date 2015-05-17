@@ -25,10 +25,20 @@ class ClientController extends ParentController {
      */
     public function getIndex()
     {
-        $clients = $this->client->paginate(20);
+        //$clients = $this->client->paginate(20);
+
+        $clients = Client::leftjoin("companys", 'clients.company_id', '=', 'companys.id')
+                ->leftjoin('users as u1', 'u1.id', '=', 'clients.owner_user_id')
+                ->leftjoin('users as u2', 'u2.id', '=', 'clients.BD_user_id')
+                ->select('clients.*', 'companys.*', 'u1.username as owner_username', 'u2.username as BD_username')
+                ->paginate(20);
+
+        $companys = DB::table('companys')->select('id', 'chinesename', 'linkman_chinesename', 'linkman_englishname')->get();
+        $users = DB::table('users')->select('id', 'username')->get();
+
 
         // Show the page
-        return View::make('mwork/client/list', compact('clients'), $this->Titles('id_client', 'id_client_my'));
+        return View::make('mwork/client/list', compact('clients', 'companys', 'users'), $this->Titles('id_client', 'id_client_my'));
     }
 
 	/**
@@ -40,9 +50,12 @@ class ClientController extends ParentController {
 	{
         // Title
         $title = Lang::get('mwork/client.add');
+        $companys = DB::table('companys')->select('id', 'chinesename')->get();
+        $users = DB::table('users')->select('id', 'username')->get();
+        
 
         // Show the page
-        return View::make('mwork/client/add', compact('clients'), $this->Titles('id_client', 'id_client_manage'));
+        return View::make('mwork/client/add', compact('companys', 'users'), $this->Titles('id_client', 'id_client_manage'));
 	}
 
 	/**
@@ -54,8 +67,7 @@ class ClientController extends ParentController {
 	{
         // Declare the rules for the form validation
         $rules = array(
-            'englishname'   => 'required|min:2',
-            'chinesename' => 'required|min:2'
+            'company'   => 'required|min:1'
         );
 
         // Validate the inputs
@@ -64,17 +76,14 @@ class ClientController extends ParentController {
         // Check if the form validates with success
         if ($validator->passes())
         {
-            // Create a new blog client
-            $user = Auth::user();
 
             // Update the blog client data
-            $this->client->chinesename            = Input::get('chinesename');
-            $this->client->content                = Input::get('englishname');
-            $this->client->englishname            = Input::get('city');
-            $this->client->location               = Input::get('location');
-            $this->client->industry               = Input::get('industry');
-            $this->client->contract               = Input::get('contract');
-            $this->client->user_id                = $user->id;
+            $this->client->company_id            = Input::get('company');
+            $this->client->owner_user_id         = Input::get('owner_user_id');
+            $this->client->BD_user_id            = Input::get('DB_user_id');
+            $this->client->contract_start        = new DateTime(Input::get('contract_start'));
+            $this->client->contract_end          = new DateTime(Input::get('contract_end'));
+            $this->client->contract_filePath     = Input::get('contract_filePath');
 
             // Was the blog client created?
             if($this->client->save())

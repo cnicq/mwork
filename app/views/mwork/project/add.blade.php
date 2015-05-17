@@ -30,17 +30,16 @@
 
 									<div class="control-group">
 
-										<label class="control-label">公司</label>
+										<label class="control-label">客户</label>
 
 										<div class="controls">
 
-											<select class="span6 m-wrap" data-placeholder="Choose a Category" tabindex="1">
-
-												<option value="">请选择...</option>
-
-												<option value="Category 1">xxx</option>
-
-											</select>
+											<select class="m-wrap span6" id='client' name='client'>
+												<option> 请选择...</option>
+												@foreach ($clients as $client)
+													<option value='{{$client->id}}' linkman='{{$client->linkman_chinesename}}|{{$client->linkman_englishname}}'> {{$client->chinesename}} </option>
+												@endforeach
+												</select>
 
 												<button class="btn purple">新增 <i class="m-icon-swapright m-icon-white"></i></button>
 												
@@ -54,16 +53,10 @@
 
 										<div class="controls">
 
-											<select class="span6 m-wrap" data-placeholder="Choose a Category" tabindex="1">
-
-												<option value="">请选择...</option>
-
-												<option value="Category 1">xxx</option>
-
-											</select>
-
-												<button class="btn purple">新增 <i class="m-icon-swapright m-icon-white"></i></button>
 											
+											<input type="text"  placeholder="" disabled name='linkman' id='linkman'>
+
+							详细
 
 										</div>
 
@@ -74,26 +67,12 @@
 										<label class="control-label">职位名称(Title)</label>
 
 										<div class="controls">
-
-											<select class="span6 m-wrap" data-placeholder="Choose a Category" tabindex="1">
-
-												<option value="1" selected>1</option>
-
-												<option value="2" >2</option>
-
-												<option value="3" >3</option>
-
-												<option value="4" >4</option>
-
-												<option value="5" >5</option>
-
-												<option value="6" >6</option>
-
-												<option value="7" >7</option>
-
-												<option value="8" >8</option>
-
-											</select>
+											<select class="m-wrap span6" id='client' name='client'>
+												<option> 请选择...</option>
+												@foreach ($positions as $position)
+													<option value='{{$position->name}}'> {{$position->text}} </option>
+												@endforeach
+												</select>
 											<button class="btn purple">新增 <i class="m-icon-swapright m-icon-white"></i></button>
 										</div>
 									</div>
@@ -126,33 +105,27 @@
 									</div>
 									
 									<div class="control-group">
-										<label class="control-label">工作地点</label>
+										<label class="control-label">工作城市</label>
 
 										<div class="controls">
 
-											<select class="span2 m-wrap" data-placeholder="Choose a Category" tabindex="1">
+						
+											<select class="m-wrap span6" id='client' name='client'>
+												<option> 请选择...</option>
+												@foreach ($citys as $city)
+													<option value='{{$city->name}}'> {{$city->text}} </option>
+												@endforeach
+												</select>
 
-												<option value="">选择国家...</option>
 
-												<option value="Category 1">xxx</option>
+										</div>
+									</div>
+									<div class="control-group">
+										<label class="control-label">具体地址</label>
 
-											</select>
+										<div class="controls">
 
-											<select class="span2 m-wrap" data-placeholder="Choose a Category" tabindex="1">
-
-												<option value="">选择城市...</option>
-
-												<option value="Category 1">xxx</option>
-
-											</select>
-
-											<select class="span2 m-wrap" data-placeholder="Choose a Category" tabindex="1">
-
-												<option value="">选择区域...</option>
-
-												<option value="Category 1">xxx</option>
-
-											</select>
+												<input class="m-wrap span6" type="text">
 
 										</div>
 									</div>
@@ -217,19 +190,13 @@
 
 										<div class="controls">
 
-											<select class="span6 m-wrap" data-placeholder="Choose a Category" tabindex="1">
+											<select class="m-wrap span6" id='client' name='client'>
+												<option> 请选择...</option>
+												@foreach ($users as $user)
+													<option value='{{$user->id}}'> {{$user->username}} </option>
+												@endforeach
+												</select>
 
-												<option value="">请选择...</option>
-
-												<option value="Category 1">Category 1</option>
-
-												<option value="Category 2">Category 2</option>
-
-												<option value="Category 3">Category 5</option>
-
-												<option value="Category 4">Category 4</option>
-
-											</select>
 											<button class="btn purple">新增 <i class="m-icon-swapright m-icon-white"></i></button>
 										</div>
 									</div>
@@ -280,6 +247,12 @@
             $('.date-picker').datepicker({
                 rtl : App.isRTL()
             });
+
+            $('#client').change(function(){
+        	$('#linkman').val($("#client").find("option:selected").attr('linkman'));
+        	});
+
+	
         }
 
 		});

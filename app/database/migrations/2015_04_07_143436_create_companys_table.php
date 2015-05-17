@@ -15,14 +15,23 @@ class CreateCompanysTable extends Migration {
         {
             $table->engine = 'InnoDB';
             $table->increments('id');
+            // basic info
 			$table->string('chinesename');
             $table->string('englishname');
-            $table->integer('city');
+            $table->string('province'); //date value table
+            $table->string('city');   // date value table
             $table->string('location');
-            $table->integer('industry');
-            $table->integer('contract');
-            $table->integer('user_id')->unsigned()->index();
-            $table->timestamps('updated_at');
+            $table->string('industry'); // date value table
+            // contact info
+            $table->string('linkman_chinesename');
+            $table->string('linkman_englishname');
+            $table->string('linkman_mobile');
+            $table->string('linkman_tel');
+            $table->string('linkman_email');
+            $table->string('linkman_QQ');
+
+            $table->timestamps();
+           
         });
 
     }

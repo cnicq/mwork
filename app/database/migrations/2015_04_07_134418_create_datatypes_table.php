@@ -16,35 +16,15 @@ class CreateDatatypesTable extends Migration {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('name');
-            $table->string('class');
-            $table->string('text');
-            $table->string('value');
-        });
-
-		 // Creates the dataclass table
-        Schema::create('dataclass', function($table)
-        {
-            $table->engine = 'InnoDB';
-            $table->increments('id');
-            $table->string('class');
-            $table->string('value');
-        });
-
-
-		// Creates the locations table
-        Schema::create('locations', function($table)
-        {
-            $table->engine = 'InnoDB';
-            $table->increments('id');
-			$table->string('name');
             $table->string('text');
         });
 
-        // Creates the candidate tags
-        Schema::create('tags', function($table)
+		 // Creates the datavalues table
+        Schema::create('datavalues', function($table)
         {
             $table->engine = 'InnoDB';
             $table->increments('id');
+            $table->string('type'); // data type name
             $table->string('name');
             $table->string('text');
         });
@@ -58,9 +38,7 @@ class CreateDatatypesTable extends Migration {
      */
     public function down()
     {
-        Schema::drop('tags');
         Schema::drop('datatypes');
-		Schema::drop('dataclass');
-		Schema::drop('locations');
+		Schema::drop('datavalues');
     }
 }

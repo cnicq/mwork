@@ -51,9 +51,12 @@ Route::group(array('before' => 'auth'), function(){
 
     // manage - get
     Route::get('/manage/company', 'CompanyController@getManage');
+    Route::get('/manage/company/delete/{id}', 'CompanyController@getDelete');
     Route::get('/manage/position', 'PositionController@getManage');
     
     Route::get('/manage/team', 'TeamController@getManage');
+    Route::get('/manage/datavalue/{type?}', 'DatavalueController@getList');
+    //Route::get('/manage/datavalue', 'DatavalueController@getList');
 
     // user
     Route::get('/manage/user', 'AdminUsersController@getCreate');
@@ -75,10 +78,13 @@ Route::group(array('before' => 'auth'), function(){
 
     // manage - post
     Route::post('/manage/company', 'CompanyController@postCreate');
+    Route::post('/manage/datavalue/update', 'DatavalueController@postEdit');
+    Route::post('/manage/datavalue/delete', 'DatavalueController@postDelete');
 
     // client
     Route::get('/client', 'ClientController@getIndex');
     Route::get('/client/manage', 'ClientController@getCreate');
+    Route::post('/client', 'ClientController@postCreate');
 
     // project
     Route::get('/project', 'ProjectController@getIndex');

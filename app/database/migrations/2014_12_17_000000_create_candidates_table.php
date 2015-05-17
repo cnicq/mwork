@@ -33,7 +33,7 @@ class CreateCandidatesTable extends Migration {
             $table->string('creater');
             $table->string('QQ');
             $table->string('Wechat');
-            $table->timestamps('update_at');
+            $table->timestamps();
         });
     }
 

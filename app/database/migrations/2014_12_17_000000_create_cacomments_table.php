@@ -20,8 +20,8 @@ class CreateCaCommentsTable extends Migration {
             $table->string('auth_id');
             $table->string('ca_id'); // candidate id
             $table->string('proj_id'); // project id
-            $table->timestamps('update_at');
             $table->string('content');
+            $table->timestamps();
         });
     }
 

@@ -1,33 +1,69 @@
 @extends('mwork.layouts.default')
-
+@section('csss')
+<link rel="stylesheet" type="text/css" href="/bootstrap2/media/css/datepicker.css" />
+@stop
 @section('content')
-    <div class="portlet box green">
 
-	<div class="portlet-title">
+<div class="tabbable tabbable-custom tabbable-full-width">
+	<ul class="nav nav-tabs">
 
-		<div class="caption"><i class="icon-reorder"></i>客户管理</div>
+			<li class="active"><a href="#tab_1_1" data-toggle="tab">客户列表</a></li>
 
-		<div class="tools">
+			<li><a href="#tab_1_2" data-toggle="tab">新增客户</a></li>
 
-			<a href="javascript:;" class="collapse"></a>
+	</ul>
 
-			<a href="#portlet-config" data-toggle="modal" class="config"></a>
+	<div class="tab-content">
 
-			<a href="javascript:;" class="reload"></a>
+			<div class="tab-pane row-fluid active" id="tab_1_1">
+				<!-- BEGIN FORM : client list-->
 
-			<a href="javascript:;" class="remove"></a>
+		<div class="portlet-body">
 
-		</div>
+			<table class="table table-striped table-bordered table-hover table-full-width" id="sample">
+				<thead>
+					<tr>
+						<th>公司</th>
+						<th>联系人</th>
+						<th>Owner</th>
+						<th>BD</th>
+						<th>合同</th>
+						<th>项目</th>
+					</tr>
+				</thead>
+				<tbody>
 
-	</div>
+					@foreach ($clients as $client)
+					<tr>
+						<td>{{$client['chinesename']}}</td>
+						<td>{{$client['linkman_chinesename']}}|{{$client['linkman_englishname']}}</td>
+						<td>{{$client['owner_username']}}</td>
+						<td>{{$client['DB_username']}}</td>
+						<td>{{$client['contract_path']}}</td>
+						<td><a href='/project'>查看</></td>
+					</tr>
 
+					@endforeach
+					
+				</tfoot>
 
-	<div class="portlet-body form">
+				</tbody>
+			</table>
+			<ul class="pagination">
+				{{$clients->links()}}
+			</ul>
+			</div>
 
-		<!-- BEGIN FORM : client manange-->
+		<!-- END FORM : client list-->   
 
-		<form action="#" class="form-horizontal">
-			<h3 class="form-section">新增</h3>
+			</div>
+
+			<div class="tab-pane row-fluid" id="tab_1_2">
+				<!-- BEGIN FORM : client manange-->
+
+		<form action="#" class="form-horizontal" method='POST'>
+			<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
+			<h3 class="form-section">基本信息</h3>
 			<!--/row-->
 			<div class="row-fluid">
 
@@ -35,13 +71,18 @@
 
 					<div class="control-group">
 
-						<label class="control-label">公司</label>
+						<label class="control-label">公司</label> 
 
 						<div class="controls">
 
-							<input type="text" class="m-wrap span12" placeholder="阿里巴巴">
-
+							<select class="m-wrap " id='company' name='company'>
+							@foreach ($companys as $company)
+								<option value='{{$company->id}}' linkman='{{$company->linkman_chinesename}}|{{$company->linkman_englishname}}'> {{$company->chinesename}} </option>
+							@endforeach
+							</select>
+							详细
 						</div>
+
 
 					</div>
 
@@ -53,19 +94,13 @@
 
 					<div class="control-group">
 
-						<label class="control-label">联系信息</label>
+						<label class="control-label">联系人</label>
 
 						<div class="controls">
 
-							<select class="m-wrap span12">
+							<input type="text"  placeholder="" disabled name='linkman' id='linkman'>
 
-								<option value="1">上海</option>
-								<option value="2">北京</option>
-								<option value="3">广州</option>
-								<option value="4">深圳</option>
-
-							</select>
-
+							详细
 						</div>
 
 					</div>
@@ -87,15 +122,11 @@
 						<label class="control-label">Owner</label>
 
 						<div class="controls">
-
-							<select class="m-wrap span12">
-
-								<option value="1">上海</option>
-								<option value="2">北京</option>
-								<option value="3">广州</option>
-								<option value="4">深圳</option>
-
-							</select>
+							<select id='owner_user_id' name='owner_user_id'>
+							@foreach ($users as $user)
+								<option value='{{$user->id}}'> {{$user->username}} </option>
+							@endforeach
+						</select>
 
 						</div>
 
@@ -109,12 +140,14 @@
 
 					<div class="control-group">
 
-						<label class="control-label">合同</label>
+						<label class="control-label">BD</label>
 
 						<div class="controls">
-
-							<input type="text" class="m-wrap span12" placeholder="上海...">
-
+							<select id='BD_user_id' name='DB_user_id'>
+							@foreach ($users as $user)
+								<option value='{{$user->id}}'> {{$user->username}} </option>
+							@endforeach
+							</select>
 						</div>
 
 					</div>
@@ -124,6 +157,76 @@
 				<!--/span-->
 
 			</div>
+
+			<h3 class="form-section">合同信息</h3>
+
+								<div class="row-fluid">
+
+									<div class="span6 ">
+
+										<div class="control-group">
+
+											<label class="control-label">开始时间</label>
+											<div class="controls">
+											<div class="input-append date date-picker" ddata-date-format="dd-mm-yyyy" data-date-viewmode="years">
+
+												<input class="m-wrap m-ctrl-medium date-picker" readonly="" size="16" type="text" value="" name='contract_start' id='contract_start'><span class="add-on"><i class="icon-calendar"></i></span>
+
+											</div>
+										</div>
+
+										</div>
+
+									</div>
+
+									<!--/span-->
+
+									<div class="span6 ">
+
+										<div class="control-group">
+
+											<label class="control-label">截止时间</label>
+											<div class="controls">
+											<div class="input-append date date-picker" ddata-date-format="dd-mm-yyyy" data-date-viewmode="years">
+
+												<input class="m-wrap m-ctrl-medium date-picker" readonly="" size="16" type="text" value="" name='contract_end' id='contract_end'><span class="add-on"><i class="icon-calendar"></i></span>
+
+											</div>
+										</div>
+
+										</div>
+
+									</div>
+
+									<!--/span-->
+
+								</div>
+
+								<!--/row-->
+
+								<div class="row-fluid">
+
+									<div class="span6 ">
+
+										<div class="control-group">
+
+											<label class="control-label">附件上传</label>
+
+											<div class="controls">
+
+												<input type="text" class="m-wrap span12" placeholder="" name='contract_filePath' id='contract_filePath'>
+
+											</div>
+
+										</div>
+
+									</div>
+
+
+
+								</div>
+
+								<!--/row-->  
 
 
 			<div class="form-actions">
@@ -136,45 +239,34 @@
 
 		</form>
 
-		<!-- END FORM : client manage-->                
-
-		<!-- BEGIN FORM : client list-->
-
-		<div class="portlet-body">
-
-			<table class="table table-striped table-bordered table-hover table-full-width" id="sample_1">
-				<thead>
-					<tr>
-						<th>公司</th>
-						<th>联系方式</th>
-						<th>Owner</th>
-						<th>合同</th>
-						<th>项目</th>
-					</tr>
-				</thead>
-				<tbody>
-
-					@foreach ($clients as $client)
-					<tr>
-						<td>{{$client['chinesename']}}</td>
-						<td>{{$client['englishname']}}</td>
-						<td>{{$client['city']}}</td>
-						<td>{{$client['location']}}</td>
-						<td>{{$client['industry']}}</td>
-					</tr>
-
-					@endforeach
-					
-				</tfoot>
-
-				</tbody>
-			</table>
-			<ul class="pagination">
-			{{$clients->links()}}
-			</ul>
+		<!-- END FORM : client manage-->   
 			</div>
-
-		<!-- END FORM : client list-->   
 	</div>
 </div>
+
+    
+@stop
+
+@section("scripts")
+
+<script type="text/javascript" src="/bootstrap2/media/js/form-components.js"></script>
+<script type="text/javascript" src="/bootstrap2/media/js/bootstrap-datepicker.js"></script>
+
+<script>
+
+		jQuery(document).ready(function() {       
+
+		   if (jQuery().datepicker) {
+            $('.date-picker').datepicker({
+                rtl : App.isRTL()
+            });
+        }
+
+        $('#company').change(function(){
+        	$('#linkman').val($("#company").find("option:selected").attr('linkman'));
+        });
+
+		});
+
+	</script>
 @stop

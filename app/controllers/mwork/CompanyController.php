@@ -22,9 +22,11 @@ class CompanyController extends ParentController {
     public function getManage()
     {
         $companys = $this->company->orderBy('updated_at', 'DESC')->paginate(20);
+        $citys = DB::table('datavalues')->where('type', '=', 'city')->get();
+        $industrys = DB::table('datavalues')->where('type', '=', 'industry')->get();
 
         // Show the page
-        return View::make('mwork/manage/company', compact('companys'), $this->Titles('id_manage', 'id_manage_company'));
+        return View::make('mwork/manage/company', compact('companys', 'citys', 'industrys'), $this->Titles('id_manage', 'id_manage_company'));
     }
 
 
@@ -63,8 +65,7 @@ class CompanyController extends ParentController {
 	{
         // Declare the rules for the form validation
         $rules = array(
-            'englishname'   => 'required|min:2',
-            'chinesename' => 'required|min:2'
+            'chinesename'   => 'required|min:2'
         );
 
         // Validate the inputs
@@ -78,26 +79,32 @@ class CompanyController extends ParentController {
 
             // Update the blog company data
             $this->company->chinesename            = Input::get('chinesename');
-            $this->company->content                = Input::get('englishname');
-            $this->company->englishname            = Input::get('city');
+            $this->company->englishname            = Input::get('englishname');
+            $this->company->city                   = Input::get('city');
             $this->company->location               = Input::get('location');
             $this->company->industry               = Input::get('industry');
-            $this->company->contract               = Input::get('contract');
-            $this->company->user_id                = $user->id;
+            $this->company->province               = "" ;
+
+            $this->company->linkman_chinesename    = Input::get('linkman_chinesename');
+            $this->company->linkman_englishname    = Input::get('linkman_englishname');
+            $this->company->linkman_mobile         = Input::get('linkman_mobile');
+            $this->company->linkman_tel            = Input::get('linkman_tel');
+            $this->company->linkman_email          = Input::get('linkman_email');
+            $this->company->linkman_QQ             = Input::get('linkman_QQ');
+
 
             // Was the blog company created?
             if($this->company->save())
             {
                 // Redirect to the new blog company page
-                return Redirect::to('manage/blogs/' . $this->company->id . '/edit')->with('success', Lang::get('manage/blogs/messages.create.success'));
+                return Redirect::to('manage/company')->with('success', Lang::get('manage/blogs/messages.create.success'));
             }
-
             // Redirect to the blog company create page
-            return Redirect::to('manage/blogs/create')->with('error', Lang::get('manage/blogs/messages.create.error'));
+            return Redirect::to('manage/company')->with('error', Lang::get('manage/blogs/messages.create.error'));
         }
 
         // Form validation failed
-        return Redirect::to('manage/blogs/create')->withInput()->withErrors($validator);
+        return Redirect::to('manage/company')->withInput()->withErrors($validator);
 	}
 
     /**
@@ -177,13 +184,26 @@ class CompanyController extends ParentController {
      * @param $company
      * @return Response
      */
-    public function getDelete($company)
+    public function getDelete($companyId)
     {
-        // Title
-        $title = Lang::get('manage/blogs/title.blog_delete');
+        $company = Company::find($companyId);
+        if(is_null($company))
+        {
+            return Redirect::to('manage/company')->with('error', Lang::get('manage/blogs/messages.delete.error'));  
+        }
 
-        // Show the page
-        return View::make('manage/blogs/delete', compact('company', 'title'));
+        $id = $company->id;
+        $company->delete();
+
+        // Was the blog company deleted?
+        $company = Company::find($id);
+        if(empty($company))
+        {
+            // Redirect to the blog posts management page
+            return Redirect::to('manage/company')->with('success', Lang::get('manage/blogs/messages.delete.success'));
+        }
+
+        return Redirect::to('manage/company')->with('error', Lang::get('manage/blogs/messages.delete.error'));
     }
 
     /**
