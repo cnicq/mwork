@@ -73,9 +73,16 @@ class ClientController extends ParentController {
         // Validate the inputs
         $validator = Validator::make(Input::all(), $rules);
 
+       
         // Check if the form validates with success
         if ($validator->passes())
         {
+            $comp = Company::find(Input::get('company'));
+            if(is_null($comp) == false)
+            {
+                // Redirect to the blog client create page
+                return $this->getIndex();
+            }
 
             // Update the blog client data
             $this->client->company_id            = Input::get('company');
@@ -89,15 +96,15 @@ class ClientController extends ParentController {
             if($this->client->save())
             {
                 // Redirect to the new blog client page
-                return Redirect::to('manage/blogs/' . $this->client->id . '/edit')->with('success', Lang::get('manage/blogs/messages.create.success'));
+                return $this->getIndex();
             }
 
             // Redirect to the blog client create page
-            return Redirect::to('manage/blogs/create')->with('error', Lang::get('manage/blogs/messages.create.error'));
+            return $this->getIndex();
         }
 
         // Form validation failed
-        return Redirect::to('manage/blogs/create')->withInput()->withErrors($validator);
+        return $this->getIndex();
 	}
 
     /**

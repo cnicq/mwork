@@ -157,23 +157,6 @@
 
 			</li>
 
-			<li id="id_plane">
-
-				<a href="/bootstrap2/javascript:;">
-
-				<i class="icon-briefcase"></i> 
-
-				<span class="title">计划</span>
-
-				<span class="arrow "></span>
-
-				</a>
-
-				<ul class="sub-menu">
-
-				</ul>
-
-			</li>
 
 			<li id="id_team">
 

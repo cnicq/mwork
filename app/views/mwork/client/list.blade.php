@@ -76,9 +76,10 @@
 						<div class="controls">
 
 							<select class="m-wrap " id='company' name='company'>
-							@foreach ($companys as $company)
+								<option>请选择...</option>
+								@foreach ($companys as $company)
 								<option value='{{$company->id}}' linkman='{{$company->linkman_chinesename}}|{{$company->linkman_englishname}}'> {{$company->chinesename}} </option>
-							@endforeach
+								@endforeach
 							</select>
 							详细
 						</div>

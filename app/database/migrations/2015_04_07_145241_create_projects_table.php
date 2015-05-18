@@ -17,16 +17,19 @@ class CreateProjectsTable extends Migration {
         {
             $table->engine = 'InnoDB';
             $table->increments('id')->unsigned();
-            $table->integer('team_id')->unsigned()->index();
-            $table->integer('client_id')->unsigned()->index();
-            $table->integer('owner_id')->unsigned()->index();
-            $table->string('title');
-            $table->string('content');
-            $table->string('purchase_order');
-            $table->string('urgency');
-            $table->integer('job_id');
-            $table->string('brief');
-            $table->string('search_strategy');
+            $table->integer('client_id')->unsigned();
+            $table->integer('team_id')->unsigned();
+            $table->integer('owner_user_id')->unsigned();
+            $table->integer('head_count')->unsigned();
+
+            $table->string('position_name');
+            $table->string('city_name')->default("");
+            $table->string('income')->default("");
+            $table->string('location')->default("");
+            $table->text('desc');
+            $table->string('starttime');
+            $table->string('endtime');
+
             $table->timestamps();
         });
 	}

@@ -24,8 +24,8 @@
 
 								<!-- BEGIN FORM-->
 
-								<form action="#" class="form-horizontal" enctype="multipart/form-data">
-
+								<form action="#" class="form-horizontal" enctype="multipart/form-data" method="POST">
+									<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
 									<h3 class="form-section">客户信息</h3>
 
 									<div class="control-group">
@@ -34,14 +34,14 @@
 
 										<div class="controls">
 
-											<select class="m-wrap span6" id='client' name='client'>
+											<select class="m-wrap span6" id='client_id' name='client_id'>
 												<option> 请选择...</option>
 												@foreach ($clients as $client)
 													<option value='{{$client->id}}' linkman='{{$client->linkman_chinesename}}|{{$client->linkman_englishname}}'> {{$client->chinesename}} </option>
 												@endforeach
 												</select>
 
-												<button class="btn purple">新增 <i class="m-icon-swapright m-icon-white"></i></button>
+												<button class="btn purple" onclick='location.href="/clients"'>新增 <i class="m-icon-swapright m-icon-white"></i></button>
 												
 										
 
@@ -49,10 +49,9 @@
 									</div>
 
 									<div class="control-group">
-										<label class="control-label">联系人</label>
+										<label class="control-label span6">联系人</label>
 
 										<div class="controls">
-
 											
 											<input type="text"  placeholder="" disabled name='linkman' id='linkman'>
 
@@ -64,16 +63,16 @@
 									<h3 class="form-section">项目内容</h3>
 									<div class="control-group">
 										<div class="control-group">
-										<label class="control-label">职位名称(Title)</label>
+										<label class="control-label">职位名称(position)</label>
 
 										<div class="controls">
-											<select class="m-wrap span6" id='client' name='client'>
+											<select class="m-wrap span6" id='position_name' name='position_name'>
 												<option> 请选择...</option>
 												@foreach ($positions as $position)
 													<option value='{{$position->name}}'> {{$position->text}} </option>
 												@endforeach
 												</select>
-											<button class="btn purple">新增 <i class="m-icon-swapright m-icon-white"></i></button>
+											<button class="btn purple" onclick='location.href="/manage/datavalues"'>新增 <i class="m-icon-swapright m-icon-white"></i></button>
 										</div>
 									</div>
 									<div class="control-group">
@@ -81,7 +80,7 @@
 
 										<div class="controls">
 
-											<select class="span6 m-wrap" data-placeholder="Choose a Category" tabindex="1">
+											<select class="span6 m-wrap" data-placeholder="Choose a Category" tabindex="1" id='head_count' name='head_count'>
 
 												<option value="1" selected>1</option>
 
@@ -110,7 +109,7 @@
 										<div class="controls">
 
 						
-											<select class="m-wrap span6" id='client' name='client'>
+											<select class="m-wrap span6" id='city_name' name='city_name'>
 												<option> 请选择...</option>
 												@foreach ($citys as $city)
 													<option value='{{$city->name}}'> {{$city->text}} </option>
@@ -125,7 +124,7 @@
 
 										<div class="controls">
 
-												<input class="m-wrap span6" type="text">
+												<input class="m-wrap span6" type="text" id='location' name='location'>
 
 										</div>
 									</div>
@@ -135,19 +134,19 @@
 
 										<div class="controls">
 
-											<div class="input-prepend input-append">
+											<div class="input-prepend input-append ">
 
-												<span class="add-on">RMB</span><input class="m-wrap " type="text">
+												<span class="add-on">RMB</span><input class="m-wrap" type="text" id='income' name='income'>
 
 											</div>
 
 										</div>
 									</div>
 									<div class="control-group">
-									<label class="control-label">工作描述</label>
+									<label class="control-label">项目说明</label>
 											<div class="controls">
 
-											<textarea class="span6 m-wrap" rows="3"></textarea>
+											<textarea class="span6 m-wrap" rows="3" id='desc' name='desc'></textarea>
                
 
 										</div>
@@ -163,7 +162,7 @@
 
 											<div class="input-append date date-picker" ddata-date-format="dd-mm-yyyy" data-date-viewmode="years">
 
-												<input class="m-wrap m-ctrl-medium date-picker" readonly="" size="16" type="text" value=""><span class="add-on"><i class="icon-calendar"></i></span>
+												<input class="m-wrap m-ctrl-medium date-picker" readonly="" size="16" type="text" value="" id='starttime' name='starttime'><span class="add-on"><i class="icon-calendar"></i></span>
 
 											</div>
 
@@ -176,7 +175,7 @@
 
 											<div class="input-append date date-picker" ddata-date-format="dd-mm-yyyy" data-date-viewmode="years">
 
-												<input class="m-wrap m-ctrl-medium date-picker" readonly="" size="16" type="text" value=""><span class="add-on"><i class="icon-calendar"></i></span>
+												<input class="m-wrap m-ctrl-medium date-picker" readonly="" size="16" type="text" value="" id='endtime' name='endtime'><span class="add-on"><i class="icon-calendar"></i></span>
 
 											</div>
 
@@ -184,39 +183,44 @@
 									</div>
 									<div class="control-group">
 
-																				<div class="control-group">
+										<div class="control-group">
+
+										<label class="control-label">项目负责团队</label>
+
+										<div class="controls">
+
+											<select class="m-wrap span6" id='team_id' name='team_id'>
+												<option> 请选择...</option>
+												@foreach ($teams as $team)
+													<option value='{{$team->id}}'> {{$team->name}} </option>
+												@endforeach
+												</select>
+
+											<button class="btn purple" onclick='location.href="/manage/teams"'>新增 <i class="m-icon-swapright m-icon-white"></i></button>
+										</div>
+										</div>
+
+										<div class="control-group">
 
 										<label class="control-label">项目负责人</label>
 
 										<div class="controls">
 
-											<select class="m-wrap span6" id='client' name='client'>
+											<select class="m-wrap span6" id='owner_user_id' name='owner_user_id'>
 												<option> 请选择...</option>
 												@foreach ($users as $user)
 													<option value='{{$user->id}}'> {{$user->username}} </option>
 												@endforeach
 												</select>
 
-											<button class="btn purple">新增 <i class="m-icon-swapright m-icon-white"></i></button>
+											<button class="btn purple" onclick='location.href="/manage/users"'>新增 <i class="m-icon-swapright m-icon-white"></i></button>
 										</div>
-									</div>
-
-										<div class="control-group">
-
-										<label class="control-label">其他说明</label>
-
-										<div class="controls">
-
-											<textarea class="span6 m-wrap" rows="3"></textarea>
-
-										</div>
-
 										</div>
 
 									</div>
 									<div class="form-actions">
 
-										<button type="submit" class="btn blue">增加</button>
+										<button type="submit" class="btn blue">提交</button>
 
 										<button type="button" class="btn" onclick='location.href="/project"'>取消</button>                            
 
@@ -248,11 +252,9 @@
                 rtl : App.isRTL()
             });
 
-            $('#client').change(function(){
-        	$('#linkman').val($("#client").find("option:selected").attr('linkman'));
+            $('#client_id').change(function(){
+        	$('#linkman').val($("#client_id").find("option:selected").attr('linkman'));
         	});
-
-	
         }
 
 		});

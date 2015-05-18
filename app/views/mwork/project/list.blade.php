@@ -4,10 +4,10 @@
 @stop
 @section('content')
   <!-- BEGIN PAGE CONTENT-->
-<div class="tabbable tabbable-custom tabbable-full-width">
+<div class="tabbable tabbable-custom tabbable-full-width" id='myTab'>
 				<ul class="nav nav-tabs">
 
-								<li class="active"><a href="#tab_1_1" data-toggle="tab">项目列表</a></li>
+								<li class="active" ><a href="#tab_1_1" data-toggle="tab">项目列表</a></li>
 
 								<li><a href="#tab_1_2" data-toggle="tab">项目详细</a></li>
 
@@ -57,38 +57,33 @@
 
 								<div class="portlet-body">
 
-									<table class="table table-striped table-bordered table-hover table-full-width" id="sample_1">
-
+									<table class="table table-striped table-bordered table-hover table-full-width" id="sample_2">
 										<thead>
 											<tr>
-												<th>项目代号</th>
+												<th>项目ID</th>
 												<th>客户</th>
 												<th>职位</th>
+												<th>所在城市</th>
 												<th>起始时间</th>
 												<th>结束时间</th>
 												<th>负责人</th>
-												<th>状态</th>
-												<th>附件</th>
-
+												<th></th>
 											</tr>
-
 										</thead>
-
 										<tbody>
-
 											@foreach ($projects as $project)
 											<tr>
-												<td>{{$project['name']}}</td>
-												<td>{{$project['owner_id']}}</td>
-												<td>{{$project['created_date']}}</td>
-												<td>{{$project['location']}}</td>
-												
+												<td>{{$project['id']}}</td>
+												<td>{{$project['client_id']}}</td>
+												<td>{{$project['position_name']}}</td>
+												<td>{{$project['city_name']}}</td>
+												<td>{{$project['starttime']}}</td>
+												<td>{{$project['endtime']}}</td>
+												<td>{{$project['owner_user_id']}}</td>
+												<td><a href="">详细</a></td>
 											</tr>
-
 											@endforeach
-											
 										</tfoot>
-
 										</tbody>
 									</table>
 								<ul class="pagination">
@@ -411,4 +406,26 @@
 				<!-- END PAGE CONTENT-->
 			</div>
 				
+@stop
+
+@section("scripts")
+
+
+
+
+<script type="text/javascript" src="/bootstrap2/media/js/form-components.js"></script>
+
+<script>
+
+		jQuery(document).ready(function() {       
+			var tabName = "tab_1_1";
+			@if (isset($project_id)) 
+			 		tabName = "tab_1_2";
+			@endif
+
+		  	$('#myTab a[href="#' + tabName + '"]').tab('show');  
+
+		});
+
+	</script>
 @stop

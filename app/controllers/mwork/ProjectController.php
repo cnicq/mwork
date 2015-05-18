@@ -34,9 +34,13 @@ class ProjectController extends ParentController {
 
         $positions = DB::table('datavalues')->where('type', '=', 'position')->get();
         $citys = DB::table('datavalues')->where('type', '=', 'city')->get();
+        $teams = DB::table('teams')->get();
+        $users = DB::table('users')->get();
+
+        $project_id = 1;
         
         // Show the page
-        return View::make('mwork/project/list', compact('projects', 'positions', 'citys'), $this->Titles('id_project', 'id_project_my'));
+        return View::make('mwork/project/list', compact('projects', 'positions', 'citys', 'teams', 'users', 'project_id'), $this->Titles('id_project', 'id_project_my'));
     }
 
 	/**
@@ -51,9 +55,10 @@ class ProjectController extends ParentController {
        
         $positions = DB::table('datavalues')->where('type', '=', 'position')->get();
         $citys = DB::table('datavalues')->where('type', '=', 'city')->get();
+        $teams = DB::table('teams')->get();
         $users = DB::table('users')->get();
         // Show the page
-        return View::make('mwork/project/add', compact('clients', 'positions', 'citys', 'users'), $this->Titles('id_project', 'id_project_manage'));
+        return View::make('mwork/project/add', compact('clients', 'positions', 'citys', 'users', 'teams', 'users'), $this->Titles('id_project', 'id_project_manage'));
 	}
 
 	/**
@@ -65,8 +70,8 @@ class ProjectController extends ParentController {
 	{
         // Declare the rules for the form validation
         $rules = array(
-            'englishname'   => 'required|min:2',
-            'chinesename' => 'required|min:2'
+            'client_id'   => 'required|min:1',
+            'team_id' => 'required|min:1'
         );
 
         // Validate the inputs
@@ -79,27 +84,30 @@ class ProjectController extends ParentController {
             $user = Auth::user();
 
             // Update the blog project data
-            $this->project->chinesename            = Input::get('chinesename');
-            $this->project->content                = Input::get('englishname');
-            $this->project->englishname            = Input::get('city');
+            $this->project->client_id            = Input::get('client_id');
+            $this->project->team_id                = Input::get('team_id');
+            $this->project->owner_user_id            = Input::get('owner_user_id');
+            $this->project->head_count               = Input::get('head_count');
+            $this->project->position_name               = Input::get('position_name');
+            $this->project->income               = Input::get('income');
             $this->project->location               = Input::get('location');
-            $this->project->industry               = Input::get('industry');
-            $this->project->contract               = Input::get('contract');
-            $this->project->user_id                = $user->id;
+            $this->project->desc               = Input::get('desc');
+            $this->project->starttime               = Input::get('starttime');
+            $this->project->endtime               = Input::get('endtime');
 
             // Was the blog project created?
             if($this->project->save())
             {
                 // Redirect to the new blog project page
-                return Redirect::to('manage/blogs/' . $this->project->id . '/edit')->with('success', Lang::get('manage/blogs/messages.create.success'));
+                return $this->getIndex();
             }
 
             // Redirect to the blog project create page
-            return Redirect::to('manage/blogs/create')->with('error', Lang::get('manage/blogs/messages.create.error'));
+            return $this->getIndex();
         }
 
         // Form validation failed
-        return Redirect::to('manage/blogs/create')->withInput()->withErrors($validator);
+        return $this->getIndex();
 	}
 
     /**
