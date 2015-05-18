@@ -88,6 +88,7 @@ Route::group(array('before' => 'auth'), function(){
 
     // project
     Route::get('/project', 'ProjectController@getIndex');
+    Route::get('/project_{id}', 'ProjectController@getShow');
     Route::get('/project/manage', 'ProjectController@getCreate');
     Route::post('/project/manage', 'ProjectController@postCreate');
     

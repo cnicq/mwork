@@ -29,7 +29,7 @@ class ProjectController extends ParentController {
         //$clients = $this->client->paginate(20);
 
         $projects = Project::leftjoin("clients", 'clients.id', '=', 'projects.client_id')
-                ->select('projects.*', 'clients.*')
+                ->select('projects.*', 'projects.id as project_id','clients.*')
                 ->paginate(20);
 
         $positions = DB::table('datavalues')->where('type', '=', 'position')->get();
@@ -37,10 +37,34 @@ class ProjectController extends ParentController {
         $teams = DB::table('teams')->get();
         $users = DB::table('users')->get();
 
-        $project_id = 1;
         
         // Show the page
-        return View::make('mwork/project/list', compact('projects', 'positions', 'citys', 'teams', 'users', 'project_id'), $this->Titles('id_project', 'id_project_my'));
+        return View::make('mwork/project/list', compact('projects', 'positions', 'citys', 'teams', 'users'), $this->Titles('id_project', 'id_project_my'));
+    }
+
+    /**
+     * Show a list of all the projects.
+     *
+     * @return View
+     */
+    public function getShow($project_id)
+    {
+        $projects = Project::leftjoin("clients", 'clients.id', '=', 'projects.client_id')
+                ->select('projects.*', 'projects.id as project_id','clients.*')
+                ->paginate(20);
+
+        $project = Project::where('projects.id', '=', $project_id)->leftjoin("clients", 'clients.id', '=', 'projects.client_id')
+                ->select('projects.*', 'projects.id as project_id','clients.*')->first();
+
+        $positions = DB::table('datavalues')->where('type', '=', 'position')->get();
+        $citys = DB::table('datavalues')->where('type', '=', 'city')->get();
+        $teams = DB::table('teams')->get();
+        $users = DB::table('users')->get();
+        $company = Company::find($project->company_id);
+
+        
+        // Show the page
+        return View::make('mwork/project/list', compact('projects', 'project', 'positions', 'citys', 'teams', 'users', 'project_id', 'company'), $this->Titles('id_project', 'id_project_my'));
     }
 
 	/**
@@ -94,6 +118,7 @@ class ProjectController extends ParentController {
             $this->project->desc               = Input::get('desc');
             $this->project->starttime               = Input::get('starttime');
             $this->project->endtime               = Input::get('endtime');
+            
 
             // Was the blog project created?
             if($this->project->save())

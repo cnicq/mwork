@@ -73,14 +73,14 @@
 										<tbody>
 											@foreach ($projects as $project)
 											<tr>
-												<td>{{$project['id']}}</td>
+												<td>{{$project['project_id']}}</td>
 												<td>{{$project['client_id']}}</td>
 												<td>{{$project['position_name']}}</td>
 												<td>{{$project['city_name']}}</td>
 												<td>{{$project['starttime']}}</td>
 												<td>{{$project['endtime']}}</td>
 												<td>{{$project['owner_user_id']}}</td>
-												<td><a href="">详细</a></td>
+												<td><a href="/project_{{$project['project_id']}}">详细</a></td>
 											</tr>
 											@endforeach
 										</tfoot>
@@ -137,14 +137,14 @@
 												<div class="span5">
 													<address>
 													<strong>职位名</strong><br>
-													<a href="#">xxx</a>
+													{{$project->position_name}}
 												</address>
 												</div>
 												<div class="span5">
 
 												<address>
 													<strong>工作地址</strong><br>
-													<a href="#">上海麦聘企业管理咨询有限公司</a>
+													{{$project->location}}
 												</address></div>
 												</div>
 
@@ -153,14 +153,14 @@
 													<div class="span5">
 														<address>
 														<strong>工作描述</strong><br>
-														<a href="#">xxx</a>
+														{{$project->desc}}
 													</address>
 													</div>
 													<div class="span5">
 
 													<address>
 														<strong>需求人数</strong><br>
-														<a href="#">1</a>
+														{{$project->head_count}}
 													</address>
 													</div>
 												</div>
@@ -170,14 +170,14 @@
 													<div class="span5">
 														<address>
 														<strong>年收入</strong><br>
-														<a href="#">10万</a>
+														{{$project->income}}万
 													</address>
 													</div>
 													<div class="span5">
 
 													<address>
 														<strong>服务费率</strong><br>
-														<a href="#">10%</a>
+														{{$project->fee}}%
 													</address></div>
 												</div>
 										
@@ -187,14 +187,14 @@
 													<div class="span5">
 														<address>
 														<strong>开始时间</strong><br>
-														<a href="#">2015-1-1</a>
+														{{$project->starttime}}
 													</address>
 													</div>
 													<div class="span5">
 
 													<address>
 														<strong>截止时间</strong><br>
-														<a href="#">015-1-2</a>
+														{{$project->endtime}}
 													</address></div>
 												</div>
 										</div>
@@ -205,7 +205,7 @@
 												<div class="portlet ">
 													<div class="portlet-title">
 
-													<div class="caption"><i class="icon-cogs"></i>项目人员</div>
+													<div class="caption"><i class="icon-cogs"></i>项目团队</div>
 
 													<div class="tools">
 
@@ -219,17 +219,15 @@
 														
 														<div class="well">
 
-														<h4>负责人</h4>
+														<h4>项目负责人</h4>
 
-														.xxx
+														{{$project->team_id}}
 
 														</div>
 
 														<div class="well">
 
 														<h4>团队贡献</h4>
-
-														.xxx
 
 														</div>
 														
@@ -261,15 +259,9 @@
 														
 														<address>
 														<strong>摘要</strong><br>
-														12312312313123123333333
-														12312333333333333333333123
-														12312333333213123123
-														123123123123
+														{{$project->desc}}
 													</address>
-													<address>
-														<strong>搜索策略</strong><br>
-														<a href="#">2015-1-1</a>
-													</address>
+													
 
 													</div>
 													</div>

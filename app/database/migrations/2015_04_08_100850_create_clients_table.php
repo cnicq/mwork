@@ -19,7 +19,9 @@ class CreateClientsTable extends Migration {
             $table->integer('company_id')->unsigned();
             $table->integer('owner_user_id')->unsigned();
             $table->integer('BD_user_id')->unsigned();
+
              // contract info
+            $table->integer('fee')->unsigned();
             $table->timestamp('contract_start');
             $table->timestamp('contract_end');
             $table->string('contract_filePath');

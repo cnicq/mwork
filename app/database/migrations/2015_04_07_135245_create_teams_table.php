@@ -12,6 +12,12 @@ class CreateTeamsTable extends Migration {
 	 */
 	public function up()
 	{
+		if(Schema::hasTable('teams'))
+		{
+			print "talbe : teams already exist.\n";
+			return;
+		}
+
 		 Schema::create('teams', function($table)
         {
             $table->engine = 'InnoDB';

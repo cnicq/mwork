@@ -82,14 +82,6 @@
 
 					</li>
 
-					<li id="id_candidate_manage">
-
-						<a href="/candidate/manage">
-
-						管理</a>
-
-					</li>
-
 				</ul>
 
 

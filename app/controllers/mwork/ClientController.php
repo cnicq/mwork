@@ -77,13 +77,21 @@ class ClientController extends ParentController {
         // Check if the form validates with success
         if ($validator->passes())
         {
+
             $comp = Company::find(Input::get('company'));
-            if(is_null($comp) == false)
+    
+            if(is_null($comp))
             {
                 // Redirect to the blog client create page
                 return $this->getIndex();
             }
 
+            $exist = Project::where('company_id', '=', Input::get('company'));
+            if($exist)
+            {
+                return $this->getIndex(); 
+            }
+            
             // Update the blog client data
             $this->client->company_id            = Input::get('company');
             $this->client->owner_user_id         = Input::get('owner_user_id');
@@ -91,14 +99,15 @@ class ClientController extends ParentController {
             $this->client->contract_start        = new DateTime(Input::get('contract_start'));
             $this->client->contract_end          = new DateTime(Input::get('contract_end'));
             $this->client->contract_filePath     = Input::get('contract_filePath');
-
+            $this->client->fee                   = intval(Input::get('fee'));
+            
             // Was the blog client created?
             if($this->client->save())
             {
+
                 // Redirect to the new blog client page
                 return $this->getIndex();
             }
-
             // Redirect to the blog client create page
             return $this->getIndex();
         }

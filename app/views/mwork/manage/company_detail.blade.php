@@ -7,15 +7,15 @@
 			<h3>公司信息</h3>
 			<address>
 				<strong>公司名</strong><br>
-				<a href="#">{{$company->chinesename}}</a>
+				{{$company->chinesename}}
 			</address>
 			<address>
 				<strong>地址</strong><br>
-				<a href="#">{{$company->location}}</a>
+				{{$company->location}}
 			</address>
 			<address>
 				<strong>电话</strong><br>
-				<a href="#">{{$company->location}}</a>
+				{{$company->location}}
 			</address>
 			</div>
 		</div>
@@ -28,7 +28,7 @@
 					<div class="span5">
 						<address>
 						<strong>中文名</strong><br>
-						<a href="#">{{$company->linkman_chinesename}}</a>
+						{{$company->linkman_chinesename}}
 					</address>
 					</div>
 
@@ -36,7 +36,7 @@
 
 					<address>
 						<strong>英文名</strong><br>
-						<a href="#">{{$company->linkman_englishname}}</a>
+						{{$company->linkman_englishname}}
 					</address></div>
 				</div>
 

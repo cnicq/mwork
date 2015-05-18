@@ -49,12 +49,9 @@
 									</div>
 
 									<div class="control-group">
-										<label class="control-label span6">联系人</label>
-
+										<label class="control-label">联系人</label>
 										<div class="controls">
-											
 											<input type="text"  placeholder="" disabled name='linkman' id='linkman'>
-
 							详细
 
 										</div>

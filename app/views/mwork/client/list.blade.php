@@ -207,6 +207,30 @@
 
 								<div class="row-fluid">
 
+										<div class="control-group">
+
+										<label class="control-label">收费费率</label>
+
+										<div class="controls">
+
+											<input class="m-wrap" id="mask_number" type="text" name='fee' id='fee'>
+
+											<span class="help-inline">%</span>
+
+										</div>
+
+									</div>
+
+						
+
+
+
+								</div>
+
+								<!--/row-->  
+
+								<div class="row-fluid">
+
 									<div class="span6 ">
 
 										<div class="control-group">
