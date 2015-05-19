@@ -39,9 +39,8 @@ class TeamController extends ParentController {
         $teams = DB::table('teams')->leftjoin(DB::raw('(select COUNT(*) as cnt, team_id from projects) p'), 'teams.id', '=', 'p.team_id')
                     ->select('teams.id', 'teams.name', 'teams.lead_name', 'teams.member_names', DB::raw('IFNULL(p.cnt, 0) as project_count'))
                     ->paginate(10, array(''));
-        $users = [];
        
-        return View::make('mwork/team/list', compact('teams', 'users'), $this->Titles('id_team', 'id_team_my'));
+        return View::make('mwork/team/list', compact('teams'), $this->Titles('id_team', 'id_team_my'));
     }
 
 	/**
@@ -110,27 +109,63 @@ class TeamController extends ParentController {
      */
 	public function getShow($teamId)
 	{
-        $userNames = Team::where('id', '=', $teamId)->select('member_names')->get();
+        $teams = DB::table('teams')->leftjoin(DB::raw('(select COUNT(*) as cnt, team_id from projects) p'), 'teams.id', '=', 'p.team_id')
+                    ->select('teams.id', 'teams.name', 'teams.lead_name', 'teams.member_names', DB::raw('IFNULL(p.cnt, 0) as project_count'))
+                    ->paginate(10, array(''));
+
+        $members = Team::where('id', '=', $teamId)->select('member_names as names')->get();
 
         $users = [];
-        for($i = 0; $i < count($userNames); $i++)
+        for($i = 0; $i < count($members); $i++)
         {
-            $user = User::where('name', '=', $userNames[$i])->first();
-            return $user;
-            $user->chinesename = "123";
-            $user->recommend = "123";
-            $user->interview = "123";
-            $user->comment = "123";
-            $user->resume = "123";
-            $user->coldcall = "123";
-            $users[] = $user;
+            $userNames = explode(',', $members[$i]->names);
+            for($j = 0; $j < count($userNames); $j++)
+            {
+                $user = User::where('username', '=', $userNames[$i])->first();
+                $user->chinesename = "123";
+                $user->recommend = "123";
+                $user->interview = "123";
+                $user->comment = "123";
+                $user->resume = "123";
+                $user->coldcall = "123";
+                $users[] = $user;
+            }
         }
         
-        $teams = [];
 
         // Show the page
-        return View::make('mwork/team/list', compact('users','teams'), $this->Titles('id_team', 'id_team_my'));
+        return View::make('mwork/team/list', compact('users', 'teams'), $this->Titles('id_team', 'id_team_my'));
 	}
+
+    public function getUser($userId)
+    {
+        $teams = DB::table('teams')->leftjoin(DB::raw('(select COUNT(*) as cnt, team_id from projects) p'), 'teams.id', '=', 'p.team_id')
+                    ->select('teams.id', 'teams.name', 'teams.lead_name', 'teams.member_names', DB::raw('IFNULL(p.cnt, 0) as project_count'))
+                    ->paginate(10, array(''));
+
+        $members = Team::where('id', '=', $teamId)->select('member_names as names')->get();
+
+        $users = [];
+        for($i = 0; $i < count($members); $i++)
+        {
+            $userNames = explode(',', $members[$i]->names);
+            for($j = 0; $j < count($userNames); $j++)
+            {
+                $user = User::where('username', '=', $userNames[$i])->first();
+                $user->chinesename = "123";
+                $user->recommend = "123";
+                $user->interview = "123";
+                $user->comment = "123";
+                $user->resume = "123";
+                $user->coldcall = "123";
+                $users[] = $user;
+            }
+        }
+        
+        // Show the page
+        return View::make('mwork/team/list', compact('users', 'teams', 'user'), $this->Titles('id_team', 'id_team_my'));
+    }
+
 
     /**
      * Show the form for editing the specified resource.

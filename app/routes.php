@@ -59,6 +59,8 @@ Route::group(array('before' => 'auth'), function(){
     //Route::get('/manage/datavalue', 'DatavalueController@getList');
 
     // user
+    Route::get('/user/{userId}/{tab}', 'UserController@getShow');
+
     Route::get('/manage/user', 'AdminUsersController@getCreate');
     Route::get('/manage/user/{id}', 'AdminUsersController@getData');
     Route::post('/manage/user/edit/{user}', 
@@ -96,6 +98,7 @@ Route::group(array('before' => 'auth'), function(){
     Route::get('/team', 'TeamController@getIndex');
     Route::get('/team/manage', 'TeamController@getCreate');
     Route::get('/team_{id}', 'TeamController@getShow');
+    Route::get('/team_user_{id}', 'TeamController@getUser');
     Route::post('/team/manage', 'TeamController@postCreate');
 
 

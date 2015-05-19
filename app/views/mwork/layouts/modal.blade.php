@@ -12,15 +12,13 @@
 
 	<meta charset="utf-8" />
 
-	<title>Mapping</title>
+	<title>Metronic | Layouts - Horzontal Menu 1</title>
 
 	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
 	<meta content="" name="description" />
 
 	<meta content="" name="author" />
-
-	@yield('metas')
 
 	<!-- BEGIN GLOBAL MANDATORY STYLES -->
 
@@ -42,17 +40,7 @@
 
 	<!-- END GLOBAL MANDATORY STYLES -->
 
-	<!-- BEGIN PAGE LEVEL STYLES -->
-
-	<link rel="stylesheet" type="text/css" href="/bootstrap2/media/css/select2_metro.css" />
-
-	<link rel="stylesheet" href="/bootstrap2/media/css/DT_bootstrap.css" />
-
-	<!-- END PAGE LEVEL STYLES -->
-
 	<link rel="shortcut icon" href="/bootstrap2/media/image/favicon.ico" />
-
-	@yield('csss')
 
 </head>
 
@@ -60,7 +48,7 @@
 
 <!-- BEGIN BODY -->
 
-<body class="page-header-fixed">
+<body class="page-header-fixed page-full-width">
 
 	<!-- BEGIN HEADER -->
 
@@ -81,6 +69,15 @@
 				</a>
 
 				<!-- END LOGO -->
+
+				<!-- BEGIN HORIZANTAL MENU -->
+
+				<div class="navbar hor-menu hidden-phone hidden-tablet">
+
+
+				</div>
+
+				<!-- END HORIZANTAL MENU -->
 
 				<!-- BEGIN RESPONSIVE MENU TOGGLER -->
 
@@ -292,7 +289,7 @@
 
 								<span class="subject">
 
-								<span class="from">Joyce Xu</span>
+								<span class="from">Bob Nilson</span>
 
 								<span class="time">2 hrs</span>
 
@@ -494,7 +491,7 @@
 
 						<img alt="" src="/bootstrap2/media/image/avatar1_small.jpg" />
 
-						<span class="username">Joyce Xu</span>
+						<span class="username">Bob Nilson</span>
 
 						<i class="icon-angle-down"></i>
 
@@ -502,19 +499,19 @@
 
 						<ul class="dropdown-menu">
 
-							<li><a href="extra_profile.html"><i class="icon-user"></i> 个人档案</a></li>
+							<li><a href="extra_profile.html"><i class="icon-user"></i> My Profile</a></li>
 
-							<li><a href="page_calendar.html"><i class="icon-calendar"></i> 日程表</a></li>
+							<li><a href="page_calendar.html"><i class="icon-calendar"></i> My Calendar</a></li>
 
-							<li><a href="inbox.html"><i class="icon-envelope"></i> 信息箱(3)</a></li>
+							<li><a href="inbox.html"><i class="icon-envelope"></i> My Inbox(3)</a></li>
 
-							<li><a href="#"><i class="icon-tasks"></i> 我的安排</a></li>
+							<li><a href="#"><i class="icon-tasks"></i> My Tasks</a></li>
 
 							<li class="divider"></li>
 
-							<li><a href="extra_lock.html"><i class="icon-lock"></i> 锁定屏幕</a></li>
+							<li><a href="extra_lock.html"><i class="icon-lock"></i> Lock Screen</a></li>
 
-							<li><a href="login.html"><i class="icon-key"></i> 退出系统</a></li>
+							<li><a href="login.html"><i class="icon-key"></i> Log Out</a></li>
 
 						</ul>
 
@@ -536,12 +533,230 @@
 
 	<!-- END HEADER -->
 
-	<!-- BEGIN CONTAINER -->
+	<!-- BEGIN CONTAINER -->   
 
-	<div class="page-container row-fluid">
+	<div class="page-container row-fluid" >
 
-		@include('mwork.layouts.menu')
-		
+		<!-- BEGIN EMPTY PAGE SIDEBAR -->
+
+		<div class="page-sidebar nav-collapse collapse visible-phone visible-tablet">
+
+			<ul class="page-sidebar-menu">
+
+				<li class="visible-phone visible-tablet">
+
+					<!-- BEGIN RESPONSIVE QUICK SEARCH FORM -->
+
+					<form class="sidebar-search">
+
+						<div class="input-box">
+
+							<a href="javascript:;" class="remove"></a>
+
+							<input type="text" placeholder="Search..." />            
+
+							<input type="button" class="submit" value=" " />
+
+						</div>
+
+					</form>
+
+					<!-- END RESPONSIVE QUICK SEARCH FORM -->
+
+				</li>
+
+				<li>
+
+					<a class="active" href="index.html">
+
+					Dashboard                        
+
+					</a>
+
+				</li>
+
+				<li  class="active">
+
+					<a href="javascript:;">
+
+					Layouts
+
+					<span class="arrow open"></span>   
+
+					<span class="selected"></span>   
+
+					</a>
+
+					<ul class="sub-menu">
+
+						<li >
+
+							<a href="layout_horizontal_sidebar_menu.html">
+
+							Horzontal & Sidebar Menu                     </a>
+
+						</li>
+
+						<li class="active">
+
+							<a href="layout_horizontal_menu1.html">
+
+							Horzontal Menu 1                    </a>
+
+						</li>
+
+						<li >
+
+							<a href="layout_horizontal_menu2.html">
+
+							Horzontal Menu 2                    </a>
+
+						</li>
+
+						<li >
+
+							<a href="layout_promo.html">
+
+							Promo Page                    </a>
+
+						</li>
+
+						<li >
+
+							<a href="layout_email.html">
+
+							Email Templates                     </a>
+
+						</li>
+
+						<li >
+
+							<a href="layout_ajax.html">
+
+							Content Loading via Ajax</a>
+
+						</li>
+
+						<li >
+
+							<a href="layout_sidebar_closed.html">
+
+							Sidebar Closed Page                    </a>
+
+						</li>
+
+						<li >
+
+							<a href="layout_blank_page.html">
+
+							Blank Page                    </a>
+
+						</li>
+
+						<li >
+
+							<a href="layout_boxed_page.html">Boxed Page</a>
+
+						</li>
+
+						<li >
+
+							<a href="layout_boxed_not_responsive.html">
+
+							Non-Responsive Boxed Layout                     </a>
+
+						</li>
+
+						<li>
+
+							<a href="javascript:;">
+
+							More options
+
+							<span class="arrow"></span>
+
+							</a>
+
+							<ul class="sub-menu">
+
+								<li><a href="#">Second level link</a></li>
+
+								<li>
+
+									<a href="javascript:;">More options<span class="arrow"></span></a>
+
+									<ul class="sub-menu">
+
+										<li><a href="index.html">Third level link</a></li>
+
+										<li><a href="index.html">Third level link</a></li>
+
+										<li><a href="index.html">Third level link</a></li>
+
+										<li><a href="index.html">Third level link</a></li>
+
+										<li><a href="index.html">Third level link</a></li>
+
+									</ul>
+
+								</li>
+
+								<li><a href="index.html">Second level link</a></li>
+
+								<li><a href="index.html">Second level link</a></li>
+
+								<li><a href="index.html">Second level link</a></li>
+
+							</ul>
+
+						</li>
+
+					</ul>
+
+				</li>
+
+				<li>
+
+					<a href="">Tables</a>
+
+				</li>
+
+				<li>
+
+					<a href="">Extra
+
+					<span class="arrow"></span>
+
+					</a>
+
+					<ul class="sub-menu">
+
+						<li><a href="index.html">About Us</a></li>
+
+						<li><a href="index.html">Services</a></li>
+
+						<li><a href="index.html">Pricing</a></li>
+
+						<li><a href="index.html">FAQs</a></li>
+
+						<li><a href="index.html">Gallery</a></li>
+
+						<li><a href="index.html">Registration</a></li>
+
+						<li><a href="index.html">2 Columns (Left)</a></li>
+
+						<li><a href="index.html">2 Columns (Right)</a></li>
+
+					</ul>
+
+				</li>
+
+			</ul>
+
+		</div>
+
+		<!-- END EMPTY PAGE SIDEBAR -->
+
 		<!-- BEGIN PAGE -->
 
 		<div class="page-content">
@@ -568,7 +783,7 @@
 
 			<!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
 
-			<!-- BEGIN PAGE CONTAINER-->        
+			<!-- BEGIN PAGE CONTAINER-->
 
 			<div class="container-fluid">
 
@@ -666,13 +881,7 @@
 
 						</div>
 
-						<!-- END BEGIN STYLE CUSTOMIZER -->  
-
-						<!-- BEGIN PAGE TITLE & BREADCRUMB-->
-
-					
-
-						<!-- END PAGE TITLE & BREADCRUMB-->
+						<!-- END BEGIN STYLE CUSTOMIZER --> 
 
 					</div>
 
@@ -680,18 +889,18 @@
 
 				<!-- END PAGE HEADER-->
 
-				<!-- BEGIN CONTENT-->
+				<!-- BEGIN PAGE CONTENT-->
 				@yield('content')
-				<!-- END CONTENT-->
-				
+
+				<!-- END PAGE CONTENT-->
 
 			</div>
 
-			<!-- END PAGE CONTAINER-->
+			<!-- END PAGE CONTAINER--> 
 
 		</div>
 
-		<!-- END PAGE -->
+		<!-- END PAGE -->    
 
 	</div>
 
@@ -702,7 +911,9 @@
 	<div class="footer">
 
 		<div class="footer-inner">
-		Matching is All - Mapping | 麦聘咨询 &copy; 2015
+
+			Matching is All - Mapping | 麦聘咨询 &copy; 2015
+
 		</div>
 
 		<div class="footer-tools">
@@ -723,7 +934,7 @@
 
 	<!-- BEGIN CORE PLUGINS -->
 
-	<script src="/bootstrap2/media/js/jquery-1.10.1.js" type="text/javascript"></script>
+	<script src="/bootstrap2/media/js/jquery-1.10.1.min.js" type="text/javascript"></script>
 
 	<script src="/bootstrap2/media/js/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
 
@@ -739,7 +950,7 @@
 
 	<script src="/bootstrap2/media/js/respond.min.js"></script>  
 
-	<![endif]-->                    
+	<![endif]-->   
 
 	<script src="/bootstrap2/media/js/jquery.slimscroll.min.js" type="text/javascript"></script>
 
@@ -751,35 +962,19 @@
 
 	<!-- END CORE PLUGINS -->
 
-	<!-- BEGIN PAGE LEVEL PLUGINS -->
+	<script src="/bootstrap2/media/js/app.js"></script>      
 
-	<script type="text/javascript" src="/bootstrap2/media/js/select2.min.js"></script>
-
-	<script type="text/javascript" src="/bootstrap2/media/js/jquery.dataTables.js"></script>
-
-	<script type="text/javascript" src="/bootstrap2/media/js/DT_bootstrap.js"></script>
-
-	<!-- END PAGE LEVEL PLUGINS -->
-
-	<!-- BEGIN PAGE LEVEL SCRIPTS -->
-
-	<script src="/bootstrap2/media/js/app.js"></script>
-
-	<script src="/bootstrap2/media/js/table-advanced.js"></script>     
-	<script src="/bootstrap2/media/js/table-editable.js"></script> 
 	<script>
 
-		jQuery(document).ready(function() {       
+		jQuery(document).ready(function() {    
 
 		   App.init();
 
-		   TableAdvanced.init();
-		   //TableEditable.init();
 		});
 
 	</script>
-	@yield('menuScripts')
-	@yield('scripts')
+
+	<!-- END JAVASCRIPTS -->
 
 </body>
 

@@ -158,6 +158,92 @@
 				</div>
 			</div>
 			<!--/row-->
+
+			<h3 class="form-section">KPI考核</h3>
+
+			<div class="row-fluid">
+
+				<div class="span6 ">
+
+					<div class="control-group">
+
+						<label class="control-label">每日推荐数量</label>
+
+						<div class="controls">
+
+							<input type="text" class="m-wrap span6" placeholder="" name="recommend" id="recommend">
+
+						</div>
+
+					</div>
+
+				</div>
+
+				<!--/span-->
+
+				<div class="span6 ">
+
+					<div class="control-group">
+
+							<label class="control-label">每日跟进数量</label>
+
+						<div class="controls">
+
+							<input type="text" class="m-wrap span6" placeholder="" name="follow" id="follow">
+
+						</div>
+					</div>
+
+				</div>
+
+				<!--/span-->
+
+			</div>
+
+
+			<!--/row-->
+
+			<div class="row-fluid">
+
+				<div class="span6 ">
+
+					<div class="control-group">
+
+						<label class="control-label">每日简历录入</label>
+
+						<div class="controls">
+
+							<input type="text" class="m-wrap span6" placeholder="" name="resume" id="resume">
+
+						</div>
+
+					
+
+					</div>
+
+				</div>
+
+				<div class="span6 ">
+
+					<div class="control-group">
+
+						<label class="control-label">每日Cold Call</label>
+
+						<div class="controls">
+
+							<input type="text" class="m-wrap span6" placeholder="" name="resume" id="resume">
+
+						</div>
+
+					
+
+					</div>
+
+				</div>
+
+				<!--/span-->
+				
+			</div>
 			<div class="form-actions">
 				<input type="hidden" id="user_mode_val" value="create" />
 				<button type="submit" class="btn btn-success" id="user_create" >创建</button>

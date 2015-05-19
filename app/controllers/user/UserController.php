@@ -39,6 +39,14 @@ class UserController extends BaseController {
         return View::make('site/user/index', compact('user'));
     }
 
+    public function getShow($userId, $tab)
+    {
+        $user = User::find($userId);
+        $title = $tab;
+
+        return View::make('mwork/user/info', compact('user', 'tab', 'title'));
+    }
+
     /**
      * Stores new user
      *

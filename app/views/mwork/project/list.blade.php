@@ -402,11 +402,7 @@
 
 @section("scripts")
 
-
-
-
 <script type="text/javascript" src="/bootstrap2/media/js/form-components.js"></script>
-
 <script>
 
 		jQuery(document).ready(function() {       

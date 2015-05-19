@@ -4,12 +4,14 @@
 @stop
 @section('content')
   <!-- BEGIN PAGE CONTENT-->
-<div class="tabbable tabbable-custom tabbable-full-width">
+<div class="tabbable tabbable-custom tabbable-full-width" id="myTab">
 			<ul class="nav nav-tabs">
 
 			<li class="active"><a href="#tab_1_1" data-toggle="tab">团队列表</a></li>
 
+			@if (isset($users))
 			<li><a href="#tab_1_2" data-toggle="tab">团队详细/KPI/考核</a></li>
+			@endif
 
 		</ul>
 
@@ -78,6 +80,7 @@
 		</div>
 		<!-- END EXAMPLE TABLE PORTLET-->
 	</div>
+	@if (isset($users))
 	<div class="tab-pane row-fluid" id="tab_1_2">
 		
 		<!-- BEGIN EXAMPLE TABLE PORTLET-->
@@ -102,7 +105,7 @@
 			</div>
 
 			<div class="portlet-body">
-
+			
 				<table class="table table-striped table-bordered table-hover table-full-width" id="team_table">
 
 					<thead>
@@ -129,7 +132,7 @@
 							<td>{{$user->comment}}</td>
 							<td>{{$user->resume}}</td>
 							<td>{{$user->coldcall}}</td>
-							<td><a href='team_kpi_{{$user->id}}'>详细</a></td>
+							<td><a href='user/{{$user->id}}/kpi' target="view_window">详细</a></td>
 						</tr>
 
 						@endforeach
@@ -138,6 +141,7 @@
 
 					</tbody>
 				</table>
+			
 			<ul class="pagination">
 			
 			</ul>
@@ -145,11 +149,28 @@
 		</div>
 		<!-- END EXAMPLE TABLE PORTLET-->
 	</div>
-
+	@endif
 			
 	</div>
 
 <!-- END PAGE CONTENT-->
 </div>
 				
+@stop
+
+@section("scripts")
+
+<script>
+
+		jQuery(document).ready(function() {       
+			var tabName = "tab_1_1";
+			@if (isset($users)) 
+			 		tabName = "tab_1_2";
+			@endif
+
+		  	$('#myTab a[href="#' + tabName + '"]').tab('show');  
+
+		});
+
+	</script>
 @stop
