@@ -95,6 +95,7 @@ Route::group(array('before' => 'auth'), function(){
     // team
     Route::get('/team', 'TeamController@getIndex');
     Route::get('/team/manage', 'TeamController@getCreate');
+    Route::get('/team_{id}', 'TeamController@getShow');
     Route::post('/team/manage', 'TeamController@postCreate');
 
 
