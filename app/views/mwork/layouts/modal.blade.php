@@ -973,6 +973,7 @@
 		});
 
 	</script>
+	@yield('scripts')
 
 	<!-- END JAVASCRIPTS -->
 

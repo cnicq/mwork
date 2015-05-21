@@ -13,14 +13,15 @@ class CreateCaCommentsTable extends Migration {
         // Creates the candidate table
         Schema::create('cacomments', function($table)
         {
+            print "talbe : cacomments up.\n";
 
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->string('type');
-            $table->string('auth_id');
-            $table->string('ca_id'); // candidate id
-            $table->string('proj_id'); // project id
-            $table->string('content');
+            $table->integer('auth_id');  // who create this comment
+            $table->integer('ca_id');    // candidate id
+            $table->integer('proj_id');  // project id
+            $table->text('content');
+
             $table->timestamps();
         });
     }

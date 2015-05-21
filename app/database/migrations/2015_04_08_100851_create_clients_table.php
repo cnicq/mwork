@@ -14,6 +14,12 @@ class CreateClientsTable extends Migration {
 	{
 		 Schema::create('clients', function($table)
         {
+        	if(Schema::hasTable('clients'))
+			{
+				print "talbe : clients already exist.\n";
+				return;
+			}
+			
             $table->engine = 'InnoDB';
             $table->increments('id')->unsigned();
             $table->integer('company_id')->unsigned();

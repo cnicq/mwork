@@ -39,12 +39,64 @@ class UserController extends BaseController {
         return View::make('site/user/index', compact('user'));
     }
 
-    public function getShow($userId, $tab)
+    public function getShow($userId, $tab, $year = 0, $month = 0)
     {
+        if($year == 0)
+        {
+            $year = date('Y');
+            $month = date('m');
+        }
+
         $user = User::find($userId);
         $title = $tab;
 
-        return View::make('mwork/user/info', compact('user', 'tab', 'title'));
+        $days = cal_days_in_month(CAL_GREGORIAN, intval($month), intval($year));
+        $starting_time = strtotime($year . '-' . $month . '-1');
+        $ending_time = strtotime($year . '-' . $month . '-' . $days);
+        $projInfos = Projectinfo::where('user_id', '=', $userId)
+                    ->whereBetween('created_at', array($starting_time, $ending_time))->select("*")->get();
+
+        $weekday = date("w", $starting_time);
+        //return $weekday;
+        $kpis = array();
+        $types = array('recommend', 'interview', 'comment', 'cv', 'cc', 'day', 'weekday');
+        $weekdays = array('日','一','二','三','四','五','六');
+
+        for($i = 1; $i <= $days; $i++)
+        {
+            $values = array('recommend'=>0, 'interview'=>0, 'comment'=>0, 'cv'=>0, 'cc'=>0, 'day'=>$i, 'weekday'=>'');
+            
+            $values['weekday'] = $weekdays[$weekday];
+            $dayTime = strtotime($year . '-' . $month . '-' . $i);
+            
+            for($j = 0; $j < count($projInfos); $j++)
+            {
+                if(date('Ymd', $projInfos[i]['created_at']) == date('Ymd', $dayTime )) 
+                {
+                    for($k = 0; $k < count($types); ++$k)
+                    {
+                        if($projInfos[i]['type'] == $types[k])
+                        {
+                            $values[$types[k]] += 1;
+                        }
+                    }
+                }
+                
+            }
+
+            if($weekday >= 6 )
+            {
+                $weekday = 0;
+            }
+            else
+            {
+                $weekday += 1;
+            }
+
+            $kpis[] = $values;
+        }
+
+        return View::make('mwork/user/info', compact('user', 'tab', 'title', 'kpis', 'year', 'month'));
     }
 
     /**

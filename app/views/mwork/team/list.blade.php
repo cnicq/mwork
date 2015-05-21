@@ -132,7 +132,7 @@
 							<td>{{$user->comment}}</td>
 							<td>{{$user->resume}}</td>
 							<td>{{$user->coldcall}}</td>
-							<td><a href='user/{{$user->id}}/kpi' target="view_window">详细</a></td>
+							<td><a href='user/{{$user->id}}/kpi/0/0' target="view_window">详细</a></td>
 						</tr>
 
 						@endforeach

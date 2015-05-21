@@ -59,7 +59,7 @@ Route::group(array('before' => 'auth'), function(){
     //Route::get('/manage/datavalue', 'DatavalueController@getList');
 
     // user
-    Route::get('/user/{userId}/{tab}', 'UserController@getShow');
+    Route::get('/user/{userId}/{tab}/{year}/{month}', 'UserController@getShow');
 
     Route::get('/manage/user', 'AdminUsersController@getCreate');
     Route::get('/manage/user/{id}', 'AdminUsersController@getData');
