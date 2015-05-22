@@ -271,7 +271,6 @@
 													<div class="portlet-title">
 
 														<div class="caption"><i class="icon-cogs"></i>候选人筛选
-															<button class="btn purple">候选人搜索 <i class="m-icon-swapright m-icon-white"></i></button>
 															<button class="btn purple">候选人添加 <i class="m-icon-swapright m-icon-white"></i></button>
 
 														</div>
@@ -292,6 +291,7 @@
 															<li class="active"><a href="#ctab_1_1" data-toggle="tab">候选人列表</a></li>
 
 															<li><a href="#ctab_1_2" data-toggle="tab">候选人详细</a></li>
+															<li><a href="#ctab_1_3" data-toggle="tab">候选人搜索</a></li>
 
 														</ul>
 
@@ -300,7 +300,11 @@
 															<div class="tab-pane row-fluid active" id="ctab_1_1">
 															</div>
 
-															<div class="tab-pane row-fluid active" id="ctab_1_2">
+															<div class="tab-pane row-fluid" id="ctab_1_2">
+															</div>
+															<div class="tab-pane row-fluid" id="ctab_1_3">
+																@include('mwork.layouts.candidate')
+
 															</div>
 														</div>
 													</div>

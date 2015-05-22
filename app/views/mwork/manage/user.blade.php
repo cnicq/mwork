@@ -2,36 +2,42 @@
 
 @section('content')
 
-<div class="portlet box green">
+<div class="tabbable tabbable-custom tabbable-full-width" id='myTab'>
+		<ul class="nav nav-tabs">
 
-	<div class="portlet-title">
+				<li class="active"><a href="#tab_1_1" data-toggle="tab">用户列表</a></li>
 
-		<div class="caption"><i class="icon-reorder"></i>用户管理</div>
+				<li><a href="#tab_1_2" data-toggle="tab">新增/修改用户</a></li>
 
-		<div class="tools">
+		</ul>
+		<div class="tab-content">
 
-			<a href="javascript:;" class="collapse"></a>
+			<div class="tab-pane row-fluid active" id="tab_1_1">
 
-			<a href="#portlet-config" data-toggle="modal" class="config"></a>
+				{{-- user list --}}
 
-			<a href="javascript:;" class="reload"></a>
+				<table id="users" class="table table-striped table-hover">
+					<thead>
+						<tr>
+							<th class="col-md-6">{{{ Lang::get('admin/users/table.name') }}}</th>
+							<th class="col-md-2">{{{ Lang::get('table.actions') }}}</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
 
-			<a href="javascript:;" class="remove"></a>
+			<div class="tab-pane row-fluid" id="tab_1_2">
 
-		</div>
-
-	</div>
-
-	<div class="portlet-body form">
-
-		<!-- BEGIN FORM : position manange-->
+				<!-- BEGIN FORM : position manange-->
 
 		<form action="#" class="form-horizontal" id="form_user" method="POST" autocomplete="off">
 			<!-- CSRF Token -->
 			<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
 			<input type="hidden" id="user_id" value="" />
 			<!-- ./ csrf token -->
-			<h3 class="form-section">新增</h3>
+			<h3 class="form-section">基本信息</h3>
 
 			<div class="row-fluid">
 
@@ -253,26 +259,9 @@
 		</form>
 
 		<!-- END FORM : position manage-->   
-	</div>
-</div>
+			</div>
+		</div>
 
-{{-- user list --}}
-	<div class="page-header">
-		<h3>
-			用户列表
-		</h3>
-	</div>
-
-	<table id="users" class="table table-striped table-hover">
-		<thead>
-			<tr>
-				<th class="col-md-6">{{{ Lang::get('admin/users/table.name') }}}</th>
-				<th class="col-md-2">{{{ Lang::get('table.actions') }}}</th>
-			</tr>
-		</thead>
-		<tbody>
-		</tbody>
-	</table>
 @stop
 
 {{-- Scripts --}}
@@ -314,7 +303,6 @@
 
 		function RefreshDataTable(result)
 		{
-			alert(result);
 			oTable._fnAjaxUpdate();
 
 			// clear form
@@ -324,6 +312,7 @@
 			$("#form_user").each(function() {   
 			  this.reset(); 
 			});   
+			$('#myTab a[href="#tab_1_1"]').tab('show');  
 		}
 
 		function ajaxSubmitEdit(fm, cb){
@@ -406,6 +395,9 @@
 						}
 					})
 					$.uniform.update();
+
+					//switch to edit tab
+					$('#myTab a[href="#tab_1_2"]').tab('show');  
 				}
 			});
 		}

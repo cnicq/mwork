@@ -34,9 +34,9 @@
 							<div class="caption"><i class="icon-comments"></i>月报 {{$year}} - {{$month}}</div>
 
 							<div class="tools">
-								<a href="/user/{{$user->id}}/kpi/0/0" class="btn"> 本月</a>
-								<a href="/user/{{$user->id}}/kpi/{{$year}}/{{$month-1}}" class="btn"><i class="icon-plus"></i> 前一月</a>
-								<a href="/user/{{$user->id}}/kpi/{{$year}}/{{$month+1}}" class="btn"><i class="icon-plus"></i> 后一月</a>
+								<button class="btn" id="curMonth"> 本月</button>
+								<button  class="btn"id="prevMonth"><i class="icon-plus"></i> 前一月</button>
+								<button class="btn" id="nextMonth"><i class="icon-plus"></i> 后一月</button>
 								
 							</div>
 
@@ -112,6 +112,40 @@
 			@endif
 
 		  	$('#myTab a[href="#' + tabName + '"]').tab('show');  
+
+		  	var year = {{$year}};
+		  	var month = {{$month}};
+
+		  	$('#prevMonth').click(function(){
+		  		if(month == 1)
+		  		{
+		  			year -= 1;
+		  			month = 12;
+		  		}
+		  		else
+		  		{
+		  			month -= 1;
+		  		}
+		  		location.href = "/user/{{$user->id}}/kpi/" +year+ "/" + month;
+		  	});
+
+		  	$('#nextMonth').click(function(){
+		  		if(month == 12)
+		  		{
+		  			year += 1;
+		  			month = 1;
+		  		}
+		  		else
+		  		{
+		  			month += 1;
+		  		}
+
+		  		location.href = "/user/{{$user->id}}/kpi/" +year+ "/" + month;
+		  	});
+
+		  	$('#curMonth').click(function(){
+		  		 location.href ="/user/{{$user->id}}/kpi/0/0";
+		  	});
 
 		});
 

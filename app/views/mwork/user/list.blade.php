@@ -37,7 +37,6 @@
 											<th>Owner</th>
 											<th>创建时间</th>
 											<th>客户</th>
-
 										</tr>
 
 									</thead>
@@ -46,12 +45,10 @@
 
 										@foreach ($husers as $huser)
 										<tr>
-
 											<td>{{$huser['name']}}</td>
 											<td>{{$huser['owner_id']}}</td>
 											<td>{{$huser['created_date']}}</td>
 											<td>{{$huser['location']}}</td>
-											
 										</tr>
 
 										@endforeach

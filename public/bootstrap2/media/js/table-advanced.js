@@ -54,7 +54,7 @@ var TableAdvanced = function () {
             //"sAjaxSource": "{{ URL::to('admin/blogs/data') }}"
         });
 
-        jQuery('#sample_1_wrapper .dataTables_filter input').addClass("m-wrap small"); // modify table search input
+        jQuery('#sample_1_wrapper .dataTables_filter input').addClass("m-wrap big"); // modify table search input
         jQuery('#sample_1_wrapper .dataTables_length select').addClass("m-wrap small"); // modify table per page dropdown
         jQuery('#sample_1_wrapper .dataTables_length select').select2(); // initialzie select2 dropdown
          

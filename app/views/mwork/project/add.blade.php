@@ -120,9 +120,7 @@
 										<label class="control-label">具体地址</label>
 
 										<div class="controls">
-
 												<input class="m-wrap span6" type="text" id='location' name='location'>
-
 										</div>
 									</div>
 
