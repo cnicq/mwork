@@ -66,7 +66,7 @@ Route::group(array('before' => 'auth'), function(){
     Route::post('/manage/user/edit/{user}', 
         array('as'=>'post_user_edit', 'uses'=>'UserController@postEdit'));
     Route::post('/manage/user/create', 
-        array('as'=>'post_user_create', 'uses'=>'UserController@postCreate'));
+        array('as'=>'post_user_create', 'uses'=>'AdminUsersController@postCreate'));
     Route::get('/manage/user/delete/{user}', 'AdminUsersController@getDelete');
 
     // role

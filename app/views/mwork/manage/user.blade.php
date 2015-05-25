@@ -37,6 +37,10 @@
 			<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
 			<input type="hidden" id="user_id" value="" />
 			<!-- ./ csrf token -->
+			<div class="alert alert-error" id= "error_div" >
+				<button class="close" data-dismiss="alert"></button>
+				<strong>错误!</strong> <p id='error_info'></p>
+			</div>
 			<h3 class="form-section">基本信息</h3>
 
 			<div class="row-fluid">
@@ -252,7 +256,7 @@
 			</div>
 			<div class="form-actions">
 				<input type="hidden" id="user_mode_val" value="create" />
-				<button type="submit" class="btn btn-success" id="user_create" >创建</button>
+				<button type="submit" class="btn btn-success" id="user_create" >新增</button>
 				<button type="submit" class="btn btn-success" id="user_edit" disabled="disabled">修改</button>
 				<button class="btn btn-success" id="user_cancel" >取消</button>
 			</div>
@@ -279,6 +283,8 @@
 		        "sAjaxSource": "{{ URL::to('users/datas') }}"
 			});
 
+			$('#error_div').hide();
+
 			$("#form_user").bind("submit", function(){
 				event.preventDefault();
 				if($("#user_mode_val").val() == 'edit'){
@@ -303,6 +309,14 @@
 
 		function RefreshDataTable(result)
 		{
+			if(result != '')
+			{
+				$('#error_div').show();
+				$('#error_info').text(result);
+				return;
+			}
+
+
 			oTable._fnAjaxUpdate();
 
 			// clear form
@@ -375,6 +389,7 @@
 				contentType: "application/json; charset=utf-8",
 				dataType: "json",
 				success: function (result) {
+					$('#error_div').hide();
 					var userData = result['userData'];
 					
 					$("#user_id").val(userData['id']);

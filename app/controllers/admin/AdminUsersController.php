@@ -108,16 +108,13 @@ class AdminUsersController extends AdminController {
             //$this->user->confirmed = Input::get('confirm');
         }
 
-        // Permissions are currently tied to roles. Can't do this yet.
-        //$user->permissions = $user->roles()->preparePermissionsForSave(Input::get( 'permissions' ));
-
         // Save if valid. Password field will be hashed before save
         $this->user->save();
-        return $this->user->id;
+       
         if ( $this->user->id ) {
             // Save roles. Handles updating.
             $this->user->saveRoles(Input::get( 'roles' ));
-
+            /*
             if (Config::get('confide::signup_email')) {
                 $user = $this->user;
                 Mail::queueOn(
@@ -131,18 +128,15 @@ class AdminUsersController extends AdminController {
                     }
                 );
             }
+            */
 
-            // Redirect to the new user page
-            return Lang::get('admin/users/messages.create.success');
+            return "";
 
         } else {
 
             // Get validation errors (see Ardent package)
             $error = $this->user->errors()->all();
             return json_encode($error);
-            return Redirect::to('admin/users/create')
-                ->withInput(Input::except('password'))
-                ->with( 'error', $error );
         }
     }
 

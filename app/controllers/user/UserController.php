@@ -161,13 +161,10 @@ class UserController extends BaseController {
         }
 
         if ($this->userRepo->save($user)) {
-            return Redirect::to('user')
-                ->with( 'success', Lang::get('user/user.user_account_updated') );
+            return "";
         } else {
             $error = $user->errors()->all(':message');
-            return Redirect::to('user')
-                ->withInput(Input::except('password', 'password_confirmation'))
-                ->with('error', $error);
+            return $error;
         }
 
     }

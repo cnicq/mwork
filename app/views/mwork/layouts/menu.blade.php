@@ -70,7 +70,7 @@
 
 						<a href="/candidate">
 
-						列表</a>
+						搜索</a>
 
 					</li>
 
