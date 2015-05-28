@@ -199,9 +199,10 @@ class UserController extends BaseController {
      */
     public function postLogin()
     {
+
         $repo = App::make('UserRepository');
         $input = Input::all();
-
+        
         if ($this->userRepo->login($input)) {
             return Redirect::intended('/');
         } else {
@@ -213,7 +214,7 @@ class UserController extends BaseController {
                 $err_msg = Lang::get('confide::confide.alerts.wrong_credentials');
             }
 
-            return Redirect::to('user/login')
+            return Redirect::to('/')
                 ->withInput(Input::except('password'))
                 ->with('error', $err_msg);
         }

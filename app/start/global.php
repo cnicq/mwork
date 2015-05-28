@@ -17,6 +17,7 @@ ClassLoader::addDirectories(array(
 	app_path().'/controllers',
 	app_path().'/models',
 	app_path().'/database/seeds',
+    app_path().'/cpa',
 
 ));
 
@@ -108,3 +109,4 @@ require __DIR__.'/../filters.php';
 */
 
 require __DIR__.'/../composers.php';
+
