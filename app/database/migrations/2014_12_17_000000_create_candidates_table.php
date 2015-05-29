@@ -14,7 +14,7 @@ class CreateCandidatesTable extends Migration {
         Schema::create('candidates', function($table)
         {
 
-            $table->engine = 'InnoDB';
+            $table->engine = 'MyISAM'; // fulltext search must use MyISAM engine
             $table->increments('id');
             $table->string('englishname');
             $table->string('chinesename');
@@ -33,8 +33,11 @@ class CreateCandidatesTable extends Migration {
             $table->string('creater');
             $table->string('QQ');
             $table->string('Wechat');
+            $table->text('forSearch'); // for fulltext search
             $table->timestamps();
         });
+
+        DB::statement('ALTER TABLE candidates ADD FULLTEXT search(forSearch)');
     }
 
     /**

@@ -1,7 +1,5 @@
 <?php
 
-require __DIR__.'/../../cpa/cpa.php';
-
 class ProjectController extends ParentController {
 
     /**
@@ -103,7 +101,6 @@ class ProjectController extends ParentController {
         // Validate the inputs
         $validator = Validator::make(Input::all(), $rules);
 
-        return Cpa::getInstance()->parse(Input::get('desc'));
         // Check if the form validates with success
         if ($validator->passes())
         {

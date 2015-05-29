@@ -128,4 +128,14 @@ class CandidateController extends ParentController {
         // Redirect to this blog post page
         return Redirect::to($slug)->withInput()->withErrors($validator);
     }
+
+    public function postSearch()
+    {
+        $q = Input::get('query');
+        $candidates = $this->candidate->whereRaw("MATCH(forSearch) AGAINST(? IN BOOLEAN MODE)", array($q))->get()->paginate(10);
+
+        // Show the page
+        return View::make('mwork/candidate/list', compact('candidates'), $this->Titles("id_candidate", 'id_candidate_list'));
+
+    }
 }

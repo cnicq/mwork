@@ -7,6 +7,8 @@ error_reporting(E_ALL);
 
 require_once 'phpanalysis.class.php';
 
+//return Cpa::getInstance()->parse(Input::get('desc'));
+
 class Cpa
 {
     private static $_instance;
