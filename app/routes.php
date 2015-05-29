@@ -46,9 +46,10 @@ Route::group(array('before' => 'auth'), function(){
 
     // candidate
     Route::get('/candidate', 'CandidateController@getIndex');
-    Route::get('/candidate/add', 'CandidateController@getAdd');
+    Route::get('/candidate/add', 'CandidateController@getCreate');
     Route::get('/candidate/manage', 'CandidateController@getManage');
     Route::post('/candidate/search', 'CandidateController@postSearch');
+    Route::post('/candidate/add', 'CandidateController@postCreate');
 
     // manage - get
     Route::get('/manage/company', 'CompanyController@getManage');

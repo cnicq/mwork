@@ -47,6 +47,62 @@ class CandidateController extends ParentController {
         return View::make('mwork/candidate/add', compact('candidates'),$this->Titles("id_candidate", 'id_candidate_add'));
     }
 
+    public function postCreate()
+    {
+        // Check if the form validates with success
+        if (true)
+        {
+            $user = Auth::user();
+            // TODO:check auth
+
+ $table->increments('id');
+            $table->string('');
+            $table->string('');
+            $table->string('');
+            $table->string('');
+            $table->string('location');
+            $table->string('hometown');
+            $table->string('label'); //tags
+            $table->string('mobile');
+            $table->string('email');
+            $table->string('company');
+            $table->string('title');
+            $table->string('status');
+            $table->string('resumes');
+            $table->text('notes');
+            $table->string('creater');
+            $table->string('QQ');
+            $table->string('Wechat');
+            $table->text('forSearch'); // for fulltext search
+            
+            // candidate data
+            $this->candidate->englishname           = Input::get('englishname');
+            $this->candidate->chinesename             = Input::get('chinesename');
+            $this->candidate->gender       = Input::get('gender');
+            $this->candidate->head_count          = Input::get('head_count');
+            $this->candidate->position_name       = Input::get('position_name');
+            $this->candidate->income              = Input::get('income');
+            $this->candidate->location            = Input::get('location');
+            $this->candidate->desc                = Input::get('desc');
+            $this->candidate->starttime           = Input::get('starttime');
+            $this->candidate->endtime             = Input::get('endtime');
+            
+
+            // Was the blog project created?
+            if($this->candidate->save())
+            {
+                // Redirect to the new candidate page
+                return $this->getIndex();
+            }
+
+            // Redirect to the candidate create page
+            return $this->getIndex();
+        }
+
+        // Form validation failed
+        return $this->getIndex();
+    }
+
     public function getManage()
     {
         $this->smallTitle = 'id_candidate_manage';
