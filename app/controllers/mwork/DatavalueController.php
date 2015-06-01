@@ -27,7 +27,7 @@ class DatavalueController extends ParentController {
      */
     public function getList($type=null)
     {   
-        $datatypes = $this->datatype->paginate(20);
+        $datatypes = $this->datatype->paginate(5);
         if(is_null($type)){
             $type = $datatypes[0]['name'];
         }

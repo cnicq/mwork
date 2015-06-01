@@ -32,9 +32,18 @@ class CandidateController extends ParentController {
     {
          
         $candidates = $this->candidate->orderBy('updated_at', 'DESC')->paginate(20);
-        //return gettype($candidates);
-        $keys = "";
+
+        $this->dealWithData($candidates);
+
+        // Show the page
+        return View::make('mwork/candidate/list', compact('candidates'), $this->Titles("id_candidate", 'id_candidate_list'));
+    }
+
+    private function dealWithData(&$candidates)
+    {
+         $keys = "111";
         foreach ($candidates as $key1 => $value1) {
+             $keys = $keys + $key1;
             $company = DB::table('companys')->where('id','=',$value1['company'])->first();
             if($company == null){
                 $value1['company'] = '/';
@@ -46,9 +55,9 @@ class CandidateController extends ParentController {
             $value1['position'] = DatavalueUtil::getInstance()->getDataValueText('position', $value1['position']);
             $value1['gender'] = DatavalueUtil::getInstance()->getGenderText($value1['gender']);
         }
+
+        return $keys;
          
-        // Show the page
-        return View::make('mwork/candidate/list', compact('candidates'), $this->Titles("id_candidate", 'id_candidate_list'));
     }
 
     public function getAdd()
@@ -206,13 +215,12 @@ class CandidateController extends ParentController {
         return Redirect::to($slug)->withInput()->withErrors($validator);
     }
 
-    public function postSearch()
+    public function getSearch($keywords = '')
     {
-        $q = Input::get('query');
-        $candidates = $this->candidate->whereRaw("MATCH(forSearch) AGAINST(? IN BOOLEAN MODE)", array($q))->get()->paginate(10);
+        $candidates = Candidate::select(array('candidates.chinesename'))->whereRaw("MATCH(searchtext) AGAINST(? IN BOOLEAN MODE)", array('章忠杰'));
 
-        // Show the page
-        return View::make('mwork/candidate/list', compact('candidates'), $this->Titles("id_candidate", 'id_candidate_list'));
-
+        //$this->dealWithData($candidates);
+        return Datatables::of($candidates)
+        ->make();
     }
 }

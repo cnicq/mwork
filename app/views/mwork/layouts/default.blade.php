@@ -763,10 +763,11 @@
 
 	<!-- BEGIN PAGE LEVEL SCRIPTS -->
 
-	<script src="/bootstrap2/media/js/app.js"></script>
+	<script src="/bootstrap2/media/js/app.js" ></script>
+	<script src="/bootstrap2/media/js/language.js" charset='gb2312'></script>
 
-	<script src="/bootstrap2/media/js/table-advanced.js"></script>     
-	<script src="/bootstrap2/media/js/table-editable.js"></script> 
+	<script src="/bootstrap2/media/js/table-advanced.js" ></script>     
+	<script src="/bootstrap2/media/js/table-editable.js" ></script> 
 	<script>
 
 		jQuery(document).ready(function() {       

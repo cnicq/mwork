@@ -1,3 +1,4 @@
+<!--
 <table class="table table-striped table-bordered table-hover table-full-width" id="sample_1">
 <thead>
 	<tr>
@@ -51,3 +52,28 @@
 {{$candidates->links()}}
 @endif
 </ul>
+!-->
+
+<table class="table table-striped table-bordered table-hover table-full-width" id="sample_1">
+<thead>
+	<tr>
+
+		<th>中文名</th>
+
+		<th>英文名</th>
+		<th>性别</th>
+		<th>所在地</th>
+		<th class="hidden-480">电话</th>
+		<th class="hidden-480">所在公司</th>
+		<th class="hidden-480">职位</th>
+		<th style="display:none;"></th>
+		<th style="display:none;"></th>
+		<th style="display:none;"></th>
+		<th style="display:none;"></th>
+		<th style="display:none;"></th>
+		<th style="display:none;"></th>
+	</tr>
+
+</thead>
+
+</table>

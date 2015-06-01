@@ -1,21 +1,26 @@
 var TableAdvanced = function () {
 
     var initTable1 = function() {
-
         /* Formating function for row details */
         function fnFormatDetails ( oTable, nTr )
         {
             var aData = oTable.fnGetData( nTr );
             var sOut = '<table>';
-            sOut += '<tr><td>材料:</td><td>'+aData[8]+'</td></tr>';
-            sOut += '<tr><td>家乡:</td><td>'+aData[9]+'</td></tr>';
-            sOut += '<tr><td>状态:</td><td>'+aData[10]+'</td></tr>';
-            sOut += '<tr><td>简历:</td><td>'+aData[11]+'</td></tr>';
-            sOut += '<tr><td>备注:</td><td>'+aData[12]+'</td></tr>';
-            sOut += '<tr><td>标签:</td><td>'+aData[13]+'</td></tr>';
+            sOut += '<tr><td>' + ChineseLan.mat+':</td><td>'+aData[8]+'</td></tr>';
+            sOut += '<tr><td>' + ChineseLan.home+':</td><td>'+aData[9]+'</td></tr>';
+            sOut += '<tr><td>' + ChineseLan.status+':</td><td>'+aData[10]+'</td></tr>';
+            sOut += '<tr><td>' + ChineseLan.cv+':</td><td>'+aData[11]+'</td></tr>';
+            sOut += '<tr><td>' + ChineseLan.note+':</td><td>'+aData[12]+'</td></tr>';
+            sOut += '<tr><td>' + ChineseLan.tag+':</td><td>'+aData[13]+'</td></tr>';
             sOut += '</table>';
              
             return sOut;
+        }
+
+        function fnGetData(oTable, sKeywords)
+        {
+            alert(0);
+            oTable.fnReloadAjax('/candidate/search/' + sKeywords);
         }
 
         /*
@@ -47,12 +52,23 @@ var TableAdvanced = function () {
             ],
             // set the initial value
             "iDisplayLength": 10,
-            "bPaginate":false,
+            "bPaginate":true,
             "bInfo":false,
-            //"bServerSide":true,
-            "bProcessing": true
-            
-            //"sAjaxSource": "{{ URL::to('admin/blogs/data') }}"
+            "bServerSide":true,
+            "bProcessing": false,
+            "sAjaxSource":'/candidate/search/'
+        });
+
+        fnFormatDetails(oTable);
+
+        //Remove default datatable logic tied to these events
+        var searchbox = jQuery('#sample_1_wrapper .dataTables_filter input');
+        searchbox.unbind();
+        searchbox.bind('keyup change', function (e) {
+           if(e.keyCode == 13) {
+                fnGetData(oTable, this.value);
+           }
+           return;
         });
 
         jQuery('#sample_1_wrapper .dataTables_filter input').addClass("m-wrap big"); // modify table search input

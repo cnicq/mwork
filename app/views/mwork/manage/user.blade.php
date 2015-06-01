@@ -19,8 +19,8 @@
 				<table id="users" class="table table-striped table-hover">
 					<thead>
 						<tr>
-							<th class="col-md-6">{{{ Lang::get('admin/users/table.name') }}}</th>
-							<th class="col-md-2">{{{ Lang::get('table.actions') }}}</th>
+							<th class="col-md-6">用户名</th>
+							<th class="col-md-2">操作</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -278,7 +278,7 @@
 				"oLanguage": {
 					"sLengthMenu": "每页 _MENU_"
 				},
-				"bProcessing": false,
+				"bProcessing": true,
 		        "bServerSide": true,
 		        "sAjaxSource": "{{ URL::to('users/datas') }}"
 			});
@@ -315,7 +315,6 @@
 				$('#error_info').text(result);
 				return;
 			}
-
 
 			oTable._fnAjaxUpdate();
 
