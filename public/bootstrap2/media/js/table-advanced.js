@@ -50,7 +50,8 @@ var TableAdvanced = function () {
             "bPaginate":false,
             "bInfo":false,
             //"bServerSide":true,
-            "bProcessing": true,
+            "bProcessing": true
+            
             //"sAjaxSource": "{{ URL::to('admin/blogs/data') }}"
         });
 

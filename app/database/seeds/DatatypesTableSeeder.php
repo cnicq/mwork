@@ -22,6 +22,10 @@ class DatatypesTableSeeder extends Seeder {
             array(
                 'name'      => 'position',
                 'text'      => '职位',
+            ),
+            array(
+                'name'      => 'cvsite',
+                'text'      => '简历来源',
             )
         );
 
@@ -56,7 +60,7 @@ class DatatypesTableSeeder extends Seeder {
       
         DB::table('datavalues')->insert( $industrys );
 
-        $positionTexts = array('工程师-初级','工程师-中级','工程师-高级','架构师','首席技术官','销售-初级','销售-中级','销售-高级','销售-总监', '助理顾问', '顾问');
+        $positionTexts = array('工程师-初级','工程师-中级','工程师-高级','架构师','首席技术官CTO','销售-初级','销售-中级','销售-高级','销售-总监', '助理顾问', '顾问');
         $positions = [];
         for($i = 0; $i < count($positionTexts); $i++)
         {
@@ -69,6 +73,20 @@ class DatatypesTableSeeder extends Seeder {
       
 
         DB::table('datavalues')->insert( $positions );
+
+        $cvsiteTexts = array('智联招聘','51job','猎聘网');
+        $cvsites = [];
+        for($i = 0; $i < count($cvsiteTexts); $i++)
+        {
+            array_push($cvsites,   array(
+                'type'      => 'cvsite',
+                'name'      =>  $i,
+                'text'      =>  $cvsiteTexts[$i]
+            ));
+        }
+      
+
+        DB::table('datavalues')->insert( $cvsites );
 
     }
 

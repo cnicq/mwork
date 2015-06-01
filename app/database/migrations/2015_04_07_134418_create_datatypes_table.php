@@ -27,6 +27,7 @@ class CreateDatatypesTable extends Migration {
             $table->string('type'); // data type name
             $table->string('name');
             $table->string('text');
+            $table->string('value');
         });
         
     }

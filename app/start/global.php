@@ -18,6 +18,7 @@ ClassLoader::addDirectories(array(
 	app_path().'/models',
 	app_path().'/database/seeds',
     app_path().'/cpa',
+    app_path().'util'
 
 ));
 
@@ -112,4 +113,7 @@ require __DIR__.'/../composers.php';
 
 
 require __DIR__.'/../cpa/cpa.php';
+require __DIR__.'/../util/DatavalueUtil.php';
+
+
 

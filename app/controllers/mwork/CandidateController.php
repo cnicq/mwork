@@ -32,7 +32,21 @@ class CandidateController extends ParentController {
     {
          
         $candidates = $this->candidate->orderBy('updated_at', 'DESC')->paginate(20);
-        
+        //return gettype($candidates);
+        $keys = "";
+        foreach ($candidates as $key1 => $value1) {
+            $company = DB::table('companys')->where('id','=',$value1['company'])->first();
+            if($company == null){
+                $value1['company'] = '/';
+            }
+            else 
+            {
+                $value1['company'] = $company->chinesename;
+            }
+            $value1['position'] = DatavalueUtil::getInstance()->getDataValueText('position', $value1['position']);
+            $value1['gender'] = DatavalueUtil::getInstance()->getGenderText($value1['gender']);
+        }
+         
         // Show the page
         return View::make('mwork/candidate/list', compact('candidates'), $this->Titles("id_candidate", 'id_candidate_list'));
     }
@@ -41,10 +55,16 @@ class CandidateController extends ParentController {
     {
         $this->smallTitle = 'id_candidate_add';
 
-        $candidates = $this->candidate->orderBy('updated_at', 'DESC')->paginate(20);
+        $companys = DB::table('companys')->orderBy('updated_at', 'DESC')->get();
+        $citys = DB::table('datavalues')->where('type', '=', 'city')->get();
+        $industrys = DB::table('datavalues')->where('type', '=', 'industry')->get();
+        $positions = DB::table('datavalues')->where('type', '=', 'position')->get();
+        $cvsites = DB::table('datavalues')->where('type', '=', 'cvsite')->get();
 
         // Show the page
-        return View::make('mwork/candidate/add', compact('candidates'),$this->Titles("id_candidate", 'id_candidate_add'));
+        return View::make('mwork/candidate/add', 
+            compact('companys', 'citys', 'industrys', 'positions', 'cvsites'),
+            $this->Titles("id_candidate", 'id_candidate_add'));
     }
 
     public function postCreate()
@@ -54,38 +74,39 @@ class CandidateController extends ParentController {
         {
             $user = Auth::user();
             // TODO:check auth
+            $forSearch = '';
+            $e = Input::all();
+            foreach($e as $k=>$v){
+                $forSearch = $forSearch.' '.$v;
+            }
 
- $table->increments('id');
-            $table->string('');
-            $table->string('');
-            $table->string('');
-            $table->string('');
-            $table->string('location');
-            $table->string('hometown');
-            $table->string('label'); //tags
-            $table->string('mobile');
-            $table->string('email');
-            $table->string('company');
-            $table->string('title');
-            $table->string('status');
-            $table->string('resumes');
-            $table->text('notes');
-            $table->string('creater');
-            $table->string('QQ');
-            $table->string('Wechat');
-            $table->text('forSearch'); // for fulltext search
-            
             // candidate data
             $this->candidate->englishname           = Input::get('englishname');
-            $this->candidate->chinesename             = Input::get('chinesename');
-            $this->candidate->gender       = Input::get('gender');
-            $this->candidate->head_count          = Input::get('head_count');
-            $this->candidate->position_name       = Input::get('position_name');
-            $this->candidate->income              = Input::get('income');
-            $this->candidate->location            = Input::get('location');
-            $this->candidate->desc                = Input::get('desc');
-            $this->candidate->starttime           = Input::get('starttime');
-            $this->candidate->endtime             = Input::get('endtime');
+            $this->candidate->chinesename           = Input::get('chinesename');
+            $this->candidate->gender                = Input::get('gender');
+            $this->candidate->location              = Input::get('location');
+            $this->candidate->city                  = Input::get('city');
+            $this->candidate->maritalstatus         = Input::get('maritalstatus');
+            $this->candidate->hometown              = Input::get('hometown');
+            $this->candidate->label                 = Input::get('label');
+            $this->candidate->mobile                = Input::get('mobile');
+            $this->candidate->birthday              = Input::get('birthday');
+            $this->candidate->tel                   = Input::get('tel');
+            $this->candidate->email                 = Input::get('email');
+            $this->candidate->company               = Input::get('company');
+            $this->candidate->position              = Input::get('position');
+            $this->candidate->status                = Input::get('status');
+            $this->candidate->resumes               = Input::get('resumes');
+            $this->candidate->notes                 = Input::get('notes');
+            $this->candidate->creater_id            = Input::get('creater_id');
+            $this->candidate->QQ                    = Input::get('QQ');
+            $this->candidate->wechat                = Input::get('wechat');
+            $this->candidate->cvsite                = Input::get('cvsite');
+            $this->candidate->cvNO                  = Input::get('cvNO');
+            $this->candidate->resumes                = Input::get('resumes');
+            $this->candidate->cvpath                = Input::get('resumes');
+            $this->candidate->creater_id                = $user->id;
+            $this->candidate->searchtext                = $forSearch;
             
 
             // Was the blog project created?
