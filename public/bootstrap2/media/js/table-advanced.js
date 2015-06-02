@@ -19,7 +19,8 @@ var TableAdvanced = function () {
 
         function fnGetData(oTable, sKeywords)
         {
-            alert(0);
+            if(!sKeywords) sKeywords = "";
+
             oTable.fnReloadAjax('/candidate/search/' + sKeywords);
         }
 
@@ -54,14 +55,13 @@ var TableAdvanced = function () {
             "iDisplayLength": 10,
             "bPaginate":true,
             "bInfo":false,
-            "bServerSide":true,
+            "bServerSide":false,
             "bProcessing": false,
-            "sAjaxSource":'/candidate/search/'
+            "bFilter":false
         });
 
-        fnFormatDetails(oTable);
-
         //Remove default datatable logic tied to these events
+        /*
         var searchbox = jQuery('#sample_1_wrapper .dataTables_filter input');
         searchbox.unbind();
         searchbox.bind('keyup change', function (e) {
@@ -70,6 +70,7 @@ var TableAdvanced = function () {
            }
            return;
         });
+*/
 
         jQuery('#sample_1_wrapper .dataTables_filter input').addClass("m-wrap big"); // modify table search input
         jQuery('#sample_1_wrapper .dataTables_length select').addClass("m-wrap small"); // modify table per page dropdown
@@ -206,7 +207,16 @@ var TableAdvanced = function () {
             initTable1();
             initTable2();
             initTable3();
+        },
+        initDetailTable : function(formName){
+            if (!jQuery().dataTable) {
+                return;
+            }
+
+            initTable1(formName);
         }
+
+
 
     };
 

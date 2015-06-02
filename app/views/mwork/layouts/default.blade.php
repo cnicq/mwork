@@ -19,6 +19,7 @@
 	<meta content="" name="description" />
 
 	<meta content="" name="author" />
+	<meta name="csrf-token" content="<?= csrf_token() ?>">
 
 	@yield('metas')
 
@@ -53,6 +54,55 @@
 	<link rel="shortcut icon" href="/bootstrap2/media/image/favicon.ico" />
 
 	@yield('csss')
+
+	<!-- BEGIN CORE PLUGINS -->
+
+	<script src="/bootstrap2/media/js/jquery-1.10.1.js" type="text/javascript"></script>
+
+	<script src="/bootstrap2/media/js/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
+
+	<!-- IMPORTANT! Load jquery-ui-1.10.1.custom.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+
+	<script src="/bootstrap2/media/js/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>      
+
+	<script src="/bootstrap2/media/js/bootstrap.min.js" type="text/javascript"></script>
+
+	<!--[if lt IE 9]>
+
+	<script src="/bootstrap2/media/js/excanvas.min.js"></script>
+
+	<script src="/bootstrap2/media/js/respond.min.js"></script>  
+
+	<![endif]-->                    
+
+	<script src="/bootstrap2/media/js/jquery.slimscroll.min.js" type="text/javascript"></script>
+
+	<script src="/bootstrap2/media/js/jquery.blockui.min.js" type="text/javascript"></script>  
+
+	<script src="/bootstrap2/media/js/jquery.cookie.min.js" type="text/javascript"></script>
+
+	<script src="/bootstrap2/media/js/jquery.uniform.min.js" type="text/javascript" ></script>
+
+	<!-- END CORE PLUGINS -->
+
+	<!-- BEGIN PAGE LEVEL PLUGINS -->
+
+	<script type="text/javascript" src="/bootstrap2/media/js/select2.min.js"></script>
+
+	<script type="text/javascript" src="/bootstrap2/media/js/jquery.dataTables.js"></script>
+
+	<script type="text/javascript" src="/bootstrap2/media/js/DT_bootstrap.js"></script>
+
+	<!-- END PAGE LEVEL PLUGINS -->
+
+	<!-- BEGIN PAGE LEVEL SCRIPTS -->
+
+	<script src="/bootstrap2/media/js/app.js" ></script>
+	<script src="/bootstrap2/media/js/language.js" charset='gb2312'></script>
+	<script src="/assets/js/datatables.fnReloadAjax.js" ></script> 
+	<script src="/assets/js/util.js" ></script> 
+	<script src="/bootstrap2/media/js/table-advanced.js" ></script>     
+	<script src="/bootstrap2/media/js/table-editable.js" ></script> 
 
 </head>
 
@@ -721,57 +771,17 @@
 
 	<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
 
-	<!-- BEGIN CORE PLUGINS -->
+	
 
-	<script src="/bootstrap2/media/js/jquery-1.10.1.js" type="text/javascript"></script>
-
-	<script src="/bootstrap2/media/js/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
-
-	<!-- IMPORTANT! Load jquery-ui-1.10.1.custom.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
-
-	<script src="/bootstrap2/media/js/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>      
-
-	<script src="/bootstrap2/media/js/bootstrap.min.js" type="text/javascript"></script>
-
-	<!--[if lt IE 9]>
-
-	<script src="/bootstrap2/media/js/excanvas.min.js"></script>
-
-	<script src="/bootstrap2/media/js/respond.min.js"></script>  
-
-	<![endif]-->                    
-
-	<script src="/bootstrap2/media/js/jquery.slimscroll.min.js" type="text/javascript"></script>
-
-	<script src="/bootstrap2/media/js/jquery.blockui.min.js" type="text/javascript"></script>  
-
-	<script src="/bootstrap2/media/js/jquery.cookie.min.js" type="text/javascript"></script>
-
-	<script src="/bootstrap2/media/js/jquery.uniform.min.js" type="text/javascript" ></script>
-
-	<!-- END CORE PLUGINS -->
-
-	<!-- BEGIN PAGE LEVEL PLUGINS -->
-
-	<script type="text/javascript" src="/bootstrap2/media/js/select2.min.js"></script>
-
-	<script type="text/javascript" src="/bootstrap2/media/js/jquery.dataTables.js"></script>
-
-	<script type="text/javascript" src="/bootstrap2/media/js/DT_bootstrap.js"></script>
-
-	<!-- END PAGE LEVEL PLUGINS -->
-
-	<!-- BEGIN PAGE LEVEL SCRIPTS -->
-
-	<script src="/bootstrap2/media/js/app.js" ></script>
-	<script src="/bootstrap2/media/js/language.js" charset='gb2312'></script>
-
-	<script src="/bootstrap2/media/js/table-advanced.js" ></script>     
-	<script src="/bootstrap2/media/js/table-editable.js" ></script> 
 	<script>
 
 		jQuery(document).ready(function() {       
 
+			$.ajaxSetup({
+			    headers: {
+			        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+			    }
+			});
 		   App.init();
 
 		   TableAdvanced.init();

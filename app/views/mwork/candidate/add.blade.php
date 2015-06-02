@@ -39,7 +39,7 @@
 
 						<div class="controls">
 
-							<input type="text" class="m-wrap span12" placeholder="张无忌" id='chinesename' name='chinesename'>
+							<input type="text" class="m-wrap span12" placeholder="" id='chinesename' name='chinesename'>
 
 						</div>
 
@@ -57,7 +57,7 @@
 
 						<div class="controls">
 
-							<input type="text" class="m-wrap span12" placeholder="Justin Zhang" id='englishname' name='englishname'> 
+							<input type="text" class="m-wrap span12" placeholder="" id='englishname' name='englishname'> 
 
 						</div>
 
@@ -105,7 +105,7 @@
 
 						<div class="controls">
 
-							<input type="text" class="m-wrap span12" placeholder="1985-06-28" id='birthday' name='birthday'>
+							<input type="text" class="m-wrap span12" placeholder="" id='birthday' name='birthday'>
 
 						</div>
 

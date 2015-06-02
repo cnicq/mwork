@@ -76,6 +76,13 @@ class CandidateController extends ParentController {
             $this->Titles("id_candidate", 'id_candidate_add'));
     }
 
+    public function postSearch()
+    {
+        $candidates = $this->candidate->orderBy('updated_at', 'DESC')->paginate(20);
+       
+        return View::make('mwork/layouts/candidate', compact('candidates'));
+    }
+
     public function postCreate()
     {
         // Check if the form validates with success
@@ -217,10 +224,11 @@ class CandidateController extends ParentController {
 
     public function getSearch($keywords = '')
     {
-        $candidates = Candidate::select(array('candidates.chinesename'))->whereRaw("MATCH(searchtext) AGAINST(? IN BOOLEAN MODE)", array('章忠杰'));
-
+        $keywordsArr = explode(' ', $keywords);
+        //return json_encode("{key:" . $keywords . "}");
+        $candidates = Candidate::select('*')->whereRaw("MATCH(searchtext) AGAINST(? IN BOOLEAN MODE)", $keywordsArr);
         //$this->dealWithData($candidates);
         return Datatables::of($candidates)
-        ->make();
+                ->make();
     }
 }

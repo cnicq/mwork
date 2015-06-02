@@ -60,11 +60,12 @@ class ProjectController extends ParentController {
         $citys = DB::table('datavalues')->where('type', '=', 'city')->get();
         $teams = DB::table('teams')->get();
         $users = DB::table('users')->get();
+        $companys = DB::table('companys')->get();
         $company = Company::find($project->company_id);
 
         
         // Show the page
-        return View::make('mwork/project/list', compact('projects', 'project', 'positions', 'citys', 'teams', 'users', 'project_id', 'company'), $this->Titles('id_project', 'id_project_my'));
+        return View::make('mwork/project/list', compact('projects', 'project', 'positions', 'companys', 'citys', 'teams', 'users', 'project_id', 'company'), $this->Titles('id_project', 'id_project_my'));
     }
 
 	/**
