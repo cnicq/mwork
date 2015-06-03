@@ -1,9 +1,6 @@
 <?php
 
 class CandidateController extends ParentController {
-
-    
-
     /**
      * candidate Model
      * @var candidate
@@ -30,19 +27,32 @@ class CandidateController extends ParentController {
      */
     public function getIndex()
     {
-        
+       
         $candidates = $this->candidate->orderBy('updated_at', 'DESC')->paginate(20);
+        
+        return $this->showList($candidates);
+       
+    }
+
+    public function showList($candidates, $mode='candidate', $blade='mwork/candidate/list')
+    {
+        $companys = DB::table('companys')->orderBy('updated_at', 'DESC')->get();
+        $citys = DB::table('datavalues')->where('type', '=', 'city')->get();
+        $industrys = DB::table('datavalues')->where('type', '=', 'industry')->get();
+        $positions = DB::table('datavalues')->where('type', '=', 'position')->get();
 
         $this->dealWithData($candidates);
 
-        // Show the page
-        return View::make('mwork/candidate/list', compact('candidates'), $this->Titles("id_candidate", 'id_candidate_list'));
+         // Show the page
+        return View::make($blade, compact('candidates', 'companys', 'citys', 'industrys', 'positions', 'mode'), 
+            $this->Titles("id_candidate", 'id_candidate_list'));
     }
 
     private function dealWithData(&$candidates)
     {
+        $keys = '';
         foreach ($candidates as $key1 => $value1) {
-             $keys = $keys + $key1;
+             $keys = $keys.$key1;
             $company = DB::table('companys')->where('id','=',$value1['company'])->first();
             if($company == null){
                 $value1['company'] = '/';
@@ -75,12 +85,45 @@ class CandidateController extends ParentController {
             $this->Titles("id_candidate", 'id_candidate_add'));
     }
 
-    public function postSearch()
+    public function postSearch($mode = 'candidate')
     {
-        $candidates = $this->candidate->orderBy('updated_at', 'DESC')->paginate(20);
-        $mode = 'candidate';
-       
-        return View::make('mwork/layouts/candidate', compact('candidates', 'mode'));
+        $candidates = null;
+        
+        $keywords = Input::get('keywords');
+        if($keywords != '')
+        {
+            $keywordsArr = explode(' ', $keywords);
+            $candidates = Candidate::select('*')->whereRaw("MATCH(searchtext) AGAINST(? IN BOOLEAN MODE)", $keywordsArr)->paginate(20);    
+        }
+        else
+        {
+
+            $inputs = Input::except('keywords', '_token');
+            $whereArr = array();
+
+            foreach ($inputs as $key => $value) {
+                if($value != ''){
+                    $whereArr[$key] = $value;
+                }
+            }
+          
+            if(count($whereArr) > 0)
+            {
+                $candidates = $this->candidate->where($whereArr)->orderBy('updated_at', 'DESC')->paginate(20);    
+            }
+            else
+            {
+                $candidates = $this->candidate->orderBy('updated_at', 'DESC')->paginate(20); 
+            }
+        }
+
+        $this->dealWithData($candidates);
+        $blade = 'mwork/candidate/part_list_general';
+        if($mode == 'project'){
+            $blade = 'mwork/candidate/part_list_project';
+        }
+
+        return $this->showList($candidates,$mode, $blade);
     }
 
     public function postCreate()
@@ -123,7 +166,6 @@ class CandidateController extends ParentController {
             $this->candidate->cvpath                = Input::get('resumes');
             $this->candidate->creater_id                = $user->id;
             $this->candidate->searchtext                = $forSearch;
-            
 
             // Was the blog project created?
             if($this->candidate->save())

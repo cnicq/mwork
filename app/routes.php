@@ -50,7 +50,7 @@ Route::group(array('before' => 'auth'), function(){
     Route::get('/candidate/manage', 'CandidateController@getManage');
     //Route::get('/candidate/search/{keywords?}', 'CandidateController@getSearch');
     Route::post('/candidate/add', 'CandidateController@postCreate');
-    Route::post('/candidate/search', 'CandidateController@postSearch');
+    Route::post('/candidate/search/{mode}', 'CandidateController@postSearch');
 
     // manage - get
     Route::get('/manage/company', 'CompanyController@getManage');

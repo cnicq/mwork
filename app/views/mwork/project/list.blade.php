@@ -303,10 +303,8 @@
 															<div class="tab-pane row-fluid" id="ctab_1_2">
 															</div>
 															<div class="tab-pane row-fluid" id="ctab_1_3">
-																@include('mwork.candidate.search')
+																@include('mwork.candidate.part_search')
 																<div id='candidate_list'></div>
-																
-
 															</div>
 														</div>
 													</div>

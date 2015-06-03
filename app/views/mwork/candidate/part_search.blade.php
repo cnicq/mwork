@@ -1,4 +1,4 @@
-<action="#" class="form-horizontal"  method="POST" autocomplete="off" id='form_search_candidate' name='form_search_candidate'>
+<form action="#" class="form-horizontal"  method="POST" autocomplete="off" id='form_search_candidate' name='form_search_candidate' >
 	<!-- CSRF Token -->
 		<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
 	<!-- ./ csrf token -->
@@ -12,7 +12,7 @@
 
 				<div class="controls">
 
-					<input type="text" class="m-wrap" placeholder="" id='chinesename' name='chinesename'>
+					<input type="text" class="m-wrap" placeholder="" id='keywords' name='keywords'>
 
 				</div>
 
@@ -30,7 +30,7 @@
 
 				<div class="controls">
 
-					<input type="text" class="m-wrap" placeholder="" id='englishname' name='englishname'> 
+					<input type="text" class="m-wrap" placeholder="" id='chinesename' name='chinesename'> 
 
 				</div>
 
@@ -71,7 +71,7 @@
 				<div class="controls">
 
 							<select class="m-wrap " id='company' name='company'>
-								<option>请选择...</option>
+								<option value=''>请选择...</option>
 								@foreach ($companys as $company)
 								<option value='{{$company->id}}' linkman='{{$company->linkman_chinesename}}|{{$company->linkman_englishname}}'> {{$company->chinesename}} </option>
 								@endforeach
@@ -92,7 +92,7 @@
 				<div class="controls">
 
 							<select class="m-wrap" id='city' name='city'>
-							<option> 请选择...</option>
+							<option value=''> 请选择...</option>
 							@foreach ($citys as $city)
 								<option value='{{$city->name}}'> {{$city->text}} </option>
 							@endforeach
@@ -114,7 +114,7 @@
 				<div class="controls">
 
 							<select class="m-wrap" id='position' name='position'>
-							<option> 请选择...</option>
+							<option value=''> 请选择...</option>
 							@foreach ($positions as $position)
 								<option value='{{$position->name}}'> {{$position->text}} </option>
 							@endforeach
@@ -140,7 +140,7 @@
 
 				<div class="controls">
 
-					<input type="text" class="m-wrap" placeholder="" id='chinesename' name='chinesename'>
+					<input type="text" class="m-wrap" placeholder="" id='mobile' name='mobile'>
 
 				</div>
 
@@ -158,7 +158,7 @@
 
 				<div class="controls">
 
-					<input type="text" class="m-wrap" placeholder="" id='englishname' name='englishname'> 
+					<input type="text" class="m-wrap" placeholder="" id='tel' name='tel'> 
 
 				</div>
 
@@ -175,7 +175,7 @@
 
 				<div class="controls">
 
-					<input type="text" class="m-wrap" placeholder="" id='englishname' name='englishname'> 
+					<input type="text" class="m-wrap" placeholder="" id='cvNO' name='cvNO'> 
 
 				</div>
 
@@ -193,28 +193,31 @@
 </div>
 </form>
 
-<div id='candidate_list'> </div>
+<div id='candidate_list'></div>
 
 <script type="text/javascript">
+var urlTo = '/candidate/search/{{$mode}}';
 jQuery(document).ready(function() {
-$('#search_submit').bind('click', function(event) {
-     $('#form_search_candidate').submit();
-     event.preventDefault();
- });
-$('#form_search_candidate').bind("submit", function(event){
+	$('#search_submit').bind('click', function(event) {
+		 $("#form_search_candidate").attr("action", urlTo);  
+	     $('#form_search_candidate').submit();
+	     event.preventDefault();
+	 });
+
+
+	$('#form_search_candidate').bind("submit", function(event){
 		event.preventDefault();
-		urlTo = "/candidate/search";
 		$.ajax({
 			type:'POST',
 			url:urlTo,
 			data:getFormJson(this),
 			success: function(d){
 				$('#candidate_list').html(d);
-
-				TableAdvanced.initDetailTable();
 			}
 		});
 	});
+
+	$('#search_submit').click();
 });
 
 </script>

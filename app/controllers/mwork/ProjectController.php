@@ -8,6 +8,7 @@ class ProjectController extends ParentController {
      */
     protected $project;
 
+    
     /**
      * Inject the models.
      * @param Company $project
@@ -37,10 +38,9 @@ class ProjectController extends ParentController {
         $teams = DB::table('teams')->get();
         $users = DB::table('users')->get();
         $companys = DB::table('companys')->orderBy('updated_at', 'DESC')->get();
-
-        
+        $mode='project';
         // Show the page
-        return View::make('mwork/project/list', compact('projects', 'positions', 'citys', 'companys', 'teams', 'users'), $this->Titles('id_project', 'id_project_my'));
+        return View::make('mwork/project/list', compact('projects', 'positions', 'citys', 'companys', 'teams', 'users', 'mode'), $this->Titles('id_project', 'id_project_my'));
     }
 
     /**
@@ -48,7 +48,7 @@ class ProjectController extends ParentController {
      *
      * @return View
      */
-    public function getShow($project_id)
+    public function getShow($project_id = 0)
     {
         $projects = Project::leftjoin("clients", 'clients.id', '=', 'projects.client_id')
                 ->select('projects.*', 'projects.id as project_id','clients.*')
@@ -63,10 +63,10 @@ class ProjectController extends ParentController {
         $users = DB::table('users')->get();
         $companys = DB::table('companys')->get();
         $company = Company::find($project->company_id);
-
-        
+        $mode='project';
         // Show the page
-        return View::make('mwork/project/list', compact('projects', 'project', 'positions', 'companys', 'citys', 'teams', 'users', 'project_id', 'company'), $this->Titles('id_project', 'id_project_my'));
+        return View::make('mwork/project/list', compact('projects', 'project', 'positions', 'companys', 'citys', 'teams', 'users', 'project_id', 'company', 'mode'), 
+            $this->Titles('id_project', 'id_project_my'));
     }
 
 	/**

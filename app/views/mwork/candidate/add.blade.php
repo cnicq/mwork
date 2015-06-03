@@ -185,7 +185,7 @@
 						<div class="controls">
 
 							<select class="m-wrap span6" id='city' name='city'>
-							<option> 请选择...</option>
+							<option value=''> 请选择...</option>
 							@foreach ($citys as $city)
 								<option value='{{$city->name}}'> {{$city->text}} </option>
 							@endforeach
@@ -233,7 +233,7 @@
 						<div class="controls">
 
 							<select class="m-wrap span6" id='position' name='position'>
-							<option> 请选择...</option>
+							<option value=''> 请选择...</option>
 							@foreach ($positions as $position)
 								<option value='{{$position->name}}'> {{$position->text}} </option>
 							@endforeach
@@ -257,7 +257,7 @@
 						<div class="controls">
 
 							<select class="m-wrap " id='company' name='company'>
-								<option>请选择...</option>
+								<option value=''>请选择...</option>
 								@foreach ($companys as $company)
 								<option value='{{$company->id}}' linkman='{{$company->linkman_chinesename}}|{{$company->linkman_englishname}}'> {{$company->chinesename}} </option>
 								@endforeach
@@ -410,7 +410,7 @@
 						<div class="controls">
 
 							<select class="m-wrap span6" id='cvsite' name='cvsite'>
-							<option> 请选择...</option>
+							<option value=''> 请选择...</option>
 							@foreach ($cvsites as $site)
 								<option value='{{$site->name}}'> {{$site->text}} </option>
 							@endforeach
