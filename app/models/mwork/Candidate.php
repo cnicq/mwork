@@ -18,6 +18,12 @@ class Candidate extends Eloquent {
 		return parent::delete();
 	}
 
+	public static function InProject($projId='', $caId='')
+	{
+		
+		$r = Projectinfo::where('ca_id', '=', $caId)->where('proj_id', '=', $projId)->get();
+		return count($r) > 0;
+	}
 	/**
 	 * Returns a formatted candidate entry,
 	 * this ensures that line breaks are returned.

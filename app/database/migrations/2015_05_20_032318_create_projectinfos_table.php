@@ -19,11 +19,9 @@ class CreateProjectinfosTable extends Migration {
             $table->engine = 'InnoDB';
             $table->increments('id')->unsigned();
             $table->integer('proj_id')->unsigned(); // project id
-            $table->integer('user_id')->unsigned(); // author /user id
-            $table->integer('ca_id')->unsigned(); // candidate id
-            $table->string('type'); // candidate process type (choose, recommend, pass, failed)
-
-            $table->text('content');
+            $table->integer('auth_id')->unsigned(); // author /user id
+            $table->integer('ca_id')->unsigned(); 	// candidate id
+            $table->string('step'); 				// candidate process step (choose, recommend, pass, failed, succeed)
 
             $table->timestamps();
 

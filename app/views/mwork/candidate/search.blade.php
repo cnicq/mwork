@@ -189,9 +189,7 @@
 
 	<!--/row-->
 <div class="form-actions">
-
 	<button type="submit" class="btn blue" id='search_submit'><i class="icon-ok"></i>搜索</button>
-
 </div>
 </form>
 
@@ -213,7 +211,7 @@ $('#form_search_candidate').bind("submit", function(event){
 			success: function(d){
 				$('#candidate_list').html(d);
 
-				TableAdvanced.init1();
+				TableAdvanced.initDetailTable();
 			}
 		});
 	});

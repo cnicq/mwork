@@ -36,10 +36,11 @@ class ProjectController extends ParentController {
         $citys = DB::table('datavalues')->where('type', '=', 'city')->get();
         $teams = DB::table('teams')->get();
         $users = DB::table('users')->get();
+        $companys = DB::table('companys')->orderBy('updated_at', 'DESC')->get();
 
         
         // Show the page
-        return View::make('mwork/project/list', compact('projects', 'positions', 'citys', 'teams', 'users'), $this->Titles('id_project', 'id_project_my'));
+        return View::make('mwork/project/list', compact('projects', 'positions', 'citys', 'companys', 'teams', 'users'), $this->Titles('id_project', 'id_project_my'));
     }
 
     /**
@@ -82,6 +83,7 @@ class ProjectController extends ParentController {
         $citys = DB::table('datavalues')->where('type', '=', 'city')->get();
         $teams = DB::table('teams')->get();
         $users = DB::table('users')->get();
+        $companys = DB::table('companys')->get();
         // Show the page
         return View::make('mwork/project/add', compact('clients', 'positions', 'citys', 'users', 'teams', 'users'), $this->Titles('id_project', 'id_project_manage'));
 	}

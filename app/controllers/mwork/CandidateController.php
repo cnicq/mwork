@@ -30,7 +30,7 @@ class CandidateController extends ParentController {
      */
     public function getIndex()
     {
-         
+        
         $candidates = $this->candidate->orderBy('updated_at', 'DESC')->paginate(20);
 
         $this->dealWithData($candidates);
@@ -41,7 +41,6 @@ class CandidateController extends ParentController {
 
     private function dealWithData(&$candidates)
     {
-         $keys = "111";
         foreach ($candidates as $key1 => $value1) {
              $keys = $keys + $key1;
             $company = DB::table('companys')->where('id','=',$value1['company'])->first();
@@ -79,8 +78,9 @@ class CandidateController extends ParentController {
     public function postSearch()
     {
         $candidates = $this->candidate->orderBy('updated_at', 'DESC')->paginate(20);
+        $mode = 'candidate';
        
-        return View::make('mwork/layouts/candidate', compact('candidates'));
+        return View::make('mwork/layouts/candidate', compact('candidates', 'mode'));
     }
 
     public function postCreate()

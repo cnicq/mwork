@@ -20,7 +20,7 @@ class CreateCaCommentsTable extends Migration {
             $table->integer('auth_id');  // who create this comment
             $table->integer('ca_id');    // candidate id
             $table->integer('proj_id');  // project id
-            $table->text('content');
+            $table->text('comment');     // comment
 
             $table->timestamps();
         });

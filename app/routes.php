@@ -103,8 +103,6 @@ Route::group(array('before' => 'auth'), function(){
     Route::get('/team_{id}', 'TeamController@getShow');
     Route::get('/team_user_{id}', 'TeamController@getUser');
     Route::post('/team/manage', 'TeamController@postCreate');
-
-
 });
 
 Route::controller('user', 'UserController');

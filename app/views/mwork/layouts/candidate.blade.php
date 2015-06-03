@@ -10,6 +10,7 @@
 		<th>电话</th>
 		<th>所在公司</th>
 		<th>职位</th>
+		<th>操作</th>
 		<th style="display:none;"></th>
 		<th style="display:none;"></th>
 		<th style="display:none;"></th>
@@ -31,8 +32,21 @@
 		<td>{{$candidate['mobile']}}</td>
 		<td>{{$candidate['company']}}</td>
 		<td>{{$candidate['position']}}</td>
-		<td style="display:none;" >{{$candidate['materialstatus']}}</td>
-		<td style="display:none;" >{{$candidate['hometown']}}</td>
+		<td>
+			@if (isset($mode))
+				@if ($mode == 'project')
+				<button>123</button>
+				@elseif ($mode == 'candidate')
+					@if (Candidate::InProject() == false)
+					<button>选择</button>
+					@else
+					<button>取消</button>
+					@endif
+				@endif
+			@endif
+		</td>
+		<td style="display:none;">{{$candidate['materialstatus']}}</td>
+		<td style="display:none;">{{$candidate['hometown']}}</td>
 		<td style="display:none;">{{$candidate['status']}}</td>
 		<td style="display:none;">{{$candidate['resumes']}}</td>
 		<td style="display:none;">{{$candidate['notes']}}</td>
