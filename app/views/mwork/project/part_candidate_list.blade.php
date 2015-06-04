@@ -1,5 +1,5 @@
 
-<table class="table table-striped table-bordered table-hover table-full-width" id="sample_4">
+<table class="table table-striped table-bordered table-hover table-full-width" id="project_candidate_list">
 <thead>
 	<tr>
 		<th style="display:none;"></th>

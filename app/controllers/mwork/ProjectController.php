@@ -27,8 +27,6 @@ class ProjectController extends ParentController {
      */
     public function getIndex()
     {
-        //$clients = $this->client->paginate(20);
-
         $projects = Project::leftjoin("clients", 'clients.id', '=', 'projects.client_id')
                 ->select('projects.*', 'projects.id as project_id','clients.*')
                 ->paginate(20);
@@ -64,9 +62,12 @@ class ProjectController extends ParentController {
         $users = DB::table('users')->get();
         $companys = DB::table('companys')->get();
         $company = Company::find($project->company_id);
+        $candidates = Projectinfo::leftjoin('candidates','candidates.id','=','projectinfos.ca_id')
+                    ->where('projectinfos.proj_id','=',$projId)->paginate(20);
         $mode='project';
+
         // Show the page
-        return View::make('mwork/project/list', compact('projects', 'project', 'positions', 'companys', 'citys', 'teams', 'users', 'projId', 'company', 'mode'), 
+        return View::make('mwork/project/list', compact('projects', 'project','candidates', 'positions', 'companys', 'citys', 'teams', 'users', 'projId', 'company', 'mode'), 
             $this->Titles('id_project', 'id_project_my'));
     }
 

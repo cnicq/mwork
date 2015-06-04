@@ -1,4 +1,4 @@
-
+@if (isset($projects))
 <table class="table table-striped table-bordered table-hover table-full-width" id="sample_2">
 	<thead>
 		<tr>
@@ -31,4 +31,6 @@
 <ul class="pagination">
 {{$projects->links()}}
 </ul>
+
+@endif
 

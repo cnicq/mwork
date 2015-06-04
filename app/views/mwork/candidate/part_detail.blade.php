@@ -1,12 +1,21 @@
 <!--BEGIN TABS-->
 
 <div class="tabbable tabbable-custom tabs-left" id="candidate_detail_tab">
-
 	<div class="alert alert-block alert-info fade in">
 		@if (Candidate::InProject($projId, $caId))
-			<button class="btn gray" disabled>已加入</button>
+			<button class="btn gray" disabled id='addProject'>已加入</button>
+			<div class="btn-group open">
+			<button class="btn red dropdown-toggle" data-toggle="dropdown">操作 <i class="icon-angle-down"></i></button>
+			<ul class="dropdown-menu">
+				<li><a href="#">已推荐</a></li>
+				<li><a href="#">拒绝</a></li>
+				<li><a href="#"></a></li>
+				<li class="divider"></li>
+				<li><a href="#">Separated link</a></li>
+			</ul>
+		</div>
 		@elseif ($projId != 0)
-			<button class="btn blue" onclick='onClickProjectD({{$projId}})'>加入项目</button>
+			<button class="btn blue" onclick='onClickProjectD({{$projId}})' id='addProject'>加入项目</button>
 		@else
 			<button class="btn blue" onclick='onClickProject()'>加入项目</button>
 		@endif
@@ -16,16 +25,16 @@
 
 	<ul class="nav nav-tabs tabs-left">
 
-		<li class="active"><a href="#ca_tab_1" data-toggle="tab">详细资料</a></li>
-		<li class=""><a href="#ca_tab_2" data-toggle="tab">参与项目</a></li>
-		<li class=""><a href="#ca_tab_3" data-toggle="tab">备注记录</a></li>
+		<li class="active"><a href="#ca_tab_1_{{$tName}}" data-toggle="tab">详细资料</a></li>
+		<li class=""><a href="#ca_tab_2_{{$tName}}" data-toggle="tab">参与项目</a></li>
+		<li class=""><a href="#ca_tab_3_{{$tName}}" data-toggle="tab">备注记录</a></li>
 		<input type="hidden" class="m-wrap span12" placeholder="" id='ca_id' name='ca_id' value='{{$caId}}'>
 		<input type="hidden" class="m-wrap span12" placeholder="" id='proj_id' name='proj_id' value='{{$projId}}'>
 	</ul>
 
 	<div class="tab-content">
 
-		<div class="tab-pane active" id="ca_tab_1" style="min-height: 500px;">
+		<div class="tab-pane active" id="ca_tab_1_{{$tName}}" style="min-height: 500px;">
 			<div class='profile-classic'>
 				<ul class="span10">
 				<li><span>中文名:</span> {{$candidate['chinesename']}}</li>
@@ -54,14 +63,14 @@
 
 		</div>
 
-		<div class="tab-pane" id="ca_tab_2" style="min-height: 500px;">
+		<div class="tab-pane" id="ca_tab_2_{{$tName}}" style="min-height: 500px;">
 			<div class='well profile-classic' id='projList'>
 				@include('mwork.project.part_list')
 			</div>
 
 		</div>
 
-		<div class="tab-pane" id="ca_tab_3" style="min-height: 500px;">
+		<div class="tab-pane" id="ca_tab_3_{{$tName}}" style="min-height: 500px;">
 
 			<div class='well'>
 				<input type="input" class="m-wrap span10" placeholder="" id='content' name='content'>
@@ -95,12 +104,12 @@ function submitComment()
 
 function onClickComment()
 {
-	$('#candidate_detail_tab a[href="#ca_tab_3"]').tab('show');  
+	$('#candidate_detail_tab a[href="#ca_tab_3_{{$tName}}"]').tab('show');  
 }
 
 function onClickProject()
 {
-	$('#candidate_detail_tab a[href="#ca_tab_2"]').tab('show');  
+	$('#candidate_detail_tab a[href="#ca_tab_2_{{$tName}}"]').tab('show');  
 }
 
 function onClickProjectD(projId)
@@ -111,13 +120,11 @@ function onClickProjectD(projId)
 			url:urlTo,
 			data:getFormJson(this),
 			success: function(r){
-				if(r =='error'){
-					alert('错误');
-				}
-				else{
-					$('#projList').html(r);
-					$('#candidate_detail_tab a[href="#ca_tab_2"]').tab('show');  	
-				}
+				$('#projList').html(r);
+				$('#candidate_detail_tab a[href="#ca_tab_2_{{$tName}}"]').tab('show'); 
+				$('#addProject').text('已加入'); 
+				$('#addProject').attr('disabled', true);
+				$('#addProject').addClass('grey');
 			}
 	});
 }

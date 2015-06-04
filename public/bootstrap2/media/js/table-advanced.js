@@ -1,7 +1,8 @@
 var TableAdvanced = function () {
 
-    var initTable1 = function(detailcb) {
+    var initTable1 = function(tableName, detailcb) {
         var detialCallback = detailcb;
+        var tName = tableName;
         /* Formating function for row details */
         function fnFormatDetails ( oTable, nTr )
         {
@@ -53,18 +54,18 @@ var TableAdvanced = function () {
         var nCloneTd = document.createElement( 'td' );
         nCloneTd.innerHTML = '<span class="row-details row-details-close"></span>';
          
-        $('#sample_1 thead tr').each( function () {
+        $('#'+tName+' thead tr').each( function () {
             this.insertBefore( nCloneTh, this.childNodes[0] );
         } );
          
-        $('#sample_1 tbody tr').each( function () {
+        $('#'+tName+' tbody tr').each( function () {
             this.insertBefore(  nCloneTd.cloneNode( true ), this.childNodes[0] );
         } );
          
         /*
          * Initialse DataTables, with no sorting on the 'details' column
          */
-        var oTable = $('#sample_1').dataTable( {
+        var oTable = $('#'+tName).dataTable( {
             "aoColumnDefs": [
                 {"bSortable": false, "aTargets": [ 0 ] }
             ],
@@ -84,7 +85,7 @@ var TableAdvanced = function () {
 
         //Remove default datatable logic tied to these events
         /*
-        var searchbox = jQuery('#sample_1_wrapper .dataTables_filter input');
+        var searchbox = jQuery('#'+tName+'_wrapper .dataTables_filter input');
         searchbox.unbind();
         searchbox.bind('keyup change', function (e) {
            if(e.keyCode == 13) {
@@ -94,15 +95,15 @@ var TableAdvanced = function () {
         });
         */
 
-        jQuery('#sample_1_wrapper .dataTables_filter input').addClass("m-wrap big"); // modify table search input
-        jQuery('#sample_1_wrapper .dataTables_length select').addClass("m-wrap small"); // modify table per page dropdown
-        jQuery('#sample_1_wrapper .dataTables_length select').select2(); // initialzie select2 dropdown
+        jQuery('#'+tName+'_wrapper .dataTables_filter input').addClass("m-wrap big"); // modify table search input
+        jQuery('#'+tName+'_wrapper .dataTables_length select').addClass("m-wrap small"); // modify table per page dropdown
+        jQuery('#'+tName+'_wrapper .dataTables_length select').select2(); // initialzie select2 dropdown
          
         /* Add event listener for opening and closing details
          * Note that the indicator for showing which row is open is not controlled by DataTables,
          * rather it is done here
          */
-        $('#sample_1').on('click', ' tbody td .row-details', function () {
+        $('#'+tName).on('click', ' tbody td .row-details', function () {
             var nTr = $(this).parents('tr')[0];
             if ( oTable.fnIsOpen(nTr) )
             {
@@ -120,8 +121,9 @@ var TableAdvanced = function () {
         });
     }
 
-     var initTable2 = function() {
-        var oTable = $('#sample_2').dataTable( {           
+     var initTable2 = function(tableName) {
+        var tName = tableName;
+        var oTable = $('#'+tName).dataTable( {           
             "aoColumnDefs": [
                 { "aTargets": [ 0 ] }
             ],
@@ -134,11 +136,11 @@ var TableAdvanced = function () {
             "iDisplayLength": 10,
         });
 
-        jQuery('#sample_2_wrapper .dataTables_filter input').addClass("m-wrap small"); // modify table search input
-        jQuery('#sample_2_wrapper .dataTables_length select').addClass("m-wrap small"); // modify table per page dropdown
-        jQuery('#sample_2_wrapper .dataTables_length select').select2(); // initialzie select2 dropdown
+        jQuery('#'+tName+'_wrapper .dataTables_filter input').addClass("m-wrap small"); // modify table search input
+        jQuery('#'+tName+'_wrapper .dataTables_length select').addClass("m-wrap small"); // modify table per page dropdown
+        jQuery('#'+tName+'_wrapper .dataTables_length select').select2(); // initialzie select2 dropdown
 
-        $('#sample_2_column_toggler input[type="checkbox"]').change(function(){
+        $('#'+tName+'_column_toggler input[type="checkbox"]').change(function(){
             /* Get the DataTables object again - this is not a recreation, just a get of the object */
             var iCol = parseInt($(this).attr("data-column"));
             var bVis = oTable.fnSettings().aoColumns[iCol].bVisible;
@@ -146,8 +148,8 @@ var TableAdvanced = function () {
         });
     }
 
-    var initTable3 = function() {
-
+    var initTable3 = function(tableName) {
+        var tName = tableName;
         /* Formating function for row details */
         function fnFormatDetails ( oTable, nTr )
         {
@@ -164,18 +166,18 @@ var TableAdvanced = function () {
         var nCloneTd = document.createElement( 'td' );
         nCloneTd.innerHTML = '<span class="row-details row-details-close"></span>';
          
-        $('#sample_3 thead tr').each( function () {
+        $('#'+tName+' thead tr').each( function () {
             this.insertBefore( nCloneTh, this.childNodes[0] );
         } );
          
-        $('#sample_3 tbody tr').each( function () {
+        $('#'+tName+' tbody tr').each( function () {
             this.insertBefore(  nCloneTd.cloneNode( true ), this.childNodes[0] );
         } );
          
         /*
          * Initialse DataTables, with no sorting on the 'details' column
          */
-        var oTable = $('#sample_3').dataTable( {
+        var oTable = $('#'+tName).dataTable( {
             "aoColumnDefs": [
                 {"bSortable": false, "aTargets": [ 0 ] }
             ],
@@ -193,15 +195,15 @@ var TableAdvanced = function () {
             //"sAjaxSource": "{{ URL::to('admin/blogs/data') }}"
         });
 
-        jQuery('#sample_3_wrapper .dataTables_filter input').addClass("m-wrap small"); // modify table search input
-        jQuery('#sample_3_wrapper .dataTables_length select').addClass("m-wrap small"); // modify table per page dropdown
-        jQuery('#sample_3_wrapper .dataTables_length select').select2(); // initialzie select2 dropdown
+        jQuery('#'+tName+'_wrapper .dataTables_filter input').addClass("m-wrap small"); // modify table search input
+        jQuery('#'+tName+'_wrapper .dataTables_length select').addClass("m-wrap small"); // modify table per page dropdown
+        jQuery('#'+tName+'_wrapper .dataTables_length select').select2(); // initialzie select2 dropdown
          
         /* Add event listener for opening and closing details
          * Note that the indicator for showing which row is open is not controlled by DataTables,
          * rather it is done here
          */
-        $('#sample_3').on('click', ' tbody td .row-details', function () {
+        $('#'+tName).on('click', ' tbody td .row-details', function () {
             var nTr = $(this).parents('tr')[0];
             if ( oTable.fnIsOpen(nTr) )
             {
@@ -227,16 +229,16 @@ var TableAdvanced = function () {
                 return;
             }
 
-            initTable1();
-            initTable2();
-            initTable3();
+            initTable1('sample_1');
+            initTable2('sample_2');
+            initTable3('sample_3');
         },
         initDetailTable : function(tableName,cb){
             if (!jQuery().dataTable) {
                 return;
             }
 
-            initTable1(cb);
+            initTable1(tableName, cb);
         }
 
 

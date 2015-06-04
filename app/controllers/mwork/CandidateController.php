@@ -7,7 +7,6 @@ class CandidateController extends ParentController {
      */
     protected $candidate;
 
-
     /**
      * Inject the models.
      * @param Post $post
@@ -19,34 +18,34 @@ class CandidateController extends ParentController {
 
         $this->candidate = $candidate;
     }
-    
 
     public function getProjectList($caId, $projId=0)
     {
-         $projects = Project::leftjoin('projectinfos','projects.id', '=', 'projectinfos.proj_id')->where('projectinfos.ca_id', '=', $caId)->select('projects.*')->paginate(20);
 
-         return Response::json(View::make("mwork/project/part_list", compact('projects', 'caId', 'projId'))->render() );
+        $projects = Project::leftjoin('projectinfos','projects.id', '=', 'projectinfos.proj_id')->where('projectinfos.ca_id', '=', $caId)->select('projects.*')->paginate(20);
+
+        return Response::json(View::make("mwork/project/part_list", compact('projects', 'caId', 'projId'))->render() );
     }
 
     public function getDetail($caId, $projId=0)
     {
-         $candidate = $this->candidate->where('id', '=', $caId)->first();
-         
-         $cacomments = DB::table('cacomments')->where('ca_id', '=', $caId)->get();
+        $candidate = $this->candidate->where('id', '=', $caId)->first();
+        $this->dealWithData($candidate);
         
-         $projects = Project::leftjoin('projectinfos','projects.id', '=', 'projectinfos.proj_id')->where('projectinfos.ca_id', '=', $caId)->select('projects.*')->paginate(20);
+        $cacomments = DB::table('cacomments')->where('ca_id', '=', $caId)->get();
+       
+        $projects = Project::leftjoin('projectinfos','projects.id', '=', 'projectinfos.proj_id')->where('projectinfos.ca_id', '=', $caId)->select('projects.*')->paginate(20);
+        $tName = time();
 
-         return Response::json(View::make("mwork/candidate/part_detail", compact('candidate', 'cacomments', 'projects', 'caId', 'projId'))->render() );
+        return Response::json(View::make("mwork/candidate/part_detail",
+         compact('candidate', 'cacomments', 'tName', 'projects', 'caId', 'projId'))->render() );
     }
 
     public function addProject($projId, $caId)
     {
-        $projInfo = Projectinfo::where('proj_id', '=', $projId)->where('ca_id', '=', $caId)->get();
-        if(empty($projInfo))
-        {
-            return $this->getProjectList($caId, $projId);
-        }
-        else
+        $projInfo = Projectinfo::where('proj_id', '=', $projId)->where('ca_id', '=', $caId)->first();
+
+        if(empty($projInfo) || $projInfo == null)
         {
             $user = Auth::user();
             $projInfo = new projectinfo();
@@ -56,9 +55,8 @@ class CandidateController extends ParentController {
             $projInfo->step = 'choose';
 
             $projInfo->save();
-
-            return $this->getProjectList($caId, $projId);
         }
+        return $this->getProjectList($caId, $projId);
     }
 
     public function addComment($caId, $content, $projId=0)
@@ -98,32 +96,34 @@ class CandidateController extends ParentController {
         $industrys = DB::table('datavalues')->where('type', '=', 'industry')->get();
         $positions = DB::table('datavalues')->where('type', '=', 'position')->get();
 
-        $this->dealWithData($candidates);
+        $this->dealWithDatas($candidates);
 
          // Show the page
         return View::make($blade, compact('candidates', 'companys', 'citys', 'industrys', 'positions', 'mode'), 
             $this->Titles("id_candidate", 'id_candidate_list'));
     }
 
-    private function dealWithData(&$candidates)
+    private function dealWithData(&$candidate)
     {
-        $keys = '';
-        foreach ($candidates as $key1 => $value1) {
-             $keys = $keys.$key1;
-            $company = DB::table('companys')->where('id','=',$value1['company'])->first();
-            if($company == null){
-                $value1['company'] = '/';
-            }
-            else 
-            {
-                $value1['company'] = $company->chinesename;
-            }
-            $value1['position'] = DatavalueUtil::getInstance()->getDataValueText('position', $value1['position']);
-            $value1['gender'] = DatavalueUtil::getInstance()->getGenderText($value1['gender']);
+        $company = DB::table('companys')->where('id','=',$candidate['company'])->first();
+        if($company == null)
+        {
+            $candidate['company'] = '/';
         }
+        else 
+        {
+            $candidate['company'] = $company->chinesename;
+        }
+        $candidate['position'] = DatavalueUtil::getInstance()->getDataValueText('position', $candidate['position']);
+        $candidate['gender'] = DatavalueUtil::getInstance()->getGenderText($candidate['gender']);
+    }
 
-        return $keys;
-         
+    private function dealWithDatas(&$candidates)
+    {
+        foreach ($candidates as $key1 => $value1) 
+        {
+            $this->dealWithData($value1);
+        }
     }
 
     public function getAdd()
@@ -173,7 +173,7 @@ class CandidateController extends ParentController {
             }
         }
 
-        $this->dealWithData($candidates);
+        $this->dealWithDatas($candidates);
         $blade = 'mwork/candidate/part_list_general';
      
         return $this->showList($candidates,$mode, $blade);

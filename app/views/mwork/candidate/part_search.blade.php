@@ -197,6 +197,21 @@
 <div id='candidate_list'></div>
 
 <script type="text/javascript">
+
+var clickDetailFunc = function(caId, cb){
+	var urlTo = "/candidate/detail/" + caId + '/' + $('#projId').val();
+	
+	$.ajax({
+            type: "GET",
+            url: urlTo,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                cb(result);
+            }
+        });  
+};
+
 var urlTo = '/candidate/search/{{$mode}}';
 jQuery(document).ready(function() {
 	$('#search_submit').bind('click', function(event) {
@@ -204,18 +219,6 @@ jQuery(document).ready(function() {
 	     $('#form_search_candidate').submit();
 	     event.preventDefault();
 	 });
-
-	var clickDetailFunc = function(caId, cb){
-		$.ajax({
-                type: "GET",
-                url: "/candidate/detail/" + caId + '/' + $('#projId').val(),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (result) {
-                    cb(result);
-                }
-            });  
-	}
 
 	$('#form_search_candidate').bind("submit", function(event){
 		event.preventDefault();
@@ -225,7 +228,7 @@ jQuery(document).ready(function() {
 			data:getFormJson(this),
 			success: function(d){
 				$('#candidate_list').html(d);
-				TableAdvanced.initDetailTable(clickDetailFunc);
+				TableAdvanced.initDetailTable('candidate_list2',clickDetailFunc);
 			}
 		});
 	});
