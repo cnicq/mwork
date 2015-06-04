@@ -39,6 +39,7 @@ class ProjectController extends ParentController {
         $users = DB::table('users')->get();
         $companys = DB::table('companys')->orderBy('updated_at', 'DESC')->get();
         $mode='project';
+
         // Show the page
         return View::make('mwork/project/list', compact('projects', 'positions', 'citys', 'companys', 'teams', 'users', 'mode'), $this->Titles('id_project', 'id_project_my'));
     }
@@ -48,13 +49,13 @@ class ProjectController extends ParentController {
      *
      * @return View
      */
-    public function getShow($project_id = 0)
+    public function getShow($projId = 0)
     {
         $projects = Project::leftjoin("clients", 'clients.id', '=', 'projects.client_id')
                 ->select('projects.*', 'projects.id as project_id','clients.*')
                 ->paginate(20);
 
-        $project = Project::where('projects.id', '=', $project_id)->leftjoin("clients", 'clients.id', '=', 'projects.client_id')
+        $project = Project::where('projects.id', '=', $projId)->leftjoin("clients", 'clients.id', '=', 'projects.client_id')
                 ->select('projects.*', 'projects.id as project_id','clients.*')->first();
 
         $positions = DB::table('datavalues')->where('type', '=', 'position')->get();
@@ -65,7 +66,7 @@ class ProjectController extends ParentController {
         $company = Company::find($project->company_id);
         $mode='project';
         // Show the page
-        return View::make('mwork/project/list', compact('projects', 'project', 'positions', 'companys', 'citys', 'teams', 'users', 'project_id', 'company', 'mode'), 
+        return View::make('mwork/project/list', compact('projects', 'project', 'positions', 'companys', 'citys', 'teams', 'users', 'projId', 'company', 'mode'), 
             $this->Titles('id_project', 'id_project_my'));
     }
 

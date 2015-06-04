@@ -287,24 +287,19 @@
 													<div class="portlet-body">
 														
 														<ul class="nav nav-tabs">
-
 															<li class="active"><a href="#ctab_1_1" data-toggle="tab">候选人列表</a></li>
-
-															<li><a href="#ctab_1_2" data-toggle="tab">候选人详细</a></li>
-															<li><a href="#ctab_1_3" data-toggle="tab">候选人搜索</a></li>
-
+															<li><a href="#ctab_1_2" data-toggle="tab">候选人搜索</a></li>
 														</ul>
 
 														<div class="tab-content">
-
 															<div class="tab-pane row-fluid active" id="ctab_1_1">
+																@include('mwork.project.part_candidate_list')
 															</div>
 
 															<div class="tab-pane row-fluid" id="ctab_1_2">
-															</div>
-															<div class="tab-pane row-fluid" id="ctab_1_3">
 																@include('mwork.candidate.part_search')
-																<div id='candidate_list'></div>
+															<div id='candidate_list'>
+															</div>
 															</div>
 														</div>
 													</div>
@@ -411,7 +406,7 @@
 
 		jQuery(document).ready(function() {       
 			var tabName = "tab_1_1";
-			@if (isset($project_id)) 
+			@if (isset($projId)) 
 			 		tabName = "tab_1_2";
 			@endif
 

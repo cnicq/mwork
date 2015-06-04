@@ -1,10 +1,13 @@
 var TableAdvanced = function () {
 
-    var initTable1 = function() {
+    var initTable1 = function(detailcb) {
+        var detialCallback = detailcb;
         /* Formating function for row details */
         function fnFormatDetails ( oTable, nTr )
         {
             var aData = oTable.fnGetData( nTr );
+
+             /*
             var sOut = '<table>';
             sOut += '<tr><td>' + ChineseLan.mat+':</td><td>'+aData[8]+'</td></tr>';
             sOut += '<tr><td>' + ChineseLan.home+':</td><td>'+aData[9]+'</td></tr>';
@@ -15,6 +18,25 @@ var TableAdvanced = function () {
             sOut += '</table>';
              
             return sOut;
+            */
+
+            if(!!detialCallback){
+                detialCallback(aData[1], function(result){
+                     oTable.fnOpen( nTr, result, 'details' );
+                });
+            }
+            else{
+              $.ajax({
+                    type: "GET",
+                    url: "/candidate/detail/" + aData[1],
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (result) {
+                        oTable.fnOpen( nTr, result, 'details' );
+                    }
+                });  
+            }
+            
         }
 
         function fnGetData(oTable, sKeywords)
@@ -70,7 +92,7 @@ var TableAdvanced = function () {
            }
            return;
         });
-*/
+        */
 
         jQuery('#sample_1_wrapper .dataTables_filter input').addClass("m-wrap big"); // modify table search input
         jQuery('#sample_1_wrapper .dataTables_length select').addClass("m-wrap small"); // modify table per page dropdown
@@ -92,7 +114,8 @@ var TableAdvanced = function () {
             {
                 /* Open this row */                
                 $(this).addClass("row-details-open").removeClass("row-details-close");
-                oTable.fnOpen( nTr, fnFormatDetails(oTable, nTr), 'details' );
+                //oTable.fnOpen( nTr, fnFormatDetails(oTable, nTr), 'details' );
+                fnFormatDetails(oTable, nTr)
             }
         });
     }
@@ -208,12 +231,12 @@ var TableAdvanced = function () {
             initTable2();
             initTable3();
         },
-        initDetailTable : function(formName){
+        initDetailTable : function(tableName,cb){
             if (!jQuery().dataTable) {
                 return;
             }
 
-            initTable1(formName);
+            initTable1(cb);
         }
 
 

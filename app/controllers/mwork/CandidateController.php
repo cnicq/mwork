@@ -20,6 +20,63 @@ class CandidateController extends ParentController {
         $this->candidate = $candidate;
     }
     
+
+    public function getProjectList($caId, $projId=0)
+    {
+         $projects = Project::leftjoin('projectinfos','projects.id', '=', 'projectinfos.proj_id')->where('projectinfos.ca_id', '=', $caId)->select('projects.*')->paginate(20);
+
+         return Response::json(View::make("mwork/project/part_list", compact('projects', 'caId', 'projId'))->render() );
+    }
+
+    public function getDetail($caId, $projId=0)
+    {
+         $candidate = $this->candidate->where('id', '=', $caId)->first();
+         
+         $cacomments = DB::table('cacomments')->where('ca_id', '=', $caId)->get();
+        
+         $projects = Project::leftjoin('projectinfos','projects.id', '=', 'projectinfos.proj_id')->where('projectinfos.ca_id', '=', $caId)->select('projects.*')->paginate(20);
+
+         return Response::json(View::make("mwork/candidate/part_detail", compact('candidate', 'cacomments', 'projects', 'caId', 'projId'))->render() );
+    }
+
+    public function addProject($projId, $caId)
+    {
+        $projInfo = Projectinfo::where('proj_id', '=', $projId)->where('ca_id', '=', $caId)->get();
+        if(empty($projInfo))
+        {
+            return $this->getProjectList($caId, $projId);
+        }
+        else
+        {
+            $user = Auth::user();
+            $projInfo = new projectinfo();
+            $projInfo->proj_id = $projId;
+            $projInfo->ca_id = $caId;
+            $projInfo->auth_id = $user->id;
+            $projInfo->step = 'choose';
+
+            $projInfo->save();
+
+            return $this->getProjectList($caId, $projId);
+        }
+    }
+
+    public function addComment($caId, $content, $projId=0)
+    {
+        $user = Auth::user();
+
+        $com = new Cacomment();
+        $com->content = $content;
+        $com->ca_id = $caId;
+        $com->proj_id = $projId;
+        $com->auth_id = $user->id;
+        $com->save();
+
+        $cacomments = DB::table('cacomments')->where('ca_id', '=', $caId)->orderBy('updated_at', 'DESC')->get();
+
+        return Response::json(View::make("mwork/candidate/part_comment", compact('cacomments'))->render() );
+    }
+
     /**
      * Returns all the candidates.
      *
@@ -97,8 +154,7 @@ class CandidateController extends ParentController {
         }
         else
         {
-
-            $inputs = Input::except('keywords', '_token');
+            $inputs = Input::except('keywords', '_token', 'projId');
             $whereArr = array();
 
             foreach ($inputs as $key => $value) {
@@ -119,10 +175,7 @@ class CandidateController extends ParentController {
 
         $this->dealWithData($candidates);
         $blade = 'mwork/candidate/part_list_general';
-        if($mode == 'project'){
-            $blade = 'mwork/candidate/part_list_project';
-        }
-
+     
         return $this->showList($candidates,$mode, $blade);
     }
 

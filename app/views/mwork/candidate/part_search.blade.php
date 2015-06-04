@@ -1,6 +1,7 @@
 <form action="#" class="form-horizontal"  method="POST" autocomplete="off" id='form_search_candidate' name='form_search_candidate' >
 	<!-- CSRF Token -->
 		<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
+		<input type="hidden" id="projId" value="@if (isset($projId)){{$projId}}@endif" />
 	<!-- ./ csrf token -->
 	<div class="row-fluid">
 
@@ -204,6 +205,17 @@ jQuery(document).ready(function() {
 	     event.preventDefault();
 	 });
 
+	var clickDetailFunc = function(caId, cb){
+		$.ajax({
+                type: "GET",
+                url: "/candidate/detail/" + caId + '/' + $('#projId').val(),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    cb(result);
+                }
+            });  
+	}
 
 	$('#form_search_candidate').bind("submit", function(event){
 		event.preventDefault();
@@ -213,6 +225,7 @@ jQuery(document).ready(function() {
 			data:getFormJson(this),
 			success: function(d){
 				$('#candidate_list').html(d);
+				TableAdvanced.initDetailTable(clickDetailFunc);
 			}
 		});
 	});
