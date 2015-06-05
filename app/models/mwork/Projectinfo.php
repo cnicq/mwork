@@ -26,5 +26,4 @@ class Projectinfo extends Eloquent {
 	{
         return $this->date($this->updated_at);
 	}
-
 }

@@ -20,6 +20,29 @@ class ProjectController extends ParentController {
         $this->project = $project;
     }
 
+    public function changeStep($projId, $caId, $stepVal, $content = '')
+    {
+        $user = Auth::user();
+
+        $info = new Projectinfo();
+        $info->auth_id = $user->id;
+        $info->proj_id = $projId;
+        $info->ca_id = $caId;
+        $info->step = $stepVal;
+        $info->content = $content;
+        $info->save();
+
+        $projectinfos = Projectinfo::where('proj_id', '=', $projId)->where('ca_id', '=', $caId)->orderBy('updated_at', 'DESC')->get();
+        $curStep  = -1;
+        $steps = Datavalue::getValues('step');
+
+        if(empty($projectinfos) == false)
+        {
+            $curStep =  Datavalue::getValue('step', $projectinfos[0]->step);    
+        }
+
+        return Response::json(View::make('mwork/project/part_info', compact('projectinfos', 'curStep', 'steps'))->render());
+    }
     /**
      * Show a list of all the projects.
      *
@@ -27,9 +50,7 @@ class ProjectController extends ParentController {
      */
     public function getIndex()
     {
-        $projects = Project::leftjoin("clients", 'clients.id', '=', 'projects.client_id')
-                ->select('projects.*', 'projects.id as project_id','clients.*')
-                ->paginate(20);
+        $projects = DB::table('projects')->paginate(20);
 
         $positions = DB::table('datavalues')->where('type', '=', 'position')->get();
         $citys = DB::table('datavalues')->where('type', '=', 'city')->get();
@@ -50,20 +71,24 @@ class ProjectController extends ParentController {
     public function getShow($projId = 0)
     {
         $projects = Project::leftjoin("clients", 'clients.id', '=', 'projects.client_id')
-                ->select('projects.*', 'projects.id as project_id','clients.*')
+                ->select('projects.*', 'clients.*')
                 ->paginate(20);
 
         $project = Project::where('projects.id', '=', $projId)->leftjoin("clients", 'clients.id', '=', 'projects.client_id')
-                ->select('projects.*', 'projects.id as project_id','clients.*')->first();
-
+                ->select('projects.*', 'projects.id','clients.*')->first();
+        if($project == null){
+            return 'error';
+        }
         $positions = DB::table('datavalues')->where('type', '=', 'position')->get();
         $citys = DB::table('datavalues')->where('type', '=', 'city')->get();
         $teams = DB::table('teams')->get();
         $users = DB::table('users')->get();
         $companys = DB::table('companys')->get();
         $company = Company::find($project->company_id);
-        $candidates = Projectinfo::leftjoin('candidates','candidates.id','=','projectinfos.ca_id')
-                    ->where('projectinfos.proj_id','=',$projId)->paginate(20);
+
+        $candidates = Projectinfo::where('projectinfos.proj_id','=',$projId)->groupBy('ca_id')->select(DB::raw('max(projectinfos.updated_at) as latest, candidates.*'))->leftjoin('candidates','candidates.id','=','projectinfos.ca_id')
+                   ->paginate(20);
+                
         $mode='project';
 
         // Show the page

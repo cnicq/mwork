@@ -15,14 +15,24 @@
 	<tbody>
 		@foreach ($projects as $project)
 		<tr>
-			<td>{{$project['project_id']}}</td>
-			<td>{{$project['client_id']}}</td>
-			<td>{{$project['position_name']}}</td>
-			<td>{{$project['city_name']}}</td>
-			<td>{{$project['starttime']}}</td>
-			<td>{{$project['endtime']}}</td>
-			<td>{{$project['owner_user_id']}}</td>
-			<td><a href="/project_{{$project['project_id']}}">详细</a></td>
+
+			<td>{{$project->id}}</td>
+			<td>{{$project->client_id}}</td>
+			<td>{{$project->position_name}}</td>
+			<td>{{$project->city_name}}</td>
+			<td>{{$project->starttime}}</td>
+			<td>{{$project->endtime}}</td>
+			<td>{{$project->owner_user_id}}</td>
+			<td>
+				@if(isset($caId))
+					@if (Candidate::InProject($project->id, $caId) == false)
+						<a href="/candidate/addProject/{{$project->id}}/{{$caId}}">加入项目</a>
+					@endif
+				@else
+					<a href="/project/{{$project->id}}">详细</a>
+				@endif
+
+			</td>
 		</tr>
 		@endforeach
 	</tfoot>

@@ -26,6 +26,10 @@ class DatatypesTableSeeder extends Seeder {
             array(
                 'name'      => 'cvsite',
                 'text'      => '简历来源',
+            ),
+            array(
+                'name'      => 'step',
+                'text'      => '推荐状态',
             )
         );
 
@@ -87,6 +91,33 @@ class DatatypesTableSeeder extends Seeder {
       
 
         DB::table('datavalues')->insert( $cvsites );
+
+        $stepTexts = array(
+            '等待推荐',           // 0
+            '已推荐-等待客户反馈',// 1
+            '反馈结果-客户拒绝',  // 2 failed
+            '反馈结果-安排面试',  // 3
+            '面试结果-通过',      // 4
+            '面试结果-失败',      // 5 failed
+            '候选人-拒绝面试',    // 6 failed
+            '候选人-接Offer',     // 7
+            '候选人-拒绝offer',   // 8 failed
+            '候选人-入职',        // 9 
+            '候选人-保证期完成',  // 10 
+            '候选人-保证期内离职' // 11
+            );
+        $stpes = [];
+        for($i = 0; $i < count($stepTexts); $i++)
+        {
+            array_push($stpes,   array(
+                'type'      => 'step',
+                'name'      =>  $i,
+                'text'      =>  $stepTexts[$i]
+            ));
+        }
+      
+
+        DB::table('datavalues')->insert( $stpes );
 
     }
 

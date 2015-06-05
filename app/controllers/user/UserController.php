@@ -53,7 +53,7 @@ class UserController extends BaseController {
         $days = cal_days_in_month(CAL_GREGORIAN, intval($month), intval($year));
         $starting_time = strtotime($year . '-' . $month . '-1');
         $ending_time = strtotime($year . '-' . $month . '-' . $days);
-        $projInfos = Projectinfo::where('user_id', '=', $userId)
+        $projInfos = Projectinfo::where('auth_id', '=', $userId)
                     ->whereBetween('created_at', array($starting_time, $ending_time))->select("*")->get();
 
         $weekday = date("w", $starting_time);

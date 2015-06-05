@@ -48,7 +48,7 @@ Route::group(array('before' => 'auth'), function(){
     Route::get('/candidate', 'CandidateController@getIndex');
     Route::get('/candidate/addProject/{projId}/{caId}', 'CandidateController@addProject');
     Route::get('/candidate/comment/{caId}/{content}/{projId?}', 'CandidateController@addComment');
-    Route::get('/candidate/detail/{caId}/{projId}', 'CandidateController@getDetail');
+    Route::get('/candidate/detail/{caId}/{projId?}', 'CandidateController@getDetail');
     Route::get('/candidate/project/{caId}', 'CandidateController@getProjectList');
     Route::get('/candidate/add', 'CandidateController@getAdd');
     Route::get('/candidate/manage', 'CandidateController@getManage');
@@ -97,8 +97,10 @@ Route::group(array('before' => 'auth'), function(){
 
     // project
     Route::get('/project', 'ProjectController@getIndex');
-    Route::get('/project_{id}', 'ProjectController@getShow');
+    Route::get('/project/{id}', 'ProjectController@getShow');
     Route::get('/project/manage', 'ProjectController@getCreate');
+    Route::get('/project/step/{projId}/{caId}/{stepVal}/{content?}', 'ProjectController@changeStep');
+
     Route::post('/project/manage', 'ProjectController@postCreate');
     
     // team

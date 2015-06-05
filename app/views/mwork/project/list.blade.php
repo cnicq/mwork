@@ -95,7 +95,7 @@
 
 		  	$('#myTab a[href="#' + tabName + '"]').tab('show');  
 
-		  	TableAdvanced.initDetailTable('project_candidate_list',clickDetailFunc);
+		  	TableAdvanced.initDetailTable('project_candidate_list', clickDetailFunc);
 
 		});
 

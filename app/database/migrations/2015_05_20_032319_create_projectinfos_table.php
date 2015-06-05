@@ -21,7 +21,8 @@ class CreateProjectinfosTable extends Migration {
             $table->integer('proj_id')->unsigned(); // project id
             $table->integer('auth_id')->unsigned(); // author /user id
             $table->integer('ca_id')->unsigned(); 	// candidate id
-            $table->string('step'); 				// candidate process step (choose, recommend, pass, failed, succeed)
+            $table->integer('step'); 				// candidate process step ,in data value
+            $table->string('content');
 
             $table->timestamps();
 

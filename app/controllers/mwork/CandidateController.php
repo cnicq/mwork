@@ -34,11 +34,20 @@ class CandidateController extends ParentController {
         
         $cacomments = DB::table('cacomments')->where('ca_id', '=', $caId)->get();
        
-        $projects = Project::leftjoin('projectinfos','projects.id', '=', 'projectinfos.proj_id')->where('projectinfos.ca_id', '=', $caId)->select('projects.*')->paginate(20);
+        $projects = DB::table('projects')->paginate(20);
         $tName = time();
+        
+        $projectinfos = Projectinfo::where('proj_id', '=', $projId)->where('ca_id', '=', $caId)->orderBy('updated_at', 'DESC')->get();
+        $curStep  = -1;
+        $steps = Datavalue::getValues('step');
+
+        if(empty($projectinfos) == false && count($projectinfos) > 0)
+        {
+            $curStep =  Datavalue::getValue('step', $projectinfos[0]->step);    
+        }
 
         return Response::json(View::make("mwork/candidate/part_detail",
-         compact('candidate', 'cacomments', 'tName', 'projects', 'caId', 'projId'))->render() );
+         compact('candidate', 'cacomments', 'tName', 'projects', 'caId', 'projId', 'curStep', 'steps', 'projectinfos'))->render() );
     }
 
     public function addProject($projId, $caId)
@@ -52,10 +61,12 @@ class CandidateController extends ParentController {
             $projInfo->proj_id = $projId;
             $projInfo->ca_id = $caId;
             $projInfo->auth_id = $user->id;
-            $projInfo->step = 'choose';
+            $projInfo->step = 0;
+            $projInfo->content = '';
 
             $projInfo->save();
         }
+
         return $this->getProjectList($caId, $projId);
     }
 

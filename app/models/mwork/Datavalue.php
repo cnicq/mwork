@@ -17,4 +17,14 @@ class Datavalue extends Eloquent {
 		return $this->date($this->created_at);
 	}
 
+	public static function getValues($type)
+	{
+		return Datavalue::where('type', '=', $type)->get();
+	}
+
+	public static function getValue($type, $name)
+	{
+		return Datavalue::where('type', '=', $type)->where('name', '=', $name)->first();
+	}
+
 }
