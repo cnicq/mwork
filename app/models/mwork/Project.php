@@ -45,4 +45,33 @@ class Project extends Eloquent {
         return $this->date($this->updated_at);
 	}
 
+	public static function getLastStep($projId, $caId)
+	{
+		$info = Projectinfo::where('proj_id', '=', $projId)
+		->where('ca_id', '=', $caId)->orderBy('updated_at', 'DESC')
+		->first();
+		if($info == null)
+		{
+			return '';
+		}
+
+		return $info->step;
+	}
+
+	public static function GetFinishHeadCount($projId)
+	{
+		$projectInfos = Projectinfo::select(DB::raw('ca_id, count(*) as cnt'))
+		->where('proj_id', '=', $projId)
+		->groupBy('ca_id')->get();
+
+		$cnt = 0;
+		foreach ($projectInfos as $value) {
+			if(Datavalue::IsFinishStepName(Project::getLastStep($projId, $value->ca_id)))
+			{
+				$cnt++;
+			}
+		}
+		return $cnt;
+	}
+
 }

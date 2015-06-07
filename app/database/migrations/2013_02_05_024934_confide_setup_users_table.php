@@ -16,6 +16,8 @@ class ConfideSetupUsersTable extends Migration {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('username');
+            $table->string('englishname');
+            $table->string('chinesename');
             $table->string('email');
             $table->string('password');
             $table->string('confirmation_code');

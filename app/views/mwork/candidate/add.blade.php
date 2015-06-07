@@ -9,20 +9,18 @@
 
 		<div class="tools">
 
-			<a href="javascript:;" class="collapse"></a>
-
-			<a href="#portlet-config" data-toggle="modal" class="config"></a>
-
-			<a href="javascript:;" class="reload"></a>
-
-			<a href="javascript:;" class="remove"></a>
-
 		</div>
 
 	</div>
 
 	<div class="portlet-body form">
 
+		@if (isset($error) && $error != '')
+		<div class="alert alert-error" id= "error_div" >
+				<button class="close" data-dismiss="alert"></button>
+				<strong>错误!</strong> <p id='error_info'>{{$error}}</p>
+		</div>
+		@endif
 		<!-- BEGIN FORM-->
 
 		<form action="#"  method="POST" class="form-horizontal">
@@ -282,11 +280,22 @@
 
 					<div class="control-group">
 
-						<label class="control-label">移动电话</label>
+						<label class="control-label">移动电话1</label>
 
 						<div class="controls">
 
-							<input type="text" class="m-wrap span12" placeholder="" id='mobile' name='mobile'>
+							<input type="text" class="m-wrap span12" placeholder="" id='mobile1' name='mobile1'>
+
+						</div>
+
+					</div>
+					<div class="control-group">
+
+						<label class="control-label">移动电话2</label>
+
+						<div class="controls">
+
+							<input type="text" class="m-wrap span12" placeholder="" id='mobile2' name='mobile2'>
 
 						</div>
 

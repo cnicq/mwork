@@ -124,13 +124,22 @@
 
 				<!-- BEGIN LOGO -->
 
-				<a class="brand" href="/">
+				<a class="brand" href="index.html">
 
-				<img src="/bootstrap2/media/image/logo.png" alt="logo" />
+				MS - Mapping System
 
 				</a>
 
 				<!-- END LOGO -->
+
+				<!-- BEGIN HORIZANTAL MENU -->
+
+				<div class="navbar hor-menu hidden-phone hidden-tablet">
+
+
+				</div>
+
+				<!-- END HORIZANTAL MENU -->
 
 				<!-- BEGIN RESPONSIVE MENU TOGGLER -->
 
@@ -148,22 +157,197 @@
 
 					<!-- BEGIN NOTIFICATION DROPDOWN -->   
 
+					<li class="dropdown" id="header_notification_bar">
+
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+
+						<i class="icon-warning-sign"></i>
+
+						<span class="badge">{{0}}</span>
+
+						</a>
+
+						<ul class="dropdown-menu extended notification">
+
+							<li>
+
+								<p>您收到{{0}}条新的事件</p>
+
+							</li>
+
+							<li>
+
+								<a href="#">
+
+								<span class="label label-success"><i class="icon-plus"></i></span>
+
+								
+
+								<span class="time">2015</span>
+
+								</a>
+
+							</li>
+
+							
+
+							<li class="external">
+
+								<a href="#">查看所提醒 <i class="m-icon-swapright"></i></a>
+
+							</li>
+
+						</ul>
+
+					</li>
+
 					<!-- END NOTIFICATION DROPDOWN -->
 
 					<!-- BEGIN INBOX DROPDOWN -->
 
-					
+					<li class="dropdown" id="header_inbox_bar">
+
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+
+						<i class="icon-envelope"></i>
+
+						<span class="badge">{{0}}</span>
+
+						</a>
+
+						<ul class="dropdown-menu extended inbox">
+
+							<li>
+
+								<p>您有{{0}}条新的消息</p>
+
+							</li>
+
+							<li>
+
+								<a href="inbox.html?a=view">
+
+								<span class="photo"><img src="/bootstrap2/media/image/avatar2.jpg" alt="" /></span>
+
+								<span class="subject">
+
+								<span class="from">Jocye</span>
+
+								<span class="time">刚刚</span>
+
+								</span>
+
+								<span class="message">
+
+								该功能开发中
+
+								</span>  
+
+								</a>
+
+							</li>
+
+							
+
+							<li class="external">
+
+								<a href="inbox.html">查看所有消息<i class="m-icon-swapright"></i></a>
+
+							</li>
+
+						</ul>
+
+					</li>
 
 					<!-- END INBOX DROPDOWN -->
 
 					<!-- BEGIN TODO DROPDOWN -->
 
-					
+					<li class="dropdown" id="header_task_bar">
+
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+
+						<i class="icon-tasks"></i>
+
+						<span class="badge">{{0}}</span>
+
+						</a>
+
+						<ul class="dropdown-menu extended tasks">
+
+							<li>
+
+								<p>您有{{0}}进行中的任务</p>
+
+							</li>
+
+							<li>
+
+								<a href="#">
+
+								<span class="task">
+
+								<span class="desc">新版本发布</span>
+
+								<span class="percent">30%</span>
+
+								</span>
+
+								<span class="progress progress-success ">
+
+								<span style="width: 30%;" class="bar"></span>
+
+								</span>
+
+								</a>
+
+							</li>
+
+							
+
+							<li class="external">
+
+								<a href="#">查看所有任务 <i class="m-icon-swapright"></i></a>
+
+							</li>
+
+						</ul>
+
+					</li>
 
 					<!-- END TODO DROPDOWN -->
 
 					<!-- BEGIN USER LOGIN DROPDOWN -->
 
+					<li class="dropdown user">
+
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+
+						<img alt="" src="/bootstrap2/media/image/avatar1_small.jpg" />
+
+						<span class="username">{{Auth::user()->username}}</span>
+
+						<i class="icon-angle-down"></i>
+
+						</a>
+
+						<ul class="dropdown-menu">
+
+							<li><a href="/user/profile/{{Auth::user()->id}}"><i class="icon-user"></i> 个人设置</a></li>
+
+							<li><a href="#"><i class="icon-calendar"></i> 日历</a></li>
+
+							<li><a href="#"><i class="icon-envelope"></i> 收件箱(0)</a></li>
+
+							<li><a href="#"><i class="icon-tasks"></i> 任务</a></li>
+
+							<li class="divider"></li>
+
+							<li><a href="/user/logout"><i class="icon-key"></i> 退出系统</a></li>
+
+						</ul>
+
+					</li>
 
 					<!-- END USER LOGIN DROPDOWN -->
 

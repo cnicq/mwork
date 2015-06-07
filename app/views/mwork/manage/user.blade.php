@@ -30,7 +30,7 @@
 
 			<div class="tab-pane row-fluid" id="tab_1_2">
 
-				<!-- BEGIN FORM : position manange-->
+				<!-- BEGIN FORM-->
 
 		<form action="#" class="form-horizontal" id="form_user" method="POST" autocomplete="off">
 			<!-- CSRF Token -->
@@ -134,8 +134,8 @@
 						<div class="controls">
 		                      @if ($mode == 'create')
 							<select class="form-control" name="confirm" id="confirm">
-								<option value="1"{{{ (Input::old('confirm', 0) === 1 ? ' selected="selected"' : '') }}}>{{{ Lang::get('general.yes') }}}</option>
-								<option value="0"{{{ (Input::old('confirm', 0) === 0 ? ' selected="selected"' : '') }}}>{{{ Lang::get('general.no') }}}</option>
+								<option value="1" selected="selected">{{{ Lang::get('general.yes') }}}</option>
+								<option value="0">{{{ Lang::get('general.no') }}}</option>
 							</select>
 							@else
 								<select class="form-control" {{{ ($user->id === Confide::user()->id ? ' disabled="disabled"' : '') }}} name="confirm" id="confirm">
@@ -168,6 +168,44 @@
 				</div>
 			</div>
 			<!--/row-->
+			<div class="row-fluid">
+
+				<div class="span6 ">
+
+					<div class="control-group">
+
+						<label class="control-label">中文名</label>
+
+						<div class="controls">
+
+							<input type="text" class="m-wrap span12" placeholder="" name="chinesename" id="chinesename" > 
+
+						</div>
+
+					</div>
+
+				</div>
+
+				<!--/span-->
+
+				<div class="span6 ">
+
+					<div class="control-group">
+
+							<label class="control-label">英文名</label>
+
+						<div class="controls">
+
+							<input type="text" class="m-wrap span12" placeholder="" id="englishname" name="englishname" >
+
+						</div>
+					</div>
+
+				</div>
+
+				<!--/span-->
+
+			</div>
 
 			<h3 class="form-section">KPI考核</h3>
 
@@ -195,11 +233,11 @@
 
 					<div class="control-group">
 
-							<label class="control-label">每日跟进数量</label>
+							<label class="control-label">每日备注(跟进)数量</label>
 
 						<div class="controls">
 
-							<input type="text" class="m-wrap span6" placeholder="" name="follow" id="follow">
+							<input type="text" class="m-wrap span6" placeholder="" name="note" id="note">
 
 						</div>
 					</div>
@@ -241,7 +279,7 @@
 
 						<div class="controls">
 
-							<input type="text" class="m-wrap span6" placeholder="" name="resume" id="resume">
+							<input type="text" class="m-wrap span6" placeholder="" name="coldcall" id="coldcall">
 
 						</div>
 
@@ -262,7 +300,7 @@
 			</div>
 		</form>
 
-		<!-- END FORM : position manage-->   
+		<!-- END FORM -->   
 			</div>
 		</div>
 
@@ -378,6 +416,8 @@
 					$("#user_id").val(userData['id']);
 					$("#username").val(userData['username']);
 					$("#email").val(userData['email']);
+					$("#chinesename").val(userData['chinesename']);
+					$("#englishname").val(userData['englishname']);
 
 					$("#user_edit").removeAttr("disabled");
 					$("#user_create").attr("disabled","disabled");
@@ -392,6 +432,13 @@
 							}
 						}
 					})
+
+					var kpiData = result['kpi'];
+					$('#recommend').val(kpiData['recommend']);
+					$('#resume').val(kpiData['resume']);
+					$('#coldcall').val(kpiData['coldcall']);
+					$('#note').val(kpiData['note']);
+
 					$.uniform.update();
 
 					//switch to edit tab

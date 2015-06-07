@@ -122,12 +122,12 @@ class TeamController extends ParentController {
             for($j = 0; $j < count($userNames); $j++)
             {
                 $user = User::where('username', '=', $userNames[$i])->first();
-                $user->chinesename = "123";
-                $user->recommend = "123";
-                $user->interview = "123";
-                $user->comment = "123";
-                $user->resume = "123";
-                $user->coldcall = "123";
+                $user->chinesename = $user->username;
+                $user->recommend = "";
+                $user->interview = "";
+                $user->comment = "";
+                $user->resume = "";
+                $user->coldcall = "";
                 $users[] = $user;
             }
         }

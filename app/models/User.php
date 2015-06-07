@@ -18,6 +18,12 @@ class User extends Eloquent implements ConfideUserInterface {
         return $this->where('username', '=', $username)->first();
     }
 
+    public static function getUserIdByUsername( $username )
+    {
+
+        return DB::table('users')->where('username', '=', $username)->first()->id;
+    }
+
     /**
      * Find the user and check whether they are confirmed
      *
@@ -68,6 +74,46 @@ class User extends Eloquent implements ConfideUserInterface {
             }
         }
         return $roleIds;
+    }
+
+    public function currentRoleNames()
+    {
+        $roles = $this->roles;
+        $roleNames = array();
+        if( !empty( $roles ) ) {
+           
+            foreach( $roles as $role )
+            {
+                $roleNames[] = $role->name;
+            }
+        }
+        return $roleNames;
+    }
+
+    public function IsAmin()
+    {
+        $roles = $this->currentRoleNames();
+
+        foreach ($roles as $value) {
+           if($value == 'user_admin'){
+            return true;
+           }
+        }
+
+        return false;
+    }
+
+    public function IsLead()
+    {
+        $roles = $this->currentRoleNames();
+
+        foreach ($roles as $value) {
+           if($value == 'user_lead'){
+            return true;
+           }
+        }
+
+        return false;
     }
 
     /**

@@ -18,7 +18,7 @@
 	<div class="portlet ">
 	<div class="portlet-title">
 
-	<div class="caption"><i class="icon-cogs"></i>项目信息(优先级)</div>
+	<div class="caption"><i class="icon-cogs"></i>项目信息</div>
 
 	<div class="tools">
 
@@ -41,7 +41,7 @@
 					<div class="span5">
 						<address>
 						<strong>职位名</strong><br>
-						{{$project->position_name}}
+						{{Datavalue::getvalue('position', $project->position_name)->text}}
 					</address>
 					</div>
 					<div class="span5">
@@ -102,11 +102,16 @@
 						</address></div>
 					</div>
 			</div>
-		</div>		
-		</div>
-		
-</div>
+		</div>	
 
+		<div class="span6">
+			<div class="well">
+				<h3>摘要</h3>
+				{{$project->desc}}
+			</div>
+		</div>	
+	</div>	
+</div>
 				<div class="portlet ">
 					<div class="portlet-title">
 
@@ -126,7 +131,7 @@
 
 						<h4>项目负责人</h4>
 
-						{{$project->team_id}}
+						{{User::find($project->owner_user_id)->username}}
 
 						</div>
 
@@ -149,7 +154,7 @@
 
 					<div class="portlet-title">
 
-						<div class="caption"><i class="icon-cogs"></i>说明</div>
+						<div class="caption"><i class="icon-cogs"></i>进度说明</div>
 
 						<div class="tools">
 
@@ -161,12 +166,9 @@
 					
 
 					<div class="portlet-body">
-						
-						<address>
-						<strong>摘要</strong><br>
-						{{$project->desc}}
-					</address>
-					
+						<div class='well' id='div_state'>
+						@include('mwork.project.part_state')
+						</div>
 
 					</div>
 					</div>
@@ -283,9 +285,26 @@
 				</div>
 
 				</div>
-
-				
-
-
 				</div>
-				@endif
+				
+<script type="text/javascript">
+function onChangeProjState()
+{
+	var urlTo = "/project/state/" + {{{$project->proj_id}}} + '/' + $('#sel_proj_state').val();
+	
+	$.ajax({
+			type: "GET",
+			url: urlTo,  // current page
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: function (result) {
+				
+				if(result != 'error'){
+				$('#div_state').html(result);
+				}
+			}
+		});
+}
+</script>
+
+@endif

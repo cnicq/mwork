@@ -67,7 +67,7 @@
 											<td>{{$candidate['gender']}}</td>
 											<td>{{$candidate['location']}}</td>
 
-											<td class="hidden-480">{{$candidate['mobile']}}</td>
+											<td class="hidden-480">{{$candidate['mobile1']}} {{$candidate['mobile2']}}</td>
 
 											<td class="hidden-480">{{$candidate['company']}}</td>
 

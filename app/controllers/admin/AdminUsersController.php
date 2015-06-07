@@ -94,6 +94,8 @@ class AdminUsersController extends AdminController {
         $this->user->username = Input::get( 'username' );
         $this->user->email = Input::get( 'email' );
         $this->user->password = Input::get( 'password' );
+        $this->user->englishname = Input::get( 'englishname' );
+        $this->user->chinesename = Input::get( 'chinesename' );
 
         // The password confirmation will be removed from model
         // before saving. This field will be used in Ardent's
@@ -129,6 +131,7 @@ class AdminUsersController extends AdminController {
                 );
             }
             */
+            $this->saveKPI($this->user);
 
             return "";
 
@@ -138,6 +141,24 @@ class AdminUsersController extends AdminController {
             $error = $this->user->errors()->all();
             return json_encode($error);
         }
+    }
+
+    public function saveKPI($user)
+    {
+
+        // save kpi
+        $kpi = Kpi::where('user_id', '=', $user->id)->first();
+        if($kpi == null)
+        {
+            $kpi = new Kpi();
+        }
+       
+        $kpi->recommend = Input::get('recommend');
+        $kpi->resume = Input::get('resume');
+        $kpi->coldecall = Input::get('coldecall');
+        $kpi->note = Input::get('note');
+
+        $kip->save();
     }
 
     /**
@@ -187,6 +208,8 @@ class AdminUsersController extends AdminController {
         $oldUser = clone $user;
         $user->username = Input::get( 'username' );
         $user->email = Input::get( 'email' );
+        $user->englishname = Input::get( 'englishname' );
+        $user->chinesename = Input::get( 'chinesename' );
         $user->confirmed = Input::get( 'confirm' );
 
         $password = Input::get( 'password' );
@@ -220,6 +243,8 @@ class AdminUsersController extends AdminController {
         $error = $user->errors()->all();
 
         if(empty($error)) {
+
+             $this->saveKPI($user);
             // Redirect to the new user page
             return Lang::get('admin/users/messages.edit.success');
         } else {
@@ -266,8 +291,9 @@ class AdminUsersController extends AdminController {
     {
         $user = User::find($id);
         $userData = DB::table('users')->where('id','=',$id)->first();
+        $kpi = Kpi::where('user_id', '=', $id)->first();
         $roles = $user->currentRoleIds();
-        return compact('userData', 'roles');
+        return compact('userData', 'roles', 'kpi');
     }
 
     /**

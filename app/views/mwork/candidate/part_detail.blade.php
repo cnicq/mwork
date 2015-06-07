@@ -21,6 +21,7 @@
 		<li class="active"><a href="#ca_tab_1_{{$tName}}" data-toggle="tab">详细资料</a></li>
 		<li class=""><a href="#ca_tab_2_{{$tName}}" data-toggle="tab">参与项目</a></li>
 		<li class=""><a href="#ca_tab_3_{{$tName}}" data-toggle="tab">备注记录</a></li>
+		<li class=""><a href="#ca_tab_5_{{$tName}}" data-toggle="tab">简历预览</a></li>
 		
 		<input type="hidden" class="m-wrap span12" placeholder="" id='ca_id' name='ca_id' value='{{$caId}}'>
 		<input type="hidden" class="m-wrap span12" placeholder="" id='proj_id' name='proj_id' value='{{$projId}}'>
@@ -46,7 +47,7 @@
 				<li><span>出生日期:</span> {{$candidate['birthday']}}</li>
 				<li><span>家乡:</span> {{$candidate['hometown']}}</li>
 				<li><span>所在城市:</span> {{$candidate['city']}}</li>
-				<li><span>移动电话:</span> {{$candidate['mobile']}}</li>
+				<li><span>移动电话:</span> {{$candidate['mobile1']}} {{$candidate['mobile2']}} </li>
 				<li><span>Email:</span> {{$candidate['email']}}</li>
 				<li><span>所在公司:</span> {{$candidate['company']}}</li>
 				<li><span>职位:</span> {{$candidate['position']}}</li>
@@ -63,7 +64,7 @@
 		</div>
 
 		<div class="tab-pane" id="ca_tab_2_{{$tName}}" style="min-height: 500px;">
-			<div class='well profile-classic' id='projList'>
+			<div id='projList'>
 				@include('mwork.project.part_list')
 			</div>
 
@@ -78,6 +79,18 @@
 			</div>
 			<div class='well profile-classic' id='comment'>
 				@include('mwork.candidate.part_comment')
+			</div>
+		</div>
+
+		<div class="tab-pane" id="ca_tab_5_{{$tName}}" style="min-height: 500px;">
+			
+			
+			<div class='well'>
+				<button>保存</button>
+			</div>
+
+			<div class='well'>
+				TODO:预览控件
 			</div>
 		</div>
 

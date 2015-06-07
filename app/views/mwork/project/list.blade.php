@@ -40,12 +40,11 @@
 											</a>
 
 											<ul class="dropdown-menu pull-right">
-
-												<li><a href="#"><i class="icon-pencil"></i> CC</a></li>
-												<li><a href="#"><i class="icon-trash"></i> 反馈</a></li>
-												<li><a href="#"><i class="icon-ban-circle"></i> 暂停</a></li>
-												<li><a href="#"><i class="icon-ban-circle"></i> 完结-完成</a></li>
-												<li><a href="#"><i class="icon-ban-circle"></i> 完结-取消</a></li>
+												@if ($values = Datavalue::getValues('projstate')) 
+													@foreach ($values as $value)
+													<li><a href="#"><i class="icon-pencil"></i> {{$value->text}}</a></li>
+													@endforeach
+												@endif
 
 											</ul>
 
@@ -56,9 +55,9 @@
 								</div>
 
 								<div class="portlet-body">
-
-									@include('mwork.project.part_list')
-
+									<div id='div_proj_list'>
+										@include('mwork.project.part_list')
+									</div>
 								</div>
 								
 		
@@ -94,8 +93,10 @@
 			@endif
 
 		  	$('#myTab a[href="#' + tabName + '"]').tab('show');  
-
-		  	TableAdvanced.initDetailTable('project_candidate_list', clickDetailFunc);
+		  	if(typeof(clickDetailFunc) == 'undefined')
+		  		TableAdvanced.initDetailTable('project_candidate_list', null);
+		  	else 
+		  		TableAdvanced.initDetailTable('project_candidate_list', clickDetailFunc);
 
 		});
 

@@ -29,7 +29,7 @@
 		<td>{{$candidate['englishname']}}</td>
 		<td>{{$candidate['gender']}}</td>
 		<td>{{$candidate['location']}}</td>
-		<td>{{$candidate['mobile']}}</td>
+		<td>{{$candidate['mobile1']}} {{$candidate['mobile2']}} </td>
 		<td>{{$candidate['company']}}</td>
 		<td>{{$candidate['position']}}</td>
 		<td style="display:none;">{{$candidate['materialstatus']}}</td>

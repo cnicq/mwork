@@ -18,6 +18,29 @@ class Candidate extends Eloquent {
 		return parent::delete();
 	}
 
+ 	public static function dealWithData(&$candidate)
+    {
+        $company = DB::table('companys')->where('id','=',$candidate['company'])->first();
+        if($company == null)
+        {	
+            $candidate['company'] = '/';
+        }
+        else 
+        {
+            $candidate['company'] = $company->chinesename;
+        }
+        $candidate['position'] = Datavalue::getvalue('position', $candidate['position'])->text;
+        $candidate['gender'] = Datavalue::getGenderText($candidate['gender']);
+    }
+
+    public static function dealWithDatas(&$candidates)
+    {
+        foreach ($candidates as $key1 => $value1) 
+        {
+            Candidate::dealWithData($value1);
+        }
+    }
+
 	public static function InProject($projId='', $caId='')
 	{
 		$r = Projectinfo::where('ca_id', '=', $caId)->where('proj_id', '=', $projId)->get();

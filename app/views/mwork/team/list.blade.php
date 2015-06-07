@@ -62,7 +62,18 @@
 						<tr>
 							<td>{{$team->name}}</td>
 							<td>{{$team->lead_name}}</td>
-							<td>{{$team->member_names}}</td>
+							<td>
+								<ul>
+									@if ($members = explode(',', $team->member_names)) @endif
+									@foreach ($members as $memberName)
+									<li>
+									<a href='/user/{{User::getUserIdByUsername($memberName)}}/kpi/0/0' target="_blank">
+									{{$memberName}}
+									</a>
+									</li>
+									@endforeach
+								</ul>
+								</td>
 							<td>{{$team->project_count}}</td>
 							<td><a href='team_{{$team->id}}'>详细</a></td>
 						</tr>

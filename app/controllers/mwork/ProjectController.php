@@ -20,6 +20,20 @@ class ProjectController extends ParentController {
         $this->project = $project;
     }
 
+    public function changeState($projId, $stateName)
+    {
+        $project = Project::find($projId);
+        if($project == null){
+            return Response::json('error');
+        }
+
+        $project->projstate_name = $stateName;
+        $project->save();
+        $project->proj_id = $project->id;
+
+        return Response::json(View::make('mwork/project/part_state', compact('project'))->render());
+    }
+
     public function changeStep($projId, $caId, $stepVal, $content = '')
     {
         $user = Auth::user();
@@ -75,7 +89,7 @@ class ProjectController extends ParentController {
                 ->paginate(20);
 
         $project = Project::where('projects.id', '=', $projId)->leftjoin("clients", 'clients.id', '=', 'projects.client_id')
-                ->select('projects.*', 'projects.id','clients.*')->first();
+                ->select('projects.*', 'projects.id as proj_id','clients.*')->first();
         if($project == null){
             return 'error';
         }
@@ -86,8 +100,12 @@ class ProjectController extends ParentController {
         $companys = DB::table('companys')->get();
         $company = Company::find($project->company_id);
 
-        $candidates = Projectinfo::where('projectinfos.proj_id','=',$projId)->groupBy('ca_id')->select(DB::raw('max(projectinfos.updated_at) as latest, candidates.*'))->leftjoin('candidates','candidates.id','=','projectinfos.ca_id')
+        $candidates = Projectinfo::where('projectinfos.proj_id','=',$projId)->groupBy('ca_id')
+        ->select(DB::raw('max(projectinfos.updated_at) as latest, candidates.*'))
+        ->leftjoin('candidates','candidates.id','=','projectinfos.ca_id')
                    ->paginate(20);
+
+        Candidate::dealWithDatas($candidates);
                 
         $mode='project';
 
@@ -111,6 +129,7 @@ class ProjectController extends ParentController {
         $teams = DB::table('teams')->get();
         $users = DB::table('users')->get();
         $companys = DB::table('companys')->get();
+
         // Show the page
         return View::make('mwork/project/add', compact('clients', 'positions', 'citys', 'users', 'teams', 'users'), $this->Titles('id_project', 'id_project_manage'));
 	}

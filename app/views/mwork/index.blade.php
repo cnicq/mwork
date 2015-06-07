@@ -3,7 +3,7 @@
 @section('content')
   <br>
   <div class="alert alert-success">
-		<strong>欢迎 {$user->username}!</strong>
+		<strong>欢迎 {{Auth::user()->username}}!</strong>
   </div>  
 
  <div class="row-fluid">

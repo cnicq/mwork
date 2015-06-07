@@ -60,7 +60,9 @@
 
 	<div class="logo">
 
-		<img src="/bootstrap2/media/image/logo-big.png" alt="" /> 
+		<h3>
+
+		</h3>
 
 	</div>
 
@@ -75,7 +77,7 @@
 		<form class="form-vertical login-form" action="/user/login" method="post">
 			<input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-			<h3 class="form-title">Login to your account</h3>
+			<h3 class="form-title">MS - Mapping System </h3>
 
 			<div class="alert alert-error hide">
 
@@ -131,13 +133,13 @@
 
 				<label class="checkbox">
 
-				<input type="checkbox" name="remember" value="1"/> Remember me
+				<input type="checkbox" name="remember" value="1"/> 记住我
 
 				</label>
 
 				<button type="submit" class="btn green pull-right">
 
-				Login <i class="m-icon-swapright m-icon-white"></i>
+				登陆 <i class="m-icon-swapright m-icon-white"></i>
 
 				</button>            
 
@@ -145,29 +147,17 @@
 
 			<div class="forget-password">
 
-				<h4>Forgot your password ?</h4>
+				
 
 				<p>
 
-					no worries, click <a href="#" class="" id="forget-password">here</a>
-
-					to reset your password.
+					需要注册新账户及密码重置请联系管理员
 
 				</p>
 
 			</div>
 
-			<div class="create-account">
-
-				<p>
-
-					Don't have an account yet ?&nbsp; 
-
-					<a href="#" id="register-btn" class="">Create an account</a>
-
-				</p>
-
-			</div>
+			
 
 		</form>
 

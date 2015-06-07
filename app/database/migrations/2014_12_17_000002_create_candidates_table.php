@@ -24,7 +24,8 @@ class CreateCandidatesTable extends Migration {
 			$table->string('birthday');
             $table->string('hometown');
 			$table->string('label'); //tags
-			$table->string('mobile');
+			$table->string('mobile1'); 
+            $table->string('mobile2'); 
             $table->string('tel');
 			$table->string('email');
 			$table->string('company'); //company 

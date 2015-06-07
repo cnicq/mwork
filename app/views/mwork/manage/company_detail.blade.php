@@ -7,15 +7,15 @@
 			<h3>公司信息</h3>
 			<address>
 				<strong>公司名</strong><br>
-				{{$company->chinesename}}
+				{{$company->chinesename}} | {{$company->englishname}}
 			</address>
 			<address>
 				<strong>地址</strong><br>
-				{{$company->location}}
+				{{$company->location}} | {{$company->province}}
 			</address>
 			<address>
-				<strong>电话</strong><br>
-				{{$company->location}}
+				<strong>所属行业</strong><br>
+				{{Datavalue::getvalue('industry', $company->industry)->text}}
 			</address>
 			</div>
 		</div>

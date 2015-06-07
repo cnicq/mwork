@@ -66,7 +66,10 @@ Route::group(array('before' => 'auth'), function(){
     //Route::get('/manage/datavalue', 'DatavalueController@getList');
 
     // user
-    Route::get('/user/{userId}/{tab}/{year}/{month}', 'UserController@getShow');
+    Route::get('/user/profile/{userId}', 'UserController@getProfile');
+    Route::get('/user/project/{userId}', 'UserController@getProject');
+    Route::get('/user/kpi/{userId}/{year?}/{month?}', 'UserController@getKPI');
+    Route::post('/user/profile', 'UserController@postProfile');
 
     Route::get('/manage/user', 'AdminUsersController@getCreate');
     Route::get('/manage/user/{id}', 'AdminUsersController@getData');
@@ -97,8 +100,9 @@ Route::group(array('before' => 'auth'), function(){
 
     // project
     Route::get('/project', 'ProjectController@getIndex');
-    Route::get('/project/{id}', 'ProjectController@getShow');
+    Route::get('/project/detail/{id}', 'ProjectController@getShow');
     Route::get('/project/manage', 'ProjectController@getCreate');
+    Route::get('/project/state/{projId}/{stateName}', 'ProjectController@changeState');
     Route::get('/project/step/{projId}/{caId}/{stepVal}/{content?}', 'ProjectController@changeStep');
 
     Route::post('/project/manage', 'ProjectController@postCreate');

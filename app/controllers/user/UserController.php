@@ -39,7 +39,84 @@ class UserController extends BaseController {
         return View::make('site/user/index', compact('user'));
     }
 
-    public function getShow($userId, $tab, $year = 0, $month = 0)
+     /**
+     * Get user's profile
+     * @param $username
+     * @return mixed
+     */
+    public function getProfile($userId)
+    {
+        $user = User::find($userId);
+        $roles = Role::all();
+
+        // Check if the user exists
+        if (is_null($user))
+        {
+            return App::abort(404);
+        }
+        $mode = 'read';
+
+        // if user is self, edit mode
+        if(Auth::user()->id == $userId)
+        {
+            $mode = 'edit';
+        }
+
+        $kpi = Kpi::where('user_id', '=', $userId)->first();
+        if($kpi == null)
+        {
+            $kpi = new Kpi();
+        }
+        $tab = 'profile';
+        $error = Session::get('error');
+
+        return View::make('mwork/user/info', compact('user', 'tab', 'mode', 'roles', 'kpi', 'error'),$this->Titles('id_user', ''));
+    }
+
+     public function postProfile()
+    {
+        $user = Auth::user();
+
+        $user->email = Input::get('email');
+        $user->englishname = Input::get('englishname');
+        $user->chinesename = Input::get('chinesename');
+
+        $password = Input::get('password');
+        $passwordConfirmation = Input::get('password_confirmation');
+
+        if (!empty($password)) {
+            if ($password != $passwordConfirmation) {
+                // Redirect to the new user page
+                $error = '密码不一致';
+                return Redirect::to('/user/profile/'.$user->id)
+                    ->with('error', $error);
+            } else {
+                $user->password = $password;
+                $user->password_confirmation = $passwordConfirmation;
+            }
+        }
+
+        if ($this->userRepo->save($user)) {
+            return Redirect::to('/user/profile/'.$user->id)->with('error', '修改成功');
+        } else {
+            $error = $user->errors()->all(':message');
+            return Redirect::to('/user/profile/'.$user->id)
+                    ->with('error', $error);
+        }
+    }
+
+    public function getProject($userId)
+    {
+        $user = User::find($userId);
+        $tab = 'project';
+
+        $projectInfos = Projectinfo::where('auth_id', '=', $userId)
+        ->leftjoin('projects', 'projects.id', '=', 'Projectinfos.proj_id')
+        ->select('Projectinfos.*','projects.id as proj_id', 'projects.*')->paginate(20);
+
+        return View::make('mwork/user/info', compact('projectInfos', 'tab', 'user'),$this->Titles('id_user', ''));
+    }
+    public function getKPI($userId, $year = 0, $month = 0)
     {
         if($year == 0)
         {
@@ -48,8 +125,8 @@ class UserController extends BaseController {
         }
 
         $user = User::find($userId);
-        $title = $tab;
-
+        $tab = 'kpi';
+        
         $days = cal_days_in_month(CAL_GREGORIAN, intval($month), intval($year));
         $starting_time = strtotime($year . '-' . $month . '-1');
         $ending_time = strtotime($year . '-' . $month . '-' . $days);
@@ -57,7 +134,6 @@ class UserController extends BaseController {
                     ->whereBetween('created_at', array($starting_time, $ending_time))->select("*")->get();
 
         $weekday = date("w", $starting_time);
-        //return $weekday;
         $kpis = array();
         $types = array('recommend', 'interview', 'comment', 'cv', 'cc', 'day', 'weekday');
         $weekdays = array('日','一','二','三','四','五','六');
@@ -96,7 +172,7 @@ class UserController extends BaseController {
             $kpis[] = $values;
         }
 
-        return View::make('mwork/user/info', compact('user', 'tab', 'title', 'kpis', 'year', 'month'));
+        return View::make('mwork/user/info', compact('user', 'tab', 'kpis', 'year', 'month'),$this->Titles('id_user', ''));
     }
 
     /**
@@ -318,24 +394,7 @@ class UserController extends BaseController {
         return Redirect::to('/');
     }
 
-    /**
-     * Get user's profile
-     * @param $username
-     * @return mixed
-     */
-    public function getProfile($username)
-    {
-        $userModel = new User;
-        $user = $userModel->getUserByUsername($username);
-
-        // Check if the user exists
-        if (is_null($user))
-        {
-            return App::abort(404);
-        }
-
-        return View::make('site/user/profile', compact('user'));
-    }
+   
 
     public function getSettings()
     {

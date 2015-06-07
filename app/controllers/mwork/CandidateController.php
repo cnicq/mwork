@@ -27,10 +27,13 @@ class CandidateController extends ParentController {
         return Response::json(View::make("mwork/project/part_list", compact('projects', 'caId', 'projId'))->render() );
     }
 
-    public function getDetail($caId, $projId=0)
+    public function getDetail($caId=0, $projId=0)
     {
         $candidate = $this->candidate->where('id', '=', $caId)->first();
-        $this->dealWithData($candidate);
+        if($candidate == null){
+            return error;
+        }
+        Candidate::dealWithData($candidate);
         
         $cacomments = DB::table('cacomments')->where('ca_id', '=', $caId)->get();
        
@@ -93,7 +96,6 @@ class CandidateController extends ParentController {
      */
     public function getIndex()
     {
-       
         $candidates = $this->candidate->orderBy('updated_at', 'DESC')->paginate(20);
         
         return $this->showList($candidates);
@@ -107,37 +109,14 @@ class CandidateController extends ParentController {
         $industrys = DB::table('datavalues')->where('type', '=', 'industry')->get();
         $positions = DB::table('datavalues')->where('type', '=', 'position')->get();
 
-        $this->dealWithDatas($candidates);
+        Candidate::dealWithDatas($candidates);
 
          // Show the page
-        return View::make($blade, compact('candidates', 'companys', 'citys', 'industrys', 'positions', 'mode'), 
+        return  View::make($blade, compact('candidates', 'companys', 'citys', 'industrys', 'positions', 'mode'), 
             $this->Titles("id_candidate", 'id_candidate_list'));
     }
 
-    private function dealWithData(&$candidate)
-    {
-        $company = DB::table('companys')->where('id','=',$candidate['company'])->first();
-        if($company == null)
-        {
-            $candidate['company'] = '/';
-        }
-        else 
-        {
-            $candidate['company'] = $company->chinesename;
-        }
-        $candidate['position'] = DatavalueUtil::getInstance()->getDataValueText('position', $candidate['position']);
-        $candidate['gender'] = DatavalueUtil::getInstance()->getGenderText($candidate['gender']);
-    }
-
-    private function dealWithDatas(&$candidates)
-    {
-        foreach ($candidates as $key1 => $value1) 
-        {
-            $this->dealWithData($value1);
-        }
-    }
-
-    public function getAdd()
+    public function getAdd($error = '')
     {
         $this->smallTitle = 'id_candidate_add';
 
@@ -146,11 +125,13 @@ class CandidateController extends ParentController {
         $industrys = DB::table('datavalues')->where('type', '=', 'industry')->get();
         $positions = DB::table('datavalues')->where('type', '=', 'position')->get();
         $cvsites = DB::table('datavalues')->where('type', '=', 'cvsite')->get();
-
+        
         // Show the page
-        return View::make('mwork/candidate/add', 
-            compact('companys', 'citys', 'industrys', 'positions', 'cvsites'),
+        $v = View::make('mwork/candidate/add', 
+            compact('companys', 'citys', 'industrys', 'positions', 'cvsites', 'error'),
             $this->Titles("id_candidate", 'id_candidate_add'));
+     
+        return $v;
     }
 
     public function postSearch($mode = 'candidate')
@@ -165,8 +146,15 @@ class CandidateController extends ParentController {
         }
         else
         {
-            $inputs = Input::except('keywords', '_token', 'projId');
+            $inputs = Input::except('keywords', '_token', 'projId', 'mobile');
             $whereArr = array();
+            $orwhereArr = array();
+            $mobile = Input::get('mobile');
+            if($mobile != '')
+            {
+                $orwhereArr['mobile1'] = Input::get('mobile');
+                $orwhereArr['mobile2'] = Input::get('mobile');
+            }
 
             foreach ($inputs as $key => $value) {
                 if($value != ''){
@@ -176,15 +164,28 @@ class CandidateController extends ParentController {
           
             if(count($whereArr) > 0)
             {
-                $candidates = $this->candidate->where($whereArr)->orderBy('updated_at', 'DESC')->paginate(20);    
+                if(count($orwhereArr) > 0){
+                    $candidates = $this->candidate->where($whereArr)
+                        ->orWhere($orwhereArr)->orderBy('updated_at', 'DESC')->paginate(20); 
+                }
+                else{
+                    $candidates = $this->candidate->where($whereArr)->orderBy('updated_at', 'DESC')->paginate(20); 
+                }   
             }
             else
             {
-                $candidates = $this->candidate->orderBy('updated_at', 'DESC')->paginate(20); 
+                if(count($orwhereArr) > 0){
+                    $candidates = $this->candidate->orWhere($orwhereArr)->orderBy('updated_at', 'DESC')->paginate(20); 
+                }
+                else{
+                    $candidates = $this->candidate->orderBy('updated_at', 'DESC')->paginate(20); 
+                }  
+
+                
             }
         }
 
-        $this->dealWithDatas($candidates);
+        Candidate::dealWithDatas($candidates);
         $blade = 'mwork/candidate/part_list_general';
      
         return $this->showList($candidates,$mode, $blade);
@@ -192,11 +193,26 @@ class CandidateController extends ParentController {
 
     public function postCreate()
     {
-        // Check if the form validates with success
+        $name = Input::get('englishname').Input::get('chinesename');
+        $mobile1 = Input::get('mobile1');
+        $mobile2 = Input::get('mobile2');
+        if( ($mobile1 == '' && $mobile2 =='') || $name=='')
+        {
+            return $this->getAdd('名字和手机号码必填');
+        }
+        if($mobile1 != '' && Candidate::where('mobile1','=',$mobile1)->orWhere('mobile2', '=',$mobile1)->first() != null){
+            return $this->getAdd('手机号为:'.$mobile1.'的候选人已经存在');
+        }
+        if($mobile2 != '' && Candidate::where('mobile1','=',$mobile2)->orWhere('mobile2', '=',$mobile2)->first() != null){
+            return $this->getAdd('手机号为:'.$mobile2.'的候选人已经存在');
+        }
+        
+        // check duplicate
+     
         if (true)
         {
             $user = Auth::user();
-            // TODO:check auth
+            
             $forSearch = '';
             $e = Input::all();
             foreach($e as $k=>$v){
@@ -212,7 +228,8 @@ class CandidateController extends ParentController {
             $this->candidate->maritalstatus         = Input::get('maritalstatus');
             $this->candidate->hometown              = Input::get('hometown');
             $this->candidate->label                 = Input::get('label');
-            $this->candidate->mobile                = Input::get('mobile');
+            $this->candidate->mobile1                = Input::get('mobile1');
+            $this->candidate->mobile2                = Input::get('mobile2');
             $this->candidate->birthday              = Input::get('birthday');
             $this->candidate->tel                   = Input::get('tel');
             $this->candidate->email                 = Input::get('email');

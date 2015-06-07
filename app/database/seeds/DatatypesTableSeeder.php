@@ -30,6 +30,10 @@ class DatatypesTableSeeder extends Seeder {
             array(
                 'name'      => 'step',
                 'text'      => '推荐状态',
+            ),
+            array(
+                'name'      => 'projstate',
+                'text'      => '项目状态',
             )
         );
 
@@ -118,6 +122,20 @@ class DatatypesTableSeeder extends Seeder {
       
 
         DB::table('datavalues')->insert( $stpes );
+
+        $projTexts = array('准备中','进行中','暂停中', '已完成', '已取消');
+        $projs = [];
+        for($i = 0; $i < count($projTexts); $i++)
+        {
+            array_push($projs,   array(
+                'type'      => 'projstate',
+                'name'      =>  $i,
+                'text'      =>  $projTexts[$i]
+            ));
+        }
+      
+
+        DB::table('datavalues')->insert( $projs );
 
     }
 

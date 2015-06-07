@@ -1,0 +1,35 @@
+/***
+project state label and badges
+***/
+.label, 
+.badge {
+  font-weight: 300;
+}
+
+.label-success, 
+.badge-success {
+  background-color: #3cc051;
+  background-image: none !important;
+  text-shadow: none !important;
+}
+
+.label-warning, 
+.badge-warning {
+  background-color: #fcb322;
+  background-image: none !important;
+  text-shadow: none !important;
+}
+
+.label-important, 
+.badge-important {
+  background-color: #ed4e2a;
+  background-image: none !important;
+  text-shadow: none !important;
+}
+
+.label-info, 
+.badge-info {
+  background-color: #57b5e3;
+  background-image: none !important;
+  text-shadow: none !important;
+}

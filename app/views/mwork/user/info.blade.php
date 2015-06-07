@@ -1,4 +1,4 @@
-@extends('mwork.layouts.modal')
+@extends('mwork.layouts.default')
 @section('csss')
 <link rel="stylesheet" type="text/css" href="/bootstrap2/media/css/profile.css" />
 @stop
@@ -7,88 +7,23 @@
 <div class="tabbable tabbable-custom tabbable-full-width" id="myTab">
 	<ul class="nav nav-tabs">
 
-		<li class="active"><a href="#tab_1_1" data-toggle="tab">基本信息</a></li>
-		<li><a href="#tab_1_2" data-toggle="tab">参与项目</a></li>
-		<li><a href="#tab_1_3" data-toggle="tab">KPI考核</a></li>
+		<li class="@if($tab == 'profile') active @endif"><a href="/user/profile/{{$user->id}}" >基本信息</a></li>
+		<li class="@if($tab == 'project') active @endif"><a href="/user/project/{{$user->id}}" >参与项目</a></li>
+		<li class="@if($tab == 'kpi') active @endif"><a href="/user/kpi/{{$user->id}}" >KPI考核</a></li>
 
 	</ul>
 
 	<div class="tab-content">
 
-		<div class="tab-pane row-fluid active" id="tab_1_1">
-
+		<div class="tab-pane row-fluid @if($tab == 'profile') active @endif" id="tab_1_1">
+			@include('mwork.user.part_profile')
 		</div>
-		<div class="tab-pane row-fluid" id="tab_1_2">
-			
+		<div class="tab-pane row-fluid @if($tab == 'project') active @endif" id="tab_1_2">
+			@include('mwork.user.part_project')
 		
 		</div>
-		<div class="tab-pane row-fluid" id="tab_1_3">
-			<div class="row-fluid">
-				<div class="span12">
-					<!-- BEGIN SAMPLE TABLE PORTLET-->
-
-					<div class="portlet box purple">
-
-						<div class="portlet-title">
-
-							<div class="caption"><i class="icon-comments"></i>月报 {{$year}} - {{$month}}</div>
-
-							<div class="tools">
-								<button class="btn" id="curMonth"> 本月</button>
-								<button  class="btn"id="prevMonth"><i class="icon-plus"></i> 前一月</button>
-								<button class="btn" id="nextMonth"><i class="icon-plus"></i> 后一月</button>
-								
-							</div>
-
-						</div>
-						
-						<div class="portlet-body">
-
-							<table class="table table-striped table-hover">
-								<thead>
-									<tr>
-
-										<th>日期</th>
-										<th>推荐数量</th>
-										<th>面试数量</th>
-										<th>跟进数量</th>
-										<th>录入简历数量</th>
-										<th>Cold Call数量</th>
-										<th>完成情况</th>
-										<th>评价</th>
-
-									</tr>
-
-								</thead>
-
-								<tbody>
-
-									@foreach ($kpis as $kpi)
-									<tr>
-										<td>星期{{$kpi['weekday']}} - {{$kpi['day']}}</td>
-										<td>{{$kpi['recommend']}}</td>
-										<td>{{$kpi['interview']}}</td>
-										<td>{{$kpi['comment']}}</td>
-										<td>{{$kpi['cv']}}</td>
-										<td>{{$kpi['cc']}}</td>
-										<td><span class="label label-success">Approved</span></td>
-										<th><span class="label label-success">Approved</span></th>
-									</tr>
-
-									@endforeach
-
-								</tbody>
-
-							</table>
-
-						</div>
-
-					</div>
-
-					<!-- END SAMPLE TABLE PORTLET-->
-
-				</div>
-			</div>
+		<div class="tab-pane row-fluid @if($tab == 'kpi') active @endif" id="tab_1_3" >
+			@include('mwork.user.part_kpi')
 		</div>
 		
 	</div>
@@ -100,54 +35,5 @@
 
 @section("scripts")
 
-<script>
 
-		jQuery(document).ready(function() {       
-			var tabName = "tab_1_1";
-			@if (isset($users)) 
-			 		tabName = "tab_1_2";
-			@endif
-			@if (isset($kpi)) 
-			 		tabName = "tab_1_3";
-			@endif
-
-		  	$('#myTab a[href="#' + tabName + '"]').tab('show');  
-
-		  	var year = {{$year}};
-		  	var month = {{$month}};
-
-		  	$('#prevMonth').click(function(){
-		  		if(month == 1)
-		  		{
-		  			year -= 1;
-		  			month = 12;
-		  		}
-		  		else
-		  		{
-		  			month -= 1;
-		  		}
-		  		location.href = "/user/{{$user->id}}/kpi/" +year+ "/" + month;
-		  	});
-
-		  	$('#nextMonth').click(function(){
-		  		if(month == 12)
-		  		{
-		  			year += 1;
-		  			month = 1;
-		  		}
-		  		else
-		  		{
-		  			month += 1;
-		  		}
-
-		  		location.href = "/user/{{$user->id}}/kpi/" +year+ "/" + month;
-		  	});
-
-		  	$('#curMonth').click(function(){
-		  		 location.href ="/user/{{$user->id}}/kpi/0/0";
-		  	});
-
-		});
-
-	</script>
 @stop

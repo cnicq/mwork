@@ -23,6 +23,7 @@ class CreateProjectsTable extends Migration {
             $table->integer('head_count')->unsigned();
 
             $table->string('position_name');
+            $table->string('projstate_name');
             $table->string('city_name')->default("");
             $table->string('income')->default("");
             $table->string('location')->default("");
