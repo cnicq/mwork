@@ -65,7 +65,7 @@ function saveData(f)
   for(var i in jsonData.Comments){
     var d = {
       auth_id:defaultAuthUserId,  // by admin
-      created_at_old:jsonData.CommentsTime[i],
+      created_at:jsonData.CommentsTime[i],
       cvPath:jsonData.Resumes[i],
       content:jsonData.Comments[i]
       };
