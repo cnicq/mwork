@@ -98,11 +98,11 @@ class CandidateController extends ParentController {
     {
         $candidates = $this->candidate->orderBy('updated_at', 'DESC')->paginate(20);
         
-        return $this->showList($candidates);
+        return $this->showList($candidates, $mode='candidate', $blade='mwork/candidate/list');
        
     }
 
-    public function showList($candidates, $mode='candidate', $blade='mwork/candidate/list')
+    public function showList($candidates, $mode='candidate', $blade='mwork/candidate/list', $subTitile='id_candidate_list')
     {
         $companys = DB::table('companys')->orderBy('updated_at', 'DESC')->get();
         $citys = DB::table('datavalues')->where('type', '=', 'city')->get();
@@ -113,7 +113,16 @@ class CandidateController extends ParentController {
 
          // Show the page
         return  View::make($blade, compact('candidates', 'companys', 'citys', 'industrys', 'positions', 'mode'), 
-            $this->Titles("id_candidate", 'id_candidate_list'));
+            $this->Titles("id_candidate", $subTitile));
+    }
+
+    public function getMy()
+    {
+        $candidates = Candidate::leftjoin('candidateowns', 'candidateowns.ca_id', '=', 'candidates.id')
+            ->where('candidateowns.owner_id', '=', Auth::user()->id)->select('candidates.*')->paginate(20);
+
+         // Show the page
+        return  $this->showList($candidates, $mode='candidate', $blade='mwork/candidate/list', 'id_candidate_my');
     }
 
     public function getAdd($error = '')

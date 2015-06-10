@@ -65,6 +65,13 @@
 				</a>
 
 				<ul class="sub-menu">
+					<li id="id_candidate_my">
+
+						<a href="/candidate/my">
+
+						我的候选人</a>
+
+					</li>
 
 					<li id="id_candidate_list">
 
