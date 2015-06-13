@@ -3,10 +3,10 @@
 		
 		<address>
 		<strong>
-			{{$cacomment->auth_id}}   [{{$cacomment->updated_at}}]
+			{{User::GetUserNameById($cacomment->auth_id)}} 
 		</strong>
 		<br>
-		{{$cacomment->content}}
+		[{{$cacomment->updated_at}}] {{$cacomment->content}}
 		</address>
 		
 @endforeach

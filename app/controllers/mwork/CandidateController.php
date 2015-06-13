@@ -53,6 +53,27 @@ class CandidateController extends ParentController {
          compact('candidate', 'cacomments', 'tName', 'projects', 'caId', 'projId', 'curStep', 'steps', 'projectinfos'))->render() );
     }
 
+    public function addOwn($caId)
+    {
+        if(Candidate::find($caId) == null)
+        {
+            return 'error';
+        }
+
+        if(Candidate::IsOwn($caId, Auth::user()->id))
+        {
+            return 'error';
+        }
+
+        $own = new Candidateown();
+        $own->ca_id = $caId;
+        $own->owner_id = Auth::user()->id;
+        $own->save();
+
+        return 'ok';
+
+    }
+
     public function addProject($projId, $caId)
     {
         $projInfo = Projectinfo::where('proj_id', '=', $projId)->where('ca_id', '=', $caId)->first();
@@ -79,6 +100,7 @@ class CandidateController extends ParentController {
 
         $com = new Cacomment();
         $com->content = $content;
+        $com->created_at_old = '';
         $com->ca_id = $caId;
         $com->proj_id = $projId;
         $com->auth_id = $user->id;

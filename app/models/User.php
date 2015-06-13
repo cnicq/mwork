@@ -158,4 +158,15 @@ class User extends Eloquent implements ConfideUserInterface {
         return $this->email;
     }
 
+    public static function GetUserNameById($userId)
+    {
+        $theUser = User::find($userId);
+        if($theUser == null){
+            return '无';
+        }
+        else{
+            return $theUser->chinesename.' | '.$theUser->englishname;
+        }
+    }
+
 }

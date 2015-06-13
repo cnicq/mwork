@@ -46,6 +46,12 @@ class Candidate extends Eloquent {
 		$r = Projectinfo::where('ca_id', '=', $caId)->where('proj_id', '=', $projId)->get();
 		return count($r) > 0;
 	}
+
+	public static function IsOwn($caId, $userId)
+	{
+		$r = Candidateown::where('ca_id', '=', $caId)->where('owner_id', '=', $userId)->get();
+		return count($r) > 0;
+	}
 	/**
 	 * Returns a formatted candidate entry,
 	 * this ensures that line breaks are returned.

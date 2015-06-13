@@ -21,8 +21,9 @@ class CreateCaCommentsTable extends Migration {
             $table->integer('ca_id');    // candidate id
             $table->integer('proj_id');  // project id
             $table->text('content');     // comment
-            $table->string('created_at_old');
-            $table->string('cvPath');
+            $table->string('created_at_old')->default('');
+            $table->string('cvPath')->default('');
+            ;
 
             $table->timestamps();
         });

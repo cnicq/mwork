@@ -9,7 +9,12 @@
 		@else
 			<button class="btn blue" onclick='onClickProject()'>加入项目</button>
 		@endif
-		<button class="btn blue" onclick='onClickComment()'>添加备注</button>
+		<button class="btn blue" onclick='onClickComment()' >添加备注</button>
+		@if (Candidate::IsOwn($caId, Auth::user()->id))
+			<button class="btn gray" disabled>已加入我的库</button>
+		@else
+			<button class="btn blue" onclick='onClickOwn({{$caId}})' id='addOwn'>加入我的库</button>
+		@endif
 	</div>
 	<!-- Only required for left/right tabs -->
 
@@ -147,7 +152,23 @@ function onClickProjectD(projId)
 				$('#candidate_detail_tab a[href="#ca_tab_2_{{$tName}}"]').tab('show'); 
 				$('#addProject').text('已加入'); 
 				$('#addProject').attr('disabled', true);
-				$('#addProject').addClass('grey');
+				$('#addProject').removeClass('blue');	
+				$('#addProject').addClass('gray');	
+			}
+	});
+}
+
+function onClickOwn(caId)
+{
+	var urlTo = '/candidate/addOwn/' + caId;
+	$.ajax({
+			type:'GET',
+			url:urlTo,
+			success: function(r){
+				$('#addOwn').removeClass('blue');	
+				$('#addOwn').addClass('gray');	
+				$('#addOwn').text('已加入我的库'); 
+				$('#addOwn').attr('disabled', true);
 			}
 	});
 }

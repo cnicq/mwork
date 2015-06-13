@@ -12,13 +12,13 @@ class CreateCandidateownTable extends Migration {
 */
 public function up()
 {
-		if(Schema::hasTable('Candidateowns'))
+		if(Schema::hasTable('candidateowns'))
 		{
-			print "talbe : Candidateowns already exist.\n";
+			print "talbe : candidateowns already exist.\n";
 			return;
 		}
 
-		Schema::create('Candidateowns', function($table)
+		Schema::create('candidateowns', function($table)
 		{
 
 			$table->engine = 'InnoDB';
@@ -37,7 +37,7 @@ public function up()
 */
 public function down()
 {
-Schema::drop('Candidateowns');
+Schema::drop('candidateowns');
 }
 
 }
