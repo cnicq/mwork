@@ -162,7 +162,7 @@ class User extends Eloquent implements ConfideUserInterface {
     {
         $theUser = User::find($userId);
         if($theUser == null){
-            return '无';
+            return '未知';
         }
         else{
             return $theUser->chinesename.' | '.$theUser->englishname;

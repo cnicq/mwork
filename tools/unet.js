@@ -75,6 +75,7 @@ function saveData(f)
   client.query(  
     'INSERT INTO Candidates SET ?',candidateData,  
     function (err, result) {  
+      // success
       if (!err) {  
         // add comment and move resume to path
         for(var i in commentData ){
@@ -93,6 +94,7 @@ function saveData(f)
             });
         }  
     } 
+    // fail
     else{
           console.log(err);
         }
