@@ -21,6 +21,7 @@ class CreateCaCommentsTable extends Migration {
             $table->integer('ca_id');    // candidate id
             $table->integer('proj_id');  // project id
             $table->text('content');     // comment
+            $talbe->integer('castatus');   // current status, datatype:castatus
             $table->string('cvPath')->default('');
             ;
 

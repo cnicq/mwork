@@ -19,6 +19,41 @@ for(var i in fileList){
     saveData(fileList[i]);
 }
 
+function addCompany(companyName, cb){
+  if(companyName != ""){
+      client.query('select count(*) as cnt from companys where chinesename=' + companyName, function(err, rows){
+          if(rows[0].cnt > 0){
+              cb(null);
+          }
+          else{
+            client.query('INSERT INTO Companys SET chinesename=' + companyName,  
+              function (err, result) { 
+                cb(null);
+             });
+        }
+  }
+  else{
+    cb(null);
+  }
+}
+
+function addCompany(positinName, cb){
+  if(companyName != ""){
+      client.query('select count(*) as cnt from positions where chinesename=' + companyName, function(err, rows){
+          if(rows[0].cnt > 0){
+              cb(null);
+          }
+          else{
+            client.query('INSERT INTO Companys SET chinesename=' + companyName,  
+              function (err, result) { 
+                cb(null);
+             });
+        }
+  }
+  else{
+    cb(null);
+  }
+}
 
 function saveData(f)
 {
@@ -50,6 +85,13 @@ function saveData(f)
     creater_id:defaultAuthUserId,
     birthday:'',
   };
+
+  // check to insert new company
+  addCompany(candidateData.company, function(err, result){
+     addPosition();
+  });
+ 
+  // check to insert new title / position
 
   
   var stext = '';

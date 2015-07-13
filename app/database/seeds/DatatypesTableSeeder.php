@@ -34,6 +34,10 @@ class DatatypesTableSeeder extends Seeder {
             array(
                 'name'      => 'projstate',
                 'text'      => '项目状态',
+            ),
+            array(
+                'name'      => 'castatus',
+                'text'      => '候选人状态',
             )
         );
 
@@ -136,6 +140,20 @@ class DatatypesTableSeeder extends Seeder {
       
 
         DB::table('datavalues')->insert( $projs );
+
+        $castatusTexts = array('创业不看机会','在职不看机会', '再职看机会','离职看机会');
+        $castatus = [];
+        for($i = 0; $i < count($castatusTexts); $i++)
+        {
+            array_push($projs,   array(
+                'type'      => 'castatus',
+                'name'      =>  $i,
+                'text'      =>  $castatusTexts[$i]
+            ));
+        }
+      
+
+        DB::table('datavalues')->insert( $castatus );
 
     }
 
