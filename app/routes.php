@@ -61,7 +61,7 @@ Route::group(array('before' => 'auth'), function(){
     // manage - get
     Route::get('/manage/company', 'CompanyController@getManage');
     Route::get('/manage/company/delete/{id}', 'CompanyController@getDelete');
-    Route::get('/manage/position', 'PositionController@getManage');
+    Route::get('/manage/position/{GUID?}', 'PositionController@getList');
     
     Route::get('/manage/team', 'TeamController@getManage');
     Route::get('/manage/datavalue/{type?}', 'DatavalueController@getList');
