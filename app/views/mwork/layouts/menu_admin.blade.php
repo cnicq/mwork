@@ -237,6 +237,12 @@
 						权限</a>
 
 					</li>
+					<li id="id_manage_position">
+						<a href="/manage/position">
+
+						职位抬头</a>
+
+					</li>
 
 					<li id="id_manage_datavalue">
 						<a href="/manage/datavalue">

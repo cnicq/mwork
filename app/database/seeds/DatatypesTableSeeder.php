@@ -20,10 +20,6 @@ class DatatypesTableSeeder extends Seeder {
                 'text'      => '行业',
             ),
             array(
-                'name'      => 'position',
-                'text'      => '职位',
-            ),
-            array(
                 'name'      => 'cvsite',
                 'text'      => '简历来源',
             ),

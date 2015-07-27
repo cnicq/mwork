@@ -10,13 +10,13 @@ class CreateCompanysTable extends Migration {
      */
     public function up()
     {
-		// Creates the companys table
+        // Creates the companys table
         Schema::create('companys', function($table)
         {
             $table->engine = 'InnoDB';
             $table->increments('id');
             // basic info
-			$table->string('chinesename');
+            $table->string('chinesename');
             $table->string('englishname');
             $table->string('province'); //date value table
             $table->string('city');   // date value table
@@ -43,6 +43,6 @@ class CreateCompanysTable extends Migration {
      */
     public function down()
     {
-		Schema::drop('companys');
+        Schema::drop('companys');
     }
 }
