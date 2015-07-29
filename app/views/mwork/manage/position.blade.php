@@ -7,14 +7,15 @@
 @section('content')
 <div class="tabbable tabbable-custom tabbable-full-width">
 				<ul class="nav nav-tabs">
-						<li class="active"><a href="#tab_1_2" data-toggle="tab">职位管理</a></li>
+						
 
-						<li><a href="#tab_1_1" data-toggle="tab">抬头管理</a></li>
+						<li class="active"><a href="#tab_1_1" data-toggle="tab">职位管理</a></li>
+						<li><a href="#tab_1_2" data-toggle="tab">Title管理</a></li>
 				</ul>
 
 					<div class="tab-content">
 
-						<div class="tab-pane row-fluid" id="tab_1_1">
+						<div class="tab-pane row-fluid active" id="tab_1_1">
 
 						<!-- BEGIN EXAMPLE TABLE PORTLET-->
 
@@ -22,9 +23,7 @@
 
 							<div class="portlet-title">
 
-								<div class="caption"><i class="icon-edit"></i>数据管理</div>
-
-								
+								<div class="caption"><i class="icon-edit"></i>职位管理</div>
 
 							</div>
 
@@ -36,7 +35,7 @@
 
 										<button id="table2_new" class="btn green">
 
-										新增数据 <i class="icon-plus"></i>
+										新增职位 <i class="icon-plus"></i>
 
 										</button>
 
@@ -60,9 +59,8 @@
 									<thead>
 
 										<tr>
-											<th>数据名-英文</th>
-
-											<th>数据名-中文</th>
+											<th>职位识别号(自动)</th>
+											<th>职位名称</th>
 
 											<th>修改</th>
 											<th>保存</th>
@@ -73,10 +71,10 @@
 
 									<tbody>
 
-										@foreach ($datavalues as $datavalue)
+										@foreach ($positions as $position)
 										<tr>
-											<td>{{$datavalue->name}}</td>
-											<td>{{$datavalue->text}}</td>
+											<td>{{$position->GUID}}</td>
+											<td>{{$position->name}}</td>
 											<td>
 												<a class="edit" href="">编辑</a>
 											</td>
@@ -86,7 +84,6 @@
 										</tr>
 
 										@endforeach
-										
 
 									</tbody>
 
@@ -99,7 +96,7 @@
 						<!-- END EXAMPLE TABLE PORTLET-->
 						</div>
 		
-						<div class="tab-pane row-fluid active" id="tab_1_2">
+						<div class="tab-pane row-fluid " id="tab_1_2">
 
 						<!-- BEGIN EXAMPLE TABLE PORTLET-->
 
@@ -158,10 +155,10 @@
 
 									<tbody>
 
-										@foreach ($datavalues as $datavalue)
+										@foreach ($positions as $position)
 										<tr>
-											<td>{{$datavalue->name}}</td>
-											<td>{{$datavalue->text}}</td>
+											<td>{{$position->GUID}}</td>
+											<td>{{$position->name}}</td>
 											<td>
 												<a class="edit" href="">编辑</a>
 											</td>
