@@ -96,6 +96,11 @@ class CandidateController extends ParentController {
 
     public function addComment($caId, $content, $projId=0)
     {
+        if($content == '')
+        {
+            return '';
+        }
+        
         $user = Auth::user();
 
         $com = new Cacomment();
@@ -104,6 +109,7 @@ class CandidateController extends ParentController {
         $com->ca_id = $caId;
         $com->proj_id = $projId;
         $com->auth_id = $user->id;
+        $com->searchtext = Cpa::getInstance()->parse($content);
         $com->save();
 
         $cacomments = DB::table('cacomments')->where('ca_id', '=', $caId)->orderBy('updated_at', 'DESC')->get();
@@ -118,9 +124,9 @@ class CandidateController extends ParentController {
      */
     public function getIndex()
     {
-        $candidates = $this->candidate->orderBy('updated_at', 'DESC')->paginate(20);
+        //$candidates = $this->candidate->orderBy('updated_at', 'DESC')->paginate(20);
         
-        return $this->showList($candidates, $mode='candidate', $blade='mwork/candidate/list');
+        return $this->showList(null, $mode='candidate', $blade='mwork/candidate/list');
        
     }
 
@@ -131,7 +137,7 @@ class CandidateController extends ParentController {
         $industrys = DB::table('datavalues')->where('type', '=', 'industry')->get();
         $positions = DB::table('datavalues')->where('type', '=', 'position')->get();
 
-        Candidate::dealWithDatas($candidates);
+        if($candidates != null) Candidate::dealWithDatas($candidates);
 
          // Show the page
         return  View::make($blade, compact('candidates', 'companys', 'citys', 'industrys', 'positions', 'mode'), 
@@ -140,11 +146,14 @@ class CandidateController extends ParentController {
 
     public function getMy()
     {
-        $candidates = Candidate::leftjoin('candidateowns', 'candidateowns.ca_id', '=', 'candidates.id')
-            ->where('candidateowns.owner_id', '=', Auth::user()->id)->select('candidates.*')->paginate(20);
-
+        $candidates = Candidate::join('candidateowns', function($join){
+            $join->on('candidates.id', '=', 'candidateowns.ca_id')
+            ->where('candidateowns.owner_id', '=', Auth::user()->id);
+        })->paginate(20);
+         
+        
          // Show the page
-        return  $this->showList($candidates, $mode='candidate', $blade='mwork/candidate/list', 'id_candidate_my');
+        return  $this->showList(null, $mode='mycandidate', $blade='mwork/candidate/list', 'id_candidate_my');
     }
 
     public function getAdd($error = '')
@@ -168,12 +177,24 @@ class CandidateController extends ParentController {
     public function postSearch($mode = 'candidate')
     {
         $candidates = null;
+
+        $my = ($mode == 'mycandidate');
         
         $keywords = Input::get('keywords');
         if($keywords != '')
         {
             $keywordsArr = explode(' ', $keywords);
-            $candidates = Candidate::select('*')->whereRaw("MATCH(searchtext) AGAINST(? IN BOOLEAN MODE)", $keywordsArr)->paginate(20);    
+            if($my)
+            {
+                $candidates = Candidate::whereRaw("MATCH(searchtext) AGAINST(? IN BOOLEAN MODE)", $keywordsArr)->join('candidateowns', function($join){
+                    $join->on('candidates.id', '=', 'candidateowns.ca_id')
+                    ->where('candidateowns.owner_id', '=', Auth::user()->id);
+                })->paginate(20); 
+            }
+            else
+            {
+                $candidates = Candidate::select('*')->whereRaw("MATCH(searchtext) AGAINST(? IN BOOLEAN MODE)", $keywordsArr)->paginate(20);    
+            }
         }
         else
         {
@@ -259,8 +280,8 @@ class CandidateController extends ParentController {
             $this->candidate->maritalstatus         = Input::get('maritalstatus');
             $this->candidate->hometown              = Input::get('hometown');
             $this->candidate->label                 = Input::get('label');
-            $this->candidate->mobile1                = Input::get('mobile1');
-            $this->candidate->mobile2                = Input::get('mobile2');
+            $this->candidate->mobile1               = Input::get('mobile1');
+            $this->candidate->mobile2               = Input::get('mobile2');
             $this->candidate->birthday              = Input::get('birthday');
             $this->candidate->tel                   = Input::get('tel');
             $this->candidate->email                 = Input::get('email');

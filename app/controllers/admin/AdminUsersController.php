@@ -151,13 +151,18 @@ class AdminUsersController extends AdminController {
         {
             $kpi = new Kpi();
         }
-       
-        $kpi->recommend = Input::get('recommend');
-        $kpi->resume = Input::get('resume');
-        $kpi->coldecall = Input::get('coldecall');
-        $kpi->note = Input::get('note');
+        
+        $recommend = Input::get('recommend');
+        $resume = Input::get('resume');
+        $coldcall = Input::get('coldcall');
+        $note = Input::get('note');
+        $kpi->recommend = $recommend == '' ? 0 : $recommend;
+        $kpi->resume = $resume == '' ? 0 : $resume;
+        $kpi->coldcall = $coldcall == '' ? 0 : $coldcall;
+        $kpi->note = $note == '' ? 0 : $note;
+        $kpi->user_id = $user->id;
 
-        $kip->save();
+        $kpi->save();
     }
 
     /**

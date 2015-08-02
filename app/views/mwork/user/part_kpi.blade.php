@@ -82,7 +82,7 @@
 		  		{
 		  			month -= 1;
 		  		}
-		  		location.href = "/user/{{$user->id}}/kpi/" +year+ "/" + month;
+		  		location.href = "/user/kpi/{{$user->id}}/" +year+ "/" + month;
 		  	});
 
 		  	$('#nextMonth').click(function(){

@@ -77,6 +77,10 @@ class UserController extends BaseController {
     {
         $user = Auth::user();
 
+        if($user->username != Input::get('username'))
+        {
+            return "没有权限";
+        }
         $user->email = Input::get('email');
         $user->englishname = Input::get('englishname');
         $user->chinesename = Input::get('chinesename');
@@ -116,7 +120,8 @@ class UserController extends BaseController {
 
         return View::make('mwork/user/info', compact('projectInfos', 'tab', 'user'),$this->Titles('id_user', ''));
     }
-    public function getKPI($userId, $year = 0, $month = 0)
+
+    public function getKpi($userId, $year = 0, $month = 0)
     {
         if($year == 0)
         {

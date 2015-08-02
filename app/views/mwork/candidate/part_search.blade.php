@@ -232,7 +232,6 @@ jQuery(document).ready(function() {
 			}
 		});
 	});
-
 	$('#search_submit').click();
 });
 

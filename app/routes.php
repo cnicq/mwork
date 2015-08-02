@@ -66,10 +66,10 @@ Route::group(array('before' => 'auth'), function(){
     Route::get('/manage/datavalue/{type?}', 'DatavalueController@getList');
     //Route::get('/manage/datavalue', 'DatavalueController@getList');
 
-    // user
+    // user 
     Route::get('/user/profile/{userId}', 'UserController@getProfile');
     Route::get('/user/project/{userId}', 'UserController@getProject');
-    Route::get('/user/kpi/{userId}/{year?}/{month?}', 'UserController@getKPI');
+    Route::get('/user/kpi/{userId}/{year?}/{month?}', 'UserController@getKpi');
     Route::post('/user/profile', 'UserController@postProfile');
 
     Route::get('/manage/user', 'AdminUsersController@getCreate');

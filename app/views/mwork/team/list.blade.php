@@ -67,7 +67,7 @@
 									@if ($members = explode(',', $team->member_names)) @endif
 									@foreach ($members as $memberName)
 									<li>
-									<a href='/user/{{User::getUserIdByUsername($memberName)}}/kpi/0/0' target="_blank">
+									<a href='/user/kpi/{{User::getUserIdByUsername($memberName)}}/0/0' target="_blank">
 									{{$memberName}}
 									</a>
 									</li>
@@ -143,7 +143,7 @@
 							<td>{{$user->comment}}</td>
 							<td>{{$user->resume}}</td>
 							<td>{{$user->coldcall}}</td>
-							<td><a href='user/{{$user->id}}/kpi/0/0' target="view_window">详细</a></td>
+							<td><a href='user/kpi/{{$user->id}}/0/0' target="view_window">详细</a></td>
 						</tr>
 
 						@endforeach

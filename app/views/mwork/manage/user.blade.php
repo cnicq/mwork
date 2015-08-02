@@ -39,7 +39,7 @@
 			<!-- ./ csrf token -->
 			<div class="alert alert-error" id= "error_div" >
 				<button class="close" data-dismiss="alert"></button>
-				<strong>错误!</strong> <p id='error_info'></p>
+				<strong>提示!</strong> <p id='error_info'></p>
 			</div>
 			<h3 class="form-section">基本信息</h3>
 
@@ -348,11 +348,10 @@
 		function RefreshDataTable(result)
 		{
 			result = result.replace(/[\r\n\s]/g, "");
-			if(result.toString() != 'succeed')
+			if(result.toString() != '')
 			{
 				$('#error_div').show();
 				$('#error_info').text(result);
-				return;
 			}
 
 			oTable._fnAjaxUpdate();
