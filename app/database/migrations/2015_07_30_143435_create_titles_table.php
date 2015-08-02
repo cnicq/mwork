@@ -19,6 +19,7 @@ class CreateTitlesTable extends Migration {
             $table->string('GUID');
             $table->string('posGUID');
             $table->string('name');
+            $table->timestamps();
            
         });
     }

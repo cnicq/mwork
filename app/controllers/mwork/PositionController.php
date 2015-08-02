@@ -36,72 +36,17 @@ class PositionController extends ParentController {
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function getCreate()
-    {
-        // Title
-        $title = Lang::get('mwork/position.add');
-
-        // Show the page
-        return View::make('mwork/position/add', 
-            compact('datatypes'), 
-            $this->Titles('id_position', 'id_position_manage'));
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @return Response
-     */
-    public function postCreate()
-    {
-        // Declare the rules for the form validation
-        $rules = array(
-            'name'   => 'required|min:2'
-        );
-
-        // Validate the inputs
-        $validator = Validator::make(Input::all(), $rules);
-
-        // Check if the form validates with success
-        if ($validator->passes())
-        {
-            // Create a new position
-            $user = Auth::user();
-
-            // Update the position data
-            $this->position->name            = Input::get('name');
-
-            // Was the position created?
-            if($this->position->save())
-            {
-                // Redirect to the new position page
-                return Redirect::to('manage/position/' . $this->datatype->id . '/edit')->with('success', Lang::get('manage/position/messages.create.success'));
-            }
-
-            // Redirect to the position create page
-            return Redirect::to('manage/position/create')->with('error', Lang::get('manage/position/messages.create.error'));
-        }
-
-        // Form validation failed
-        return Redirect::to('manage/position/create')->withInput()->withErrors($validator);
-    }
-
-
-    /**
      * Update the specified resource in storage.
      *
      * @param $datatype
      * @return Response
      */
-    public function postEdit()
+    public function postEditPosition()
     {
         // Declare the rules for the form validation
         $rules = array(
-            'name'   => 'required|min:1'
+            'name'   => 'required|min:1', // name => GUID
+            'text'   => 'required|min:1'  // text => name
         );
 
         // Validate the inputs
@@ -110,7 +55,9 @@ class PositionController extends ParentController {
         // Check if the form validates with success
         if ($validator->passes())
         {
-             $pos = Position::where('name', '=', Input::get('name'))->first();
+            $guid = Input::get('name');
+            $name = Input::get('text');
+            $pos = Position::where('GUID', '=', $guid)->first();
 
             if(is_null($pos))
             {
@@ -119,10 +66,61 @@ class PositionController extends ParentController {
             }
 
             // Update the datavalue data
-            $pos->name          = Input::get('name');
+            $pos->name          = $name;
 
             // Was the blog datatype updated?
             if($pos->save())
+            {
+                // Redirect to the new blog datatype page
+                return Lang::get('manage/blogs/messages.update.success');
+            }
+
+            // Redirect to the blogs datatype management page
+            return Lang::get('manage/blogs/messages.update.error');
+        }
+
+        // Form validation failed
+        return Lang::get('manage/blogs/messages.update.error');
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param $datatype
+     * @return Response
+     */
+    public function postEditTitle()
+    {
+        // Declare the rules for the form validation
+        $rules = array(
+            'name'   => 'required|min:1', // name => GUID
+            'text'   => 'required|min:1'  // text => name
+        );
+
+        // Validate the inputs
+        $validator = Validator::make(Input::all(), $rules);
+     
+        // Check if the form validates with success
+        if ($validator->passes())
+        {
+            $guid = Input::get('name');
+            $name = Input::get('text');
+            $posGUID = Input::get('type');
+
+            $tite = Title::where('GUID', '=', $guid)->first();
+
+            if(is_null($tite))
+            {
+                $tite = new Title();
+                $tite->GUID   = DB::raw('UUID()');
+            }
+
+            // Update the datavalue data
+            $tite->name          = $name;
+            $tite->posGUID       = $posGUID;
+
+            // Was the blog datatype updated?
+            if($tite->save())
             {
                 // Redirect to the new blog datatype page
                 return Lang::get('manage/blogs/messages.update.success');

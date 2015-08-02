@@ -192,8 +192,8 @@
 <script src="/bootstrap2/media/js/table-editable-my.js"></script> 
 <script>
 	jQuery(document).ready(function() {       
-		 MyTableEditable.init("table1");
-		 MyTableEditable.init("table2");
+		 MyTableEditable.init("table1", 'datavalue', 'sel_datatype');
+		 MyTableEditable.init("table2", 'datavalue', 'sel_datatype');
 	 	
 	});
 

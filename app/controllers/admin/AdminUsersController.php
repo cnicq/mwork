@@ -145,7 +145,6 @@ class AdminUsersController extends AdminController {
 
     public function saveKPI($user)
     {
-
         // save kpi
         $kpi = Kpi::where('user_id', '=', $user->id)->first();
         if($kpi == null)

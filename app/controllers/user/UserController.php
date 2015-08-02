@@ -237,7 +237,7 @@ class UserController extends BaseController {
         }
 
         if ($this->userRepo->save($user)) {
-            return "";
+            return 'succeed';
         } else {
             $error = $user->errors()->all(':message');
             return $error;

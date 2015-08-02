@@ -61,7 +61,6 @@ Route::group(array('before' => 'auth'), function(){
     // manage - get
     Route::get('/manage/company', 'CompanyController@getManage');
     Route::get('/manage/company/delete/{id}', 'CompanyController@getDelete');
-    Route::get('/manage/position/{GUID?}', 'PositionController@getList');
     
     Route::get('/manage/team', 'TeamController@getManage');
     Route::get('/manage/datavalue/{type?}', 'DatavalueController@getList');
@@ -76,7 +75,7 @@ Route::group(array('before' => 'auth'), function(){
     Route::get('/manage/user', 'AdminUsersController@getCreate');
     Route::get('/manage/user/{id}', 'AdminUsersController@getData');
     Route::post('/manage/user/edit/{user}', 
-        array('as'=>'post_user_edit', 'uses'=>'UserController@postEdit'));
+        array('as'=>'post_user_edit', 'uses'=>'AdminUsersController@postEdit'));
     Route::post('/manage/user/create', 
         array('as'=>'post_user_create', 'uses'=>'AdminUsersController@postCreate'));
     Route::get('/manage/user/delete/{user}', 'AdminUsersController@getDelete');
@@ -94,6 +93,11 @@ Route::group(array('before' => 'auth'), function(){
     Route::post('/manage/company', 'CompanyController@postCreate');
     Route::post('/manage/datavalue/update', 'DatavalueController@postEdit');
     Route::post('/manage/datavalue/delete', 'DatavalueController@postDelete');
+
+    // position / title
+    Route::get('/manage/position/{GUID?}', 'PositionController@getList');
+    Route::post('/manage/position/update', 'PositionController@postEditPosition');
+    Route::post('/manage/title/update', 'PositionController@postEditTitle');
 
     // client
     Route::get('/client', 'ClientController@getIndex');

@@ -18,6 +18,8 @@ class CreatePositionsTable extends Migration {
 
             $table->string('GUID');
             $table->string('name');
+            
+            $table->timestamps();
            
         });
     }

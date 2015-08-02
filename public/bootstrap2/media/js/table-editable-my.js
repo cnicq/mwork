@@ -3,7 +3,9 @@ var MyTableEditable = function () {
     return {
 
         //main function to initiate the module
-        init: function (tableName) {
+        init: function (tableName, dataTableName, selectName) {
+            var selName = selectName;
+            var dtName = dataTableName;
             function restoreRow(oTable, nRow) {
                 var aData = oTable.fnGetData(nRow);
                 var jqTds = $('>td', nRow);
@@ -39,19 +41,18 @@ var MyTableEditable = function () {
                 oTable.fnUpdate('<a class="edit" href="">编辑</a>', nRow, 2, false);
                 oTable.fnUpdate('<a class="delete" href="">删除</a>', nRow, 3, false);
                 oTable.fnDraw();
-                var ds = "name=" + jqInputs[0].value + "&text=" + jqInputs[1].value + "&type=" + $('#sel_datatype').val();
-               
+                var ds = "name=" + jqInputs[0].value + "&text=" + jqInputs[1].value + "&type=" + $('#'+selName).val();
+         
                 // sync server
                 $.ajax({
                 type:"POST",
-                url:"/manage/datavalue/update",
+                url:"/manage/"+dtName+"/update",
                 datatype: 'json',
                 data:ds,
                 beforeSend: function(request) {
                     return request.setRequestHeader('X-CSRF-Token', $("meta[name='_token']").attr('content'));
                 },
                 success: function(d){
-                   
                 }
                 });
             }
@@ -64,13 +65,12 @@ var MyTableEditable = function () {
                 $.ajax({
                 type:"POST",
                 datatype: 'json',
-                url:"/manage/datavalue/delete",
+                url:"/manage/"+dtName+"/delete",
                 data:"name=" + n,
                 beforeSend: function(request) {
                     return request.setRequestHeader('X-CSRF-Token', $("meta[name='_token']").attr('content'));
                 },
                 success: function(d){
-                   
                 }
                 });
             }

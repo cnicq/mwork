@@ -347,7 +347,8 @@
 
 		function RefreshDataTable(result)
 		{
-			if(result != '')
+			result = result.replace(/[\r\n\s]/g, "");
+			if(result.toString() != 'succeed')
 			{
 				$('#error_div').show();
 				$('#error_info').text(result);
@@ -434,11 +435,12 @@
 					})
 
 					var kpiData = result['kpi'];
-					$('#recommend').val(kpiData['recommend']);
-					$('#resume').val(kpiData['resume']);
-					$('#coldcall').val(kpiData['coldcall']);
-					$('#note').val(kpiData['note']);
-
+					if(!!kpiData){
+						$('#recommend').val(kpiData['recommend']);
+						$('#resume').val(kpiData['resume']);
+						$('#coldcall').val(kpiData['coldcall']);
+						$('#note').val(kpiData['note']);
+					}
 					$.uniform.update();
 
 					//switch to edit tab
