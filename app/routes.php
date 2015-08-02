@@ -48,6 +48,7 @@ Route::group(array('before' => 'auth'), function(){
     Route::get('/candidate', 'CandidateController@getIndex');
     Route::get('/candidate/addProject/{projId}/{caId}', 'CandidateController@addProject');
     Route::get('/candidate/comment/{caId}/{content}/{projId?}', 'CandidateController@addComment');
+    Route::post('/candidate/comment', 'CandidateController@postComment');
     Route::get('/candidate/detail/{caId}/{projId?}', 'CandidateController@getDetail');
     Route::get('/candidate/project/{caId}', 'CandidateController@getProjectList');
     Route::get('/candidate/add', 'CandidateController@getAdd');

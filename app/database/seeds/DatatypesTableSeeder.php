@@ -137,11 +137,11 @@ class DatatypesTableSeeder extends Seeder {
 
         DB::table('datavalues')->insert( $projs );
 
-        $castatusTexts = array('创业不看机会','在职不看机会', '再职看机会','离职看机会');
+        $castatusTexts = array('未知','明确看机会','考虑看机会','不看机会');
         $castatus = [];
         for($i = 0; $i < count($castatusTexts); $i++)
         {
-            array_push($projs,   array(
+            array_push($castatus,   array(
                 'type'      => 'castatus',
                 'name'      =>  $i,
                 'text'      =>  $castatusTexts[$i]

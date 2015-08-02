@@ -3,10 +3,12 @@
 		
 		<address>
 		<strong>
-			{{User::GetUserNameById($cacomment->auth_id)}} 
+			[{{$cacomment->created_at}}] {{User::GetUserNameById($cacomment->auth_id)}} 
 		</strong>
 		<br>
-		[{{$cacomment->created_at}}] {{$cacomment->content}}
+		
+		{{Datavalue::getvalue('castatus',$cacomment->castatus)->text}}
+		 - {{$cacomment->content}}
 		</address>
 		
 @endforeach

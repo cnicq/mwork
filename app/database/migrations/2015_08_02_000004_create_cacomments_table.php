@@ -21,7 +21,7 @@ class CreateCaCommentsTable extends Migration {
             $table->integer('ca_id');    // candidate id
             $table->integer('proj_id');  // project id
             $table->text('content');     // comment
-            $table->integer('castatus');   // current status, datatype:castatus
+            $table->integer('castatus')->default(0);   // current status, datatype:castatus
             $table->string('cvPath')->default('');
             $table->string('created_at_old')->default('');
             $table->text('searchtext'); // for fulltext search

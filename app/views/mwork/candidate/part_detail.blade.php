@@ -78,7 +78,13 @@
 		<div class="tab-pane" id="ca_tab_3_{{$tName}}" style="min-height: 500px;">
 
 			<div class='well'>
-				<input type="input" class="m-wrap span10" placeholder="" id='content_comment' name='content_comment'>
+				<select class="m-wrap" id='castatus' name='castatus'>
+							
+							@foreach ($castatus as $st)
+								<option value='{{$st->name}}'> {{$st->text}} </option>
+							@endforeach
+							</select>
+				<input type="input" class="m-wrap span8" placeholder="" id='content_comment' name='content_comment'>
 				<button class="btn blue" onclick='submitComment()'>备注</button>
 			
 			</div>
@@ -108,11 +114,16 @@
 <script type="text/javascript">
 function submitComment()
 {
-	var urlTo = '/candidate/comment/' + $('#ca_id').val() + '/' + $('#content_comment').val() + '/0';
+	var urlTo = '/candidate/comment';
+	var dataStr = {'content_comment':$('#content_comment').val(), 
+					'ca_id':$('#ca_id').val(),
+					'castatus':$('#castatus').val(),
+					'proj_id':$('#proj_id').val()};
+					
 	$.ajax({
-			type:'GET',
+			type:'POST',
 			url:urlTo,
-			data:getFormJson(this),
+			data:dataStr,
 			success: function(d){
 				$('#comment').html(d);
 			}

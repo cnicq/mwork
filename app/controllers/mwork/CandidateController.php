@@ -36,6 +36,7 @@ class CandidateController extends ParentController {
         Candidate::dealWithData($candidate);
         
         $cacomments = DB::table('cacomments')->where('ca_id', '=', $caId)->get();
+        $castatus = DB::table('datavalues')->where('type', '=', 'castatus')->get();
        
         $projects = DB::table('projects')->paginate(20);
         $tName = time();
@@ -50,7 +51,7 @@ class CandidateController extends ParentController {
         }
 
         return Response::json(View::make("mwork/candidate/part_detail",
-         compact('candidate', 'cacomments', 'tName', 'projects', 'caId', 'projId', 'curStep', 'steps', 'projectinfos'))->render() );
+         compact('candidate', 'castatus', 'cacomments', 'tName', 'projects', 'caId', 'projId', 'curStep', 'steps', 'projectinfos'))->render() );
     }
 
     public function addOwn($caId)
@@ -94,7 +95,7 @@ class CandidateController extends ParentController {
         return $this->getProjectList($caId, $projId);
     }
 
-    public function addComment($caId, $content, $projId=0)
+    public function addComment($caId, $content, $status, $projId=0)
     {
         if($content == '')
         {
@@ -107,6 +108,7 @@ class CandidateController extends ParentController {
         $com->content = $content;
         $com->created_at_old = '';
         $com->ca_id = $caId;
+        $com->castatus = $status;
         $com->proj_id = $projId;
         $com->auth_id = $user->id;
         $com->searchtext = Cpa::getInstance()->parse($content);
@@ -115,6 +117,16 @@ class CandidateController extends ParentController {
         $cacomments = DB::table('cacomments')->where('ca_id', '=', $caId)->orderBy('updated_at', 'DESC')->get();
 
         return Response::json(View::make("mwork/candidate/part_comment", compact('cacomments'))->render() );
+    }
+
+    public function postComment()
+    {
+        $content = Input::get('content_comment');
+        $caId = Input::get('ca_id');
+        $projId = Input::get('proj_id');
+        $status = Input::get('castatus');
+
+        return $this->addComment($caId, $content, $status, $projId);
     }
 
     /**
@@ -136,11 +148,12 @@ class CandidateController extends ParentController {
         $citys = DB::table('datavalues')->where('type', '=', 'city')->get();
         $industrys = DB::table('datavalues')->where('type', '=', 'industry')->get();
         $positions = DB::table('datavalues')->where('type', '=', 'position')->get();
+        
 
         if($candidates != null) Candidate::dealWithDatas($candidates);
 
          // Show the page
-        return  View::make($blade, compact('candidates', 'companys', 'citys', 'industrys', 'positions', 'mode'), 
+        return  View::make($blade, compact('candidates', 'companys', 'citys', 'industrys', 'positions', 'castatus', 'mode'), 
             $this->Titles("id_candidate", $subTitile));
     }
 
