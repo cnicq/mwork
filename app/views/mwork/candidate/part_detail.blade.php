@@ -81,7 +81,7 @@
 				<select class="m-wrap" id='castatus' name='castatus'>
 							
 							@foreach ($castatus as $st)
-								<option value='{{$st->name}}'> {{$st->text}} </option>
+								<option value='{{$st->name}}'> 状态:{{$st->text}} </option>
 							@endforeach
 							</select>
 				<input type="input" class="m-wrap span8" placeholder="" id='content_comment' name='content_comment'>

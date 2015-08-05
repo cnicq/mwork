@@ -199,14 +199,16 @@ class CandidateController extends ParentController {
             $keywordsArr = explode(' ', $keywords);
             if($my)
             {
-                $candidates = Candidate::whereRaw("MATCH(searchtext) AGAINST(? IN BOOLEAN MODE)", $keywordsArr)->join('candidateowns', function($join){
-                    $join->on('candidates.id', '=', 'candidateowns.ca_id')
-                    ->where('candidateowns.owner_id', '=', Auth::user()->id);
+                $candidates = Candidate::whereRaw("MATCH(searchtext) AGAINST(? IN BOOLEAN MODE)", $keywordsArr)->join(
+                    'candidateowns', function($join){
+                        $join->on('candidates.id', '=', 'candidateowns.ca_id')
+                        ->where('candidateowns.owner_id', '=', Auth::user()->id);
                 })->paginate(20); 
             }
             else
             {
-                $candidates = Candidate::select('*')->whereRaw("MATCH(searchtext) AGAINST(? IN BOOLEAN MODE)", $keywordsArr)->paginate(20);    
+                $candidates = Candidate::whereRaw("MATCH(searchtext) AGAINST(? IN BOOLEAN MODE)", $keywordsArr)
+                    ->orwhereRaw("id IN (select ca_id from cacomments WHERE MATCH(searchtext) AGAINST(? IN BOOLEAN MODE))", $keywordsArr)->paginate(20); 
             }
         }
         else
