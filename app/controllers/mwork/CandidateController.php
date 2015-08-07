@@ -105,13 +105,16 @@ class CandidateController extends ParentController {
         $user = Auth::user();
 
         $com = new Cacomment();
+
         $com->content = $content;
         $com->created_at_old = '';
         $com->ca_id = $caId;
         $com->castatus = $status;
         $com->proj_id = $projId;
         $com->auth_id = $user->id;
-        $com->searchtext = Cpa::getInstance()->parse($content);
+        $st = $this->modifyKeywords($content);
+        $com->searchtext = Cpa::getInstance()->parse($st);
+        
         $com->save();
 
         $cacomments = DB::table('cacomments')->where('ca_id', '=', $caId)->orderBy('updated_at', 'DESC')->get();
@@ -142,6 +145,7 @@ class CandidateController extends ParentController {
        
     }
 
+   
     public function showList($candidates, $mode='candidate', $blade='mwork/candidate/list', $subTitile='id_candidate_list')
     {
         $companys = DB::table('companys')->orderBy('updated_at', 'DESC')->get();
@@ -187,6 +191,15 @@ class CandidateController extends ParentController {
         return $v;
     }
 
+    function modifyKeywords($keywords){
+        $keywords = strtolower($keywords);
+        $keywords = str_replace('+','p',$keywords);
+        $keywords = str_replace('-','m',$keywords);
+        $keywords = str_replace('*','s',$keywords);
+
+        return $keywords;
+    }
+
     public function postSearch($mode = 'candidate')
     {
         $candidates = null;
@@ -194,6 +207,8 @@ class CandidateController extends ParentController {
         $my = ($mode == 'mycandidate');
         
         $keywords = Input::get('keywords');
+        $keywords = $this->modifyKeywords($keywords);
+
         if($keywords != '')
         {
             $keywordsArr = explode(' ', $keywords);
