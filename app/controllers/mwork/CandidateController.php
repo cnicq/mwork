@@ -29,6 +29,7 @@ class CandidateController extends ParentController {
 
     public function getDetail($caId=0, $projId=0)
     {
+    
         $candidate = $this->candidate->where('id', '=', $caId)->first();
         if($candidate == null){
             return error;
@@ -208,20 +209,22 @@ class CandidateController extends ParentController {
         
         $keywords = Input::get('keywords');
         $keywords = $this->modifyKeywords($keywords);
-
         if($keywords != '')
         {
             $keywordsArr = explode(' ', $keywords);
             if($my)
             {
+
                 $candidates = Candidate::whereRaw("MATCH(searchtext) AGAINST(? IN BOOLEAN MODE)", $keywordsArr)->join(
                     'candidateowns', function($join){
                         $join->on('candidates.id', '=', 'candidateowns.ca_id')
                         ->where('candidateowns.owner_id', '=', Auth::user()->id);
-                })->paginate(20); 
+                })->orwhereRaw("candidates.id IN (select ca_id from cacomments WHERE MATCH(searchtext) AGAINST(? IN BOOLEAN MODE))", $keywordsArr)
+                ->select('candidates.*','candidates.id as cid')->paginate(20); 
             }
             else
             {
+
                 $candidates = Candidate::whereRaw("MATCH(searchtext) AGAINST(? IN BOOLEAN MODE)", $keywordsArr)
                     ->orwhereRaw("id IN (select ca_id from cacomments WHERE MATCH(searchtext) AGAINST(? IN BOOLEAN MODE))", $keywordsArr)->paginate(20); 
             }

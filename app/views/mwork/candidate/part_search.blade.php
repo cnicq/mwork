@@ -3,62 +3,7 @@
 		<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
 		<input type="hidden" id="projId" value="@if (isset($projId)){{$projId}}@endif" />
 	<!-- ./ csrf token -->
-	<div class="row-fluid">
-
-		<div class="span4 ">
-
-			<div class="control-group">
-
-				<label class="control-label">关键字(空格隔开)</label>
-
-				<div class="controls">
-
-					<input type="text" class="m-wrap" placeholder="" id='keywords' name='keywords'>
-
-				</div>
-
-			</div>
-
-		</div>
-
-		<!--/span-->
-
-		<div class="span4 ">
-
-			<div class="control-group">
-
-				<label class="control-label">中文名</label>
-
-				<div class="controls">
-
-					<input type="text" class="m-wrap" placeholder="" id='chinesename' name='chinesename'> 
-
-				</div>
-
-			</div>
-
-		</div>
-
-		<!--/span-->
-		<div class="span4 ">
-
-			<div class="control-group">
-
-				<label class="control-label">英文名</label>
-
-				<div class="controls">
-
-					<input type="text" class="m-wrap" placeholder="" id='englishname' name='englishname'> 
-
-				</div>
-
-			</div>
-
-		</div>
-
-		<!--/span-->
-
-	</div>
+	
 
 	<!--/row-->
 	<div class="row-fluid">
@@ -130,65 +75,26 @@
 
 	</div>
 
-	<!--/row-->
 	<div class="row-fluid">
 
 		<div class="span4 ">
 
 			<div class="control-group">
 
-				<label class="control-label">移动电话</label>
+				<label class="control-label">关键字(用空格分开)</label>
 
 				<div class="controls">
 
-					<input type="text" class="m-wrap" placeholder="" id='mobile' name='mobile'>
+					<input type="text" class="m-wrap" placeholder="" id='keywords' name='keywords'>
 
 				</div>
 
 			</div>
 
 		</div>
-
-		<!--/span-->
-
-		<div class="span4 ">
-
-			<div class="control-group">
-
-				<label class="control-label">固定电话</label>
-
-				<div class="controls">
-
-					<input type="text" class="m-wrap" placeholder="" id='tel' name='tel'> 
-
-				</div>
-
-			</div>
-
-		</div>
-
-		<!--/span-->
-		<div class="span4 ">
-
-			<div class="control-group">
-
-				<label class="control-label">简历编号</label>
-
-				<div class="controls">
-
-					<input type="text" class="m-wrap" placeholder="" id='cvNO' name='cvNO'> 
-
-				</div>
-
-			</div>
-
-		</div>
-
-		<!--/span-->
 
 	</div>
-
-	<!--/row-->
+	
 <div class="form-actions">
 	<button type="submit" class="btn blue" id='search_submit'><i class="icon-ok"></i>搜索</button>
 </div>
