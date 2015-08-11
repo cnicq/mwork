@@ -20,6 +20,10 @@ class Candidate extends Eloquent {
 
  	public static function dealWithData(&$candidate)
     {
+    	if($candidate == null || $candidate == '')
+    	{
+    		return;
+    	}
         $company = DB::table('companys')->where('id','=',$candidate['company'])->first();
         if($company == null)
         {	
@@ -35,6 +39,10 @@ class Candidate extends Eloquent {
 
     public static function dealWithDatas(&$candidates)
     {
+    	if($candidates == null || $candidates == '')
+    	{
+    		return;
+    	}
         foreach ($candidates as $key1 => $value1) 
         {
             Candidate::dealWithData($value1);

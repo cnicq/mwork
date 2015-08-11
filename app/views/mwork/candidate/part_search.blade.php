@@ -19,7 +19,7 @@
 							<select class="m-wrap " id='company' name='company'>
 								<option value=''>请选择...</option>
 								@foreach ($companys as $company)
-								<option value='{{$company->id}}' linkman='{{$company->linkman_chinesename}}|{{$company->linkman_englishname}}'> {{$company->chinesename}} </option>
+								<option value='{{$company->linkman_chinesename}}' linkman='{{$company->linkman_chinesename}}|{{$company->linkman_englishname}}'> {{$company->chinesename}} </option>
 								@endforeach
 							</select>
 						</div>
@@ -40,7 +40,7 @@
 							<select class="m-wrap" id='city' name='city'>
 							<option value=''> 请选择...</option>
 							@foreach ($citys as $city)
-								<option value='{{$city->name}}'> {{$city->text}} </option>
+								<option value='{{$city->text}}'> {{$city->text}} </option>
 							@endforeach
 							</select>
 						
@@ -62,7 +62,7 @@
 							<select class="m-wrap" id='position' name='position'>
 							<option value=''> 请选择...</option>
 							@foreach ($positions as $position)
-								<option value='{{$position->name}}'> {{$position->text}} </option>
+								<option value='{{$position->text}}'> {{$position->text}} </option>
 							@endforeach
 							</select>
 						</div>

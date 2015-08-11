@@ -209,66 +209,73 @@ class CandidateController extends ParentController {
         
         $keywords = Input::get('keywords');
         $keywords = $this->modifyKeywords($keywords);
+        
+        $company = Input::get('company');
+        $city = Input::get('city');
+        $position = Input::get('position');
+        if($company != '')
+        {
+            $keywords .=' '.$company;
+        }
+        if($city != '')
+        {
+            $keywords .=' '.$city;
+        }
+        if($position != '')
+        {
+            $keywords .=' '.$position;
+        }
+       
+        $s = '';
         if($keywords != '')
         {
-            $keywordsArr = explode(' ', $keywords);
-            if($my)
+            $exp = explode(' ', $keywords);
+            
+            $c = 1;
+            foreach ($exp AS $e)
             {
+                $s .= "$e*";
 
-                $candidates = Candidate::whereRaw("MATCH(searchtext) AGAINST(? IN BOOLEAN MODE)", $keywordsArr)->join(
-                    'candidateowns', function($join){
-                        $join->on('candidates.id', '=', 'candidateowns.ca_id')
-                        ->where('candidateowns.owner_id', '=', Auth::user()->id);
-                })->orwhereRaw("candidates.id IN (select ca_id from cacomments WHERE MATCH(searchtext) AGAINST(? IN BOOLEAN MODE))", $keywordsArr)
-                ->select('candidates.*','candidates.id as cid')->paginate(20); 
+                if ($c + 1 == count($exp))
+                    $s .= ' ';
+
+                $c++;
+            }
+        }
+           
+        if($my)
+        {
+           if($s != '')
+            {
+                $candidates = Candidate::whereRaw("MATCH(searchtext) AGAINST('$s' IN BOOLEAN MODE)")->join(
+                        'candidateowns', function($join){
+                            $join->on('candidates.id', '=', 'candidateowns.ca_id')
+                            ->where('candidateowns.owner_id', '=', Auth::user()->id);
+                    })->orwhereRaw("candidates.id IN (select ca_id from cacomments WHERE MATCH(searchtext) AGAINST('$s' IN BOOLEAN MODE))")
+                    ->select('candidates.*','candidates.id as cid')->paginate(20); 
             }
             else
             {
-
-                $candidates = Candidate::whereRaw("MATCH(searchtext) AGAINST(? IN BOOLEAN MODE)", $keywordsArr)
-                    ->orwhereRaw("id IN (select ca_id from cacomments WHERE MATCH(searchtext) AGAINST(? IN BOOLEAN MODE))", $keywordsArr)->paginate(20); 
+                $candidates = Candidate::join(
+                        'candidateowns', function($join){
+                            $join->on('candidates.id', '=', 'candidateowns.ca_id')
+                            ->where('candidateowns.owner_id', '=', Auth::user()->id);
+                    })->select('candidates.*','candidates.id as cid')->paginate(20); 
             }
         }
         else
         {
-            $inputs = Input::except('keywords', '_token', 'projId', 'mobile');
-            $whereArr = array();
-            $orwhereArr = array();
-            $mobile = Input::get('mobile');
-            if($mobile != '')
+            if($s != '')
             {
-                $orwhereArr['mobile1'] = Input::get('mobile');
-                $orwhereArr['mobile2'] = Input::get('mobile');
-            }
-
-            foreach ($inputs as $key => $value) {
-                if($value != ''){
-                    $whereArr[$key] = $value;
-                }
-            }
-          
-            if(count($whereArr) > 0)
-            {
-                if(count($orwhereArr) > 0){
-                    $candidates = $this->candidate->where($whereArr)
-                        ->orWhere($orwhereArr)->orderBy('updated_at', 'DESC')->paginate(20); 
-                }
-                else{
-                    $candidates = $this->candidate->where($whereArr)->orderBy('updated_at', 'DESC')->paginate(20); 
-                }   
+                $candidates = Candidate::whereRaw("MATCH(searchtext) AGAINST('$s' IN BOOLEAN MODE)")
+                    ->orwhereRaw("id IN (select ca_id from cacomments WHERE MATCH(searchtext) AGAINST('$s' IN BOOLEAN MODE))")->paginate(20); 
             }
             else
             {
-                if(count($orwhereArr) > 0){
-                    $candidates = $this->candidate->orWhere($orwhereArr)->orderBy('updated_at', 'DESC')->paginate(20); 
-                }
-                else{
-                    $candidates = $this->candidate->orderBy('updated_at', 'DESC')->paginate(20); 
-                }  
-
-                
+                $candidates = Candidate::paginate(20); 
             }
         }
+        
 
         Candidate::dealWithDatas($candidates);
         $blade = 'mwork/candidate/part_list_general';
