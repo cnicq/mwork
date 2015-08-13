@@ -208,6 +208,8 @@ class CandidateController extends ParentController {
         $my = ($mode == 'mycandidate');
         
         $keywords = Input::get('keywords');
+        //$keywords = Cpa::getInstance()->parse($keywords);
+
         $keywords = $this->modifyKeywords($keywords);
         
         $company = Input::get('company');
@@ -234,7 +236,11 @@ class CandidateController extends ParentController {
             $c = 1;
             foreach ($exp AS $e)
             {
-                $s .= "$e*";
+                if($e == ''){
+                    continue;
+                }
+
+                $s .= "+$e*";
 
                 if ($c + 1 == count($exp))
                     $s .= ' ';
@@ -242,7 +248,7 @@ class CandidateController extends ParentController {
                 $c++;
             }
         }
-           
+        //return $s;
         if($my)
         {
            if($s != '')

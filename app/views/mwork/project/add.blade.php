@@ -40,10 +40,8 @@
 													<option value='{{$client->id}}' linkman='{{$client->linkman_chinesename}}|{{$client->linkman_englishname}}'> {{$client->chinesename}} </option>
 												@endforeach
 												</select>
-
-												<button class="btn purple" onclick='location.href="/clients"'>新增 <i class="m-icon-swapright m-icon-white"></i></button>
+												<a class="btn blue" href="/client" target='_blank'>新增</a>
 												
-										
 
 										</div>
 									</div>
@@ -69,7 +67,8 @@
 													<option value='{{$position->name}}'> {{$position->text}} </option>
 												@endforeach
 												</select>
-											<button class="btn purple" onclick='location.href="/manage/datavalues"'>新增 <i class="m-icon-swapright m-icon-white"></i></button>
+												<a class="btn blue" href="/manage/datavalues" target='_blank'>新增</a>
+											
 										</div>
 									</div>
 									<div class="control-group">
@@ -190,8 +189,8 @@
 													<option value='{{$team->id}}'> {{$team->name}} </option>
 												@endforeach
 												</select>
-
-											<button class="btn purple" onclick='location.href="/manage/teams"'>新增 <i class="m-icon-swapright m-icon-white"></i></button>
+												<a class="btn blue" href="/manage/teams" target='_blank'>新增</a>
+											
 										</div>
 										</div>
 
@@ -207,8 +206,8 @@
 													<option value='{{$user->id}}'> {{$user->username}} </option>
 												@endforeach
 												</select>
-
-											<button class="btn purple" onclick='location.href="/manage/users"'>新增 <i class="m-icon-swapright m-icon-white"></i></button>
+												<a class="btn blue" href="/manage/users" target='_blank'>新增</a>
+											
 										</div>
 										</div>
 
@@ -216,8 +215,8 @@
 									<div class="form-actions">
 
 										<button type="submit" class="btn blue">提交</button>
-
-										<button type="button" class="btn" onclick='location.href="/project"'>取消</button>                            
+										<a class="btn blue" href="/project" >取消</a>
+									                            
 
 									</div>
 									
