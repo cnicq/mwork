@@ -35,8 +35,6 @@
 					@else
 						已加入
 					@endif
-
-					
 				@endif
 
 				<a href="/project/detail/{{$project->id}}" target="_blank">详细</a>

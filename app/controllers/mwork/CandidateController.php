@@ -76,6 +76,38 @@ class CandidateController extends ParentController {
 
     }
 
+    public function deleteOwn($caId)
+    {
+        $ca = Candidate::find($caId);
+
+        if(empty($ca))
+        {
+            return 'error';
+        }
+
+        if(!Candidate::IsOwn($caId, Auth::user()->id))
+        {
+            return 'error';
+        }
+
+        $caOwn = Candidateown::where('ca_id', '=', $caId)->where('owner_id', '=', Auth::user()->id)->first();
+        if(empty($caOwn))
+        {
+            return 'error';
+        }
+        $caOwn->delete();
+        $caOwn = Candidateown::where('ca_id', '=', $caId)->where('owner_id', '=', Auth::user()->id)->first();
+        if(empty($caOwn))
+        {
+            return 'ok';
+        }
+        else 
+        {
+            return 'error';
+        }
+
+    }
+
     public function addProject($projId, $caId)
     {
         $projInfo = Projectinfo::where('proj_id', '=', $projId)->where('ca_id', '=', $caId)->first();
@@ -95,6 +127,8 @@ class CandidateController extends ParentController {
 
         return $this->getProjectList($caId, $projId);
     }
+
+    
 
     public function addComment($caId, $content, $status, $projId=0)
     {

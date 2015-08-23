@@ -11,9 +11,9 @@
 		@endif
 		<button class="btn blue" onclick='onClickComment()' >添加备注</button>
 		@if (Candidate::IsOwn($caId, Auth::user()->id))
-			<button class="btn gray" disabled>已加入我的库</button>
+			<button class="btn yellow" onclick='onClickDeleteOwn({{$caId}})' id='deleteOwn'>移出我的库</button>
 		@else
-			<button class="btn blue" onclick='onClickOwn({{$caId}})' id='addOwn'>加入我的库</button>
+			<button class="btn blue" onclick='onClickAddOwn({{$caId}})' id='addOwn'>加入我的库</button>
 		@endif
 	</div>
 	<!-- Only required for left/right tabs -->
@@ -169,7 +169,7 @@ function onClickProjectD(projId)
 	});
 }
 
-function onClickOwn(caId)
+function onClickAddOwn(caId)
 {
 	var urlTo = '/candidate/addOwn/' + caId;
 	$.ajax({
@@ -177,9 +177,22 @@ function onClickOwn(caId)
 			url:urlTo,
 			success: function(r){
 				$('#addOwn').removeClass('blue');	
-				$('#addOwn').addClass('gray');	
-				$('#addOwn').text('已加入我的库'); 
-				$('#addOwn').attr('disabled', true);
+				$('#addOwn').addClass('yellow');	
+				$('#addOwn').text('移出我的库'); 
+			}
+	});
+}
+
+function onClickDeleteOwn(caId)
+{
+	var urlTo = '/candidate/deleteOwn/' + caId;
+	$.ajax({
+			type:'GET',
+			url:urlTo,
+			success: function(r){
+				$('#deleteOwn').removeClass('yellow');	
+				$('#deleteOwn').addClass('blue');	
+				$('#deleteOwn').text('加入我的库'); 
 			}
 	});
 }

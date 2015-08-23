@@ -12,8 +12,6 @@ class Candidate extends Eloquent {
 	 */
 	public function delete()
 	{
-		// Delete the comments
-		$this->comments()->delete();
 
 		return parent::delete();
 	}

@@ -55,6 +55,8 @@ Route::group(array('before' => 'auth'), function(){
     Route::get('/candidate/manage', 'CandidateController@getManage');
     Route::get('/candidate/my', 'CandidateController@getMy');
     Route::get('/candidate/addOwn/{caId}', 'CandidateController@addOwn');
+    Route::get('/candidate/deleteOwn/{caId}', 'CandidateController@deleteOwn');
+    
     //Route::get('/candidate/search/{keywords?}', 'CandidateController@getSearch');
     Route::post('/candidate/add', 'CandidateController@postCreate');
     Route::post('/candidate/search/{mode}', 'CandidateController@postSearch');
